@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:halo/app/config.dart';
 import 'package:halo/app/module/site_module.dart';
 import 'package:halo/app/provide.dart';
+import 'package:halo/app/request_info.dart';
 import 'package:halo/ui/article/list/article_list_module.dart';
 import 'package:halo/ui/comment/comment_list_module.dart';
 import 'package:halo/ui/login/site_login.dart';
@@ -25,15 +27,26 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Provide.value<SiteModule>(context).loadData();
-    return Provide<SiteModule>(
-      builder: (context, child, site) => MaterialApp(
+    return Provide<SiteModule>(builder: (context, child, site) {
+      if (site.site != null && isNotEmpty(site.site.title)) {
+        //配置信息
+        RequestInfo().HOST = site.site.address;
+      }
+      return MaterialApp(
+          localizationsDelegates: [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+          ],
+          supportedLocales: [
+            const Locale('zh', 'CN'),
+          ],
           title: (site.site != null && isNotEmpty(site.site.title)) ? site.site.title : "HaloBlog",
           theme: ThemeData(
               appBarTheme: AppBarTheme(elevation: 2),
               primarySwatch: Colors.blue,
               textTheme: TextTheme(title: TextStyle(color: Config.fontColor))),
-          home: (site.site == null || isEmpty(site.site.address)) ? SiteLogin() : MainPage()),
+          home: (site.site == null || isEmpty(site.site.address)) ? SiteLogin() : MainPage());
 //          home: MainPage()),
-    );
+    });
   }
 }

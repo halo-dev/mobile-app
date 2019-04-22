@@ -28,16 +28,21 @@ class Api {
   ///
   /// 登录,获取Token
   ///
-  Observable<ResultData> login(map) =>
-      Observable.fromFuture(Http.post("/auth_center/v3/login", params: map));
-
   ///
   /// 获取用户信息
   /// @param system_type
   /// @return User
-  Observable<ResultData> user(Map<String, dynamic> map) =>
+  static Observable<ResultData> user(Map<String, dynamic> map) =>
       Observable.fromFuture(Http.post("/user_center/v3/member_info", params: map));
 
-  Observable<ResultData> getPosts({Map<String, dynamic> query}) =>
+  static Observable<ResultData> getPosts({Map<String, dynamic> query}) =>
       Observable.fromFuture(Http.get("/api/admin/posts", query: query));
+
+//修改密码
+  static Observable<ResultData> updatePassword(Map<String, dynamic> query) =>
+      Observable.fromFuture(Http.get("/api/admin/posts", query: query));
+
+  /// 登陆
+  static Observable<ResultData> login(Map<String, String> query) =>
+      Observable.fromFuture(Http.post("/api/admin/login", params: query));
 }

@@ -3,11 +3,11 @@ import 'dart:convert' show json;
 class Site {
   String account;
   String address;
-  String icon;
+  String avatar;
   String password;
   String title;
 
-  Site.fromParams({this.account, this.address, this.icon, this.password, this.title});
+  Site.fromParams({this.account, this.address, this.avatar, this.password, this.title});
 
   factory Site(jsonStr) => jsonStr == null
       ? null
@@ -16,13 +16,13 @@ class Site {
   Site.fromJson(jsonRes) {
     account = jsonRes['account'];
     address = jsonRes['address'];
-    icon = jsonRes['icon'];
+    avatar = jsonRes['avatar'];
     password = jsonRes['password'];
     title = jsonRes['title'];
   }
 
   @override
   String toString() {
-    return '{"account": ${account != null ? '${json.encode(account)}' : 'null'},"address": ${address != null ? '${json.encode(address)}' : 'null'},"icon": ${icon != null ? '${json.encode(icon)}' : 'null'},"password": ${password != null ? '${json.encode(password)}' : 'null'},"title": ${title != null ? '${json.encode(title)}' : 'null'}}';
+    return '{"account": ${account != null ? '${json.encode(account)}' : 'null'},"address": ${address != null ? '${json.encode(address)}' : 'null'},"avatar": ${avatar != null ? '${json.encode(avatar)}' : 'null'},"password": ${password != null ? '${json.encode(password)}' : 'null'},"title": ${title != null ? '${json.encode(title)}' : 'null'}}';
   }
 }

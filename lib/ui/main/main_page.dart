@@ -27,21 +27,24 @@ class _MainPageView extends State<MainPage> {
           appBar: AppBar(
             title: Text(site.site.title),
           ),
-          floatingActionButton: FloatingActionButton(
-            child: Image.asset(
-              "assest/images/push_article.png",
-              width: 24,
-              height: 24,
-              color: Colors.white,
+          floatingActionButton: Container(
+            child: FloatingActionButton(
+              child: Image.asset(
+                "assest/images/push_article.png",
+                width: 24,
+                height: 24,
+                color: Colors.white,
+              ),
+              tooltip: "发布新文章",
+              onPressed: () {
+                _openNew(context);
+              },
+              foregroundColor: Colors.white,
+              backgroundColor: Color.fromARGB(255, 0, 135, 190),
+              elevation: 5.0,
+              highlightElevation: 10.0,
             ),
-            tooltip: "发布新文章",
-            onPressed: () {
-              _openNew(context);
-            },
-            foregroundColor: Colors.white,
-            backgroundColor: Color.fromARGB(255, 0, 135, 190),
-            elevation: 5.0,
-            highlightElevation: 10.0,
+            margin: EdgeInsets.fromLTRB(0, 0, 30, 50),
           ),
           floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
 //          home: isEmpty(site.site.address) ? SiteLogin() : te.site.title),
@@ -85,7 +88,7 @@ class _MainPageView extends State<MainPage> {
       child: new Column(
         children: [
           SiteView(
-            site.icon,
+            site.avatar,
             site.title,
             site.address,
             padding: EdgeInsets.all(10),

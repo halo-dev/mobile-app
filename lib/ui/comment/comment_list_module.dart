@@ -7,7 +7,7 @@ class CommentListModule extends ChangeNotifier {
   List<Comment> commentList = List();
 
   void refresh(bool up) {
-    ApiRequest(Api().getPosts(), (data) {
+    ApiRequest(Api.getPosts(), (data) {
       if (up) {
         commentList.clear();
       }

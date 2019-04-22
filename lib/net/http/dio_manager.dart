@@ -3,7 +3,6 @@ import 'package:halo/app/request_info.dart';
 import 'package:halo/net/interceptor/dio_interceptor.dart';
 import 'package:halo/net/interceptor/dio_response_interceptor.dart';
 import 'package:halo/net/interceptor/log_interceptor.dart';
-import 'package:halo/util/log_util.dart';
 
 ///dio管理
 class DioManager {
@@ -54,8 +53,10 @@ class DioManager {
     }
   }
 
-  void update() {
-    _dio.options.baseUrl = RequestInfo().HOST;
-    Log(RequestInfo().HOST);
+  void update(String host) {
+    if (_dio == null) {
+      dio();
+    }
+    _dio.options.baseUrl = host;
   }
 }

@@ -40,13 +40,14 @@ class EditPage extends StatelessWidget {
           title: Text("纂写文章"),
           centerTitle: Theme.of(context).platform == TargetPlatform.iOS ? true : false,
           actions: <Widget>[
-            IconButton(
-              // action button
-              icon: Icon(Icons.remove_red_eye),
-              onPressed: () {
-                _preview(context);
-              },
-            ),
+            FlatButton(
+                onPressed: () {
+                  _preview(context);
+                },
+                child: Text(
+                  "下一步",
+                  style: TextStyle(color: Colors.white, fontSize: 15),
+                )),
           ],
         ),
         body: MarkdownEditor(

@@ -11,11 +11,11 @@ typedef void Finish();
 void ApiRequest(Observable<ResultData> obs, Success onSuccess, onFail, onFinish) {
   obs
       .doOnData((response) {
-        if (response.code == 0) {
+        if (response.status == 200) {
 //          onSuccess(response.data);
           onSuccess(response.data);
         } else {
-          onFail(response.code, response.msg);
+          onFail(response.status, response.message);
         }
       })
       .doOnDone(onFinish)

@@ -1,14 +1,11 @@
 import 'dart:convert' show json;
 
-///
-///网络结果数据
-///
 class ResultData<T> {
-  int code;
+  int status;
   T data;
-  String msg;
+  String message;
 
-  ResultData.fromParams(this.code, this.data, this.msg);
+  ResultData.fromParams(this.status, this.data, this.message);
 
   factory ResultData(jsonStr) => jsonStr == null
       ? null
@@ -17,13 +14,13 @@ class ResultData<T> {
           : new ResultData.fromJson(jsonStr);
 
   ResultData.fromJson(jsonRes) {
-    code = jsonRes['code'];
+    status = jsonRes['status'];
     data = jsonRes['data'];
-    msg = jsonRes['msg'];
+    message = jsonRes['message'];
   }
 
   @override
   String toString() {
-    return '{"code": $code,"data": ${data != null ? '${json.encode(data)}' : 'null'},"msg": ${msg != null ? '${json.encode(msg)}' : 'null'}}';
+    return '{"status": $status,"data": ${data != null ? '${json.encode(data)}' : 'null'},"message": ${message != null ? '${json.encode(message)}' : 'null'}}';
   }
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:halo/app/config.dart';
-import 'package:halo/ui/login/site_info.dart';
-import 'package:halo/util/jump_page.dart';
+import 'package:halo/ui/login/login_to_site.dart';
 import 'package:halo/util/string_util.dart';
 import 'package:halo/widget/login_text_field.dart';
 import 'package:toast/toast.dart';
@@ -72,10 +71,12 @@ class SiteLogin extends StatelessWidget {
     var address = _addressCtl.text;
     var user = _userCtl.text;
     var passwd = _passwdCtl.text;
+    //登陆
     if (isEmpty(address) || isEmpty(user) || isEmpty(passwd)) {
       Toast.show("请完善站点信息", context, gravity: 1);
     } else {
-      pushToNewPage(context, SiteInfo(address, user, passwd));
+      LoginToSite().login(address, user, passwd, context);
+//      pushToNewPage(context, SiteInfo(address, user, passwd));
     }
   }
 }

@@ -7,7 +7,7 @@ class ArticleListModule extends ChangeNotifier {
   List<Content> articleList = List();
 
   void refresh(bool up) {
-    ApiRequest(Api().getPosts(), (data) {
+    ApiRequest(Api.getPosts(), (data) {
       if (up) {
         articleList.clear();
       }

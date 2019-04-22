@@ -22,11 +22,16 @@ class SiteView extends StatelessWidget {
             width: 50,
             imageUrl: icon,
             placeholder: (context, url) => new CircularProgressIndicator(),
-            errorWidget: (context, url, error) => new Icon(Icons.error),
+            errorWidget: (context, url, error) => Image.asset(
+                  "assest/images/halo_avatar.png",
+                  width: 50,
+                  height: 50,
+                ),
           ),
           Padding(
               padding: EdgeInsets.only(left: 10),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
