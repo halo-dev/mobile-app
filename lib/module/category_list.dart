@@ -21,43 +21,36 @@ class CategoryList {
 
   @override
   String toString() {
-    return '{"json_list": $list}';
+    return '{"list": $list}';
   }
 }
 
 class Category {
-  int createTime;
   int id;
   int parentId;
-  int updateTime;
-  bool deleted;
   String description;
   String name;
   String slugName;
+  List<Category> children;
 
   Category.fromParams(
-      {this.createTime,
-      this.id,
-      this.parentId,
-      this.updateTime,
-      this.deleted,
-      this.description,
-      this.name,
-      this.slugName});
+      {this.id, this.parentId, this.description, this.name, this.slugName, this.children});
 
   Category.fromJson(jsonRes) {
-    createTime = jsonRes['createTime'];
     id = jsonRes['id'];
     parentId = jsonRes['parentId'];
-    updateTime = jsonRes['updateTime'];
-    deleted = jsonRes['deleted'];
     description = jsonRes['description'];
     name = jsonRes['name'];
     slugName = jsonRes['slugName'];
+    children = jsonRes['children'] == null ? null : [];
+
+    for (var childrenItem in children == null ? [] : jsonRes['children']) {
+      children.add(childrenItem == null ? null : new Category.fromJson(childrenItem));
+    }
   }
 
   @override
   String toString() {
-    return '{"createTime": $createTime,"id": $id,"parentId": $parentId,"updateTime": $updateTime,"deleted": $deleted,"description": ${description != null ? '${json.encode(description)}' : 'null'},"name": ${name != null ? '${json.encode(name)}' : 'null'},"slugName": ${slugName != null ? '${json.encode(slugName)}' : 'null'}}';
+    return '{"id": $id,"parentId": $parentId,"description": ${description != null ? '${json.encode(description)}' : 'null'},"name": ${name != null ? '${json.encode(name)}' : 'null'},"slugName": ${slugName != null ? '${json.encode(slugName)}' : 'null'},"children": $children}';
   }
 }

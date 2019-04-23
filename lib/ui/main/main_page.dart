@@ -5,6 +5,7 @@ import 'package:halo/app/module/site_module.dart';
 import 'package:halo/app/provide.dart';
 import 'package:halo/ui/article/edit/edit_page.dart';
 import 'package:halo/ui/article/list/article_list.dart';
+import 'package:halo/ui/category/category_manager.dart';
 import 'package:halo/ui/comment/comment_list.dart';
 import 'package:halo/ui/login/site_login.dart';
 import 'package:halo/ui/main/site_view.dart';
@@ -72,7 +73,7 @@ class _MainPageView extends State<MainPage> {
           color: Config.fontColor,
         ),
         "分类管理", () {
-      pushToNewPage(context, ArticleListPage());
+      pushToNewPage(context, CategoryManagerPage());
     }));
     widgets.add(createItem(
         Image.asset(

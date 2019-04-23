@@ -6,7 +6,6 @@ class DioResponseInterceptor extends Interceptor {
   @override
   onResponse(Response response) {
     if (null != response.data['status']) {
-      //有时候 code 为string 有时候 为 int
       var status = response.data['status'];
       response.data =
           ResultData.fromParams(status, response.data['data'], response.data['message']);

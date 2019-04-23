@@ -46,5 +46,6 @@ class Api {
   static String deleteTags(tagID) => "/api/admin/tags/$tagID";
 
   ///
-  static final String categories = "/api/admin/categories";
+  static final String category = "/api/admin/categories";
+  static final String categoryTreeView = "/api/admin/categories/tree_view";
 }

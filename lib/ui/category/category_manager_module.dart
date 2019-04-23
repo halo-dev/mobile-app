@@ -1,21 +1,20 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:halo/module/category_list.dart';
 import 'package:halo/module/tag_list.dart';
 import 'package:halo/net/api.dart';
 import 'package:halo/net/api_request.dart';
 import 'package:halo/util/Utils.dart';
 import 'package:halo/util/toast.dart';
 
-class TagListModule extends ChangeNotifier {
-  TagList tagList;
+class CategoryListModule extends ChangeNotifier {
+  CategoryList cateList;
   int status;
 
   void updateList(BuildContext context) {
-    Map params = HashMap<String, dynamic>();
-    params["more"] = true;
-    ApiWithQuery<TagList>(Api.listTags, GET, params, (data) {
-      tagList = data;
+    ApiRequest<CategoryList>(Api.categoryTreeView, GET, (data) {
+      cateList = data;
       notifyListeners();
     }, (code, msg) {
       status = code;
@@ -24,9 +23,9 @@ class TagListModule extends ChangeNotifier {
     }, () {});
   }
 
-  void delete(Tag tag) {
-    ApiRequest<TagList>(Api.deleteTags(tag.id), DELETE, (data) {
-      tagList.list.remove(tag);
+  void delete(Category tag) {
+    ApiRequest<CategoryList>(Api.deleteTags(tag.id), DELETE, (data) {
+      cateList.list.remove(tag);
       notifyListeners();
     }, (code, msg) {
       ToastUtil.showToast(msg);
@@ -37,8 +36,8 @@ class TagListModule extends ChangeNotifier {
   void update(Tag tag) {
     Map params = HashMap<String, dynamic>();
     params["tagId"] = tag.id;
-    ApiWithQuery<TagList>(Api.listTags, DELETE, params, (data) {
-      tagList.list.remove(tag);
+    ApiWithQuery<TagList>(Api.category, DELETE, params, (data) {
+      cateList.list.remove(tag);
       notifyListeners();
     }, (code, msg) {
       ToastUtil.showToast(msg);
@@ -46,16 +45,19 @@ class TagListModule extends ChangeNotifier {
     }, () {});
   }
 
-  void create(String name, String slug) {
-    /// {
-    //  "name": "string",
+  void create(String name, String slug, String description, String parentId) {
+    ///{
+    //  "description": "string",
+    //  "name": "父分类",
+    //  "parentId": 1,
     //  "slugName": "string"
     //}
     Map params = HashMap<String, dynamic>();
-    params["name"] = name;
+    params["description"] = description;
     params["slugName"] = slug;
-    ApiWithQuery<Tag>(Api.listTags, POST, params, (data) {
-      tagList.list.add(data);
+    params["parentId"] = slug;
+    ApiWithQuery<Category>(Api.category, POST, params, (data) {
+      cateList.list.add(data);
       notifyListeners();
     }, (code, msg) {
       ToastUtil.showToast(msg);

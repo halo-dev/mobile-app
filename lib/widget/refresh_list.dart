@@ -42,4 +42,12 @@ class PullRefreshMixIn {
         noDataText: "更新于 %T",
         mode: mode);
   }
+
+  void finishRefresh(RefreshController controller) {
+    if (controller.headerStatus == RefreshStatus.refreshing ||
+        controller.footerStatus == RefreshStatus.refreshing) {
+      controller.sendBack(
+          controller.headerStatus == RefreshStatus.refreshing, RefreshStatus.completed);
+    }
+  }
 }
