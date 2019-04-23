@@ -1,8 +1,8 @@
 import 'dart:convert' show json;
 
-class ResultData<T> {
+class ResultData {
   int status;
-  T data;
+  dynamic data;
   String message;
 
   ResultData.fromParams(this.status, this.data, this.message);

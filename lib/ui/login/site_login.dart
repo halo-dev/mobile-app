@@ -21,6 +21,7 @@ class SiteLogin extends StatelessWidget {
       _userCtl.text = "";
       _passwdCtl.text = "";
     }
+    _addressCtl.text = "http://192.168.4.94:8090";
     return Scaffold(
       appBar: AppBar(
         title: Image.asset(

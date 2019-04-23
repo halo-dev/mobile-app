@@ -18,8 +18,8 @@ class LoginToSite {
     params["username"] = user;
     params["password"] = pwd;
 
-    ApiRequest(Api.login(params), (data) {
-      pushToNewPage(context, SiteInfo(Profile.fromJson(data), pwd));
+    ApiWithQuery<Profile>(Api.login, POST, params, (data) {
+      pushToNewPage(context, SiteInfo(data, pwd));
     }, (code, msg) {
       ToastUtil.show(msg, context);
     }, () {});

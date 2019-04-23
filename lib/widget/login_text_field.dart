@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 
-Widget loginTextField(hintText, controller, String iconPath, {bool show = false}) {
+Widget loginTextField(
+  hintText,
+  controller,
+  String iconPath, {
+  bool show = false,
+  TextInputAction action,
+  TextInputType inputType,
+}) {
   return Row(
     crossAxisAlignment: CrossAxisAlignment.end,
     children: <Widget>[
@@ -22,6 +29,8 @@ Widget loginTextField(hintText, controller, String iconPath, {bool show = false}
               controller: controller,
               autofocus: true,
               obscureText: show,
+              keyboardType: inputType,
+              textInputAction: action,
               decoration: new InputDecoration(
                   labelText: hintText,
                   labelStyle: TextStyle(fontSize: 15),

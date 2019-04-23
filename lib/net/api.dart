@@ -6,8 +6,6 @@ const String BaseUrl = "http://www.apkdv.com";
 
 class Api {
   ///邮箱账号
-  Observable<ResultData> accountList() =>
-      Observable.fromFuture(Http.post("/email_service/v3/accountList"));
 
   ///   /**
   //     * 登录,获取Token
@@ -32,17 +30,21 @@ class Api {
   /// 获取用户信息
   /// @param system_type
   /// @return User
-  static Observable<ResultData> user(Map<String, dynamic> map) =>
-      Observable.fromFuture(Http.post("/user_center/v3/member_info", params: map));
-
-  static Observable<ResultData> getPosts({Map<String, dynamic> query}) =>
-      Observable.fromFuture(Http.get("/api/admin/posts", query: query));
-
 //修改密码
   static Observable<ResultData> updatePassword(Map<String, dynamic> query) =>
       Observable.fromFuture(Http.get("/api/admin/posts", query: query));
 
   /// 登陆
-  static Observable<ResultData> login(Map<String, String> query) =>
-      Observable.fromFuture(Http.post("/api/admin/login", params: query));
+
+  static final String login = "/api/admin/login";
+  static final String getPosts = "/api/admin/posts";
+
+  /// tag ///
+  /// tag list
+  static final String listTags = "/api/admin/tags";
+
+  static String deleteTags(tagID) => "/api/admin/tags/$tagID";
+
+  ///
+  static final String categories = "/api/admin/categories";
 }

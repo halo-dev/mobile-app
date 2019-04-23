@@ -9,6 +9,7 @@ import 'package:halo/ui/comment/comment_list.dart';
 import 'package:halo/ui/login/site_login.dart';
 import 'package:halo/ui/main/site_view.dart';
 import 'package:halo/ui/setting/setting_page.dart';
+import 'package:halo/ui/tag/tag_manager.dart';
 import 'package:halo/util/jump_page.dart';
 
 class MainPage extends StatefulWidget {
@@ -62,6 +63,26 @@ class _MainPageView extends State<MainPage> {
 //    widgets.add(createItem(Icons.assessment, "站点页面"));
     widgets.add(createItem(Icons.library_books, "博客文章", () {
       pushToNewPage(context, ArticleListPage());
+    }));
+    widgets.add(createItem(
+        Image.asset(
+          "assest/images/image_classification.png",
+          width: 22,
+          height: 22,
+          color: Config.fontColor,
+        ),
+        "分类管理", () {
+      pushToNewPage(context, ArticleListPage());
+    }));
+    widgets.add(createItem(
+        Image.asset(
+          "assest/images/image_tag.png",
+          width: 24,
+          height: 24,
+          color: Config.fontColor,
+        ),
+        "标签管理", () {
+      pushToNewPage(context, TagManagerPage());
     }));
     widgets.add(createItem(Icons.image, "媒体", null));
     widgets.add(createItem(Icons.forum, "评论", () {
@@ -118,11 +139,13 @@ class _MainPageView extends State<MainPage> {
   Widget createItem(icon, title, Function callBack) {
     return ListTile(
       onTap: callBack,
-      leading: Icon(
-        icon,
-        size: 24,
-        color: Config.fontColor,
-      ),
+      leading: icon is Widget
+          ? icon
+          : Icon(
+              icon,
+              size: 24,
+              color: Config.fontColor,
+            ),
       title: Text(
         title,
         style: TextStyle(fontSize: 16, color: Config.fontColor),

@@ -8,6 +8,7 @@ import 'package:halo/ui/article/list/article_list_module.dart';
 import 'package:halo/ui/comment/comment_list_module.dart';
 import 'package:halo/ui/login/site_login.dart';
 import 'package:halo/ui/main/main_page.dart';
+import 'package:halo/ui/tag/tag_manager_module.dart';
 import 'package:halo/util/string_util.dart';
 
 void main() {
@@ -15,6 +16,7 @@ void main() {
     ProviderNode(
       providers: Providers()
         ..provide(Provider<SiteModule>.value(SiteModule()))
+        ..provide(Provider<TagListModule>.value(TagListModule()))
         ..provide(Provider<CommentListModule>.value(CommentListModule()))
         ..provide(Provider<ArticleListModule>.value(ArticleListModule())),
       child: MyApp(),
