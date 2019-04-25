@@ -1,47 +1,168 @@
 import 'package:flutter/material.dart';
-import 'package:halo/app/config.dart' as cf;
+import 'package:halo/app/config.dart';
 import 'package:halo/app/provide.dart';
+import 'package:halo/module/category_list.dart';
 import 'package:halo/ui/category/category_manager_module.dart';
-import 'package:halo/widget/refresh_list.dart';
-import 'package:halo/widget/textfield_alertdialog.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:halo/ui/category/dropdownmenu_item.dart';
+import 'package:halo/widget/login_text_field.dart';
 
 class CreateCategoryPage extends StatefulWidget {
+  Category item;
+  bool modify;
+
+  CreateCategoryPage(this.item, this.modify);
+
+  CreateCategoryPage.create() {
+    modify = false;
+  }
+
   @override
   State<StatefulWidget> createState() {
     return _CreateCategoryPageView();
   }
 }
 
-class _CreateCategoryPageView extends State<CreateCategoryPage> with PullRefreshMixIn {
-  RefreshController controller;
-
-  @override
-  void initState() {
-    super.initState();
-    controller = RefreshController();
-  }
+class _CreateCategoryPageView extends State<CreateCategoryPage> {
+  final TextEditingController _nameCtl = new TextEditingController();
+  final TextEditingController _desCtl = new TextEditingController();
+  final TextEditingController _singeCtl = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    Provide.value<CategoryListModule>(context).updateList(context);
+//    Provide.value<CategoryListModule>(context).updateList();
     return Scaffold(
-      backgroundColor: cf.Config.background,
+      backgroundColor: Config.background,
       appBar: AppBar(
         elevation: 0,
-        title: Text("分类"),
+        title: Text((widget.modify && widget.item != null)
+            ? "修改分类"
+            : (!widget.modify && widget.item != null) ? widget.item.name : "创建分类"),
+        actions: <Widget>[
+          IconButton(
+              icon: Icon(
+                Icons.done,
+                color: Colors.white,
+              ),
+              onPressed: _update)
+        ],
       ),
-      body: _buildCreate(),
+      body: new Container(
+        color: Colors.white,
+        padding: EdgeInsets.fromLTRB(15, 15, 15, 2),
+        child: _buildCreate(),
+      ),
     );
   }
 
-  void _addNew(BuildContext context) {
-    TextFieldDialog(context, "创建新分类", (name, slug) {
-//      Provide.value<CategoryListModule>(context).create(name, slug);
+  _buildCreate() {
+    //修改
+    if (widget.modify && widget.item != null) {
+      _nameCtl.text = widget.item.name;
+      _desCtl.text = widget.item.description;
+      _singeCtl.text = widget.item.slugName;
+      Provide.value<CategoryListModule>(context).currentCategory(widget.item);
+    } else
+      Provide.value<CategoryListModule>(context).currentCategory(Category.fromParams(id: 0));
+    //创建
+
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "父级分类(可选)",
+            style: TextStyle(fontSize: 13, color: Config.fontLightColor),
+          ),
+          _buildDropMenu(),
+          loginTextField("* 分类名称", _nameCtl, null,
+              inputType: TextInputType.url,
+              labelStyle: TextStyle(fontSize: 15, color: Colors.pink)),
+          loginTextField("分类描述", _desCtl, null, inputType: TextInputType.url),
+          loginTextField("slug", _singeCtl, null, inputType: TextInputType.url),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDropMenu() {
+    return Provide<CategoryListModule>(builder: (context, child, mode) {
+      if (mode.cateList == null) {
+        return buildTop();
+      } else if (mode.cateList != null && mode.cateList.list.isNotEmpty) {
+        //创建和更新
+
+        List<DropdownMenuItem<Category>> items = new List<DropdownMenuItem<Category>>();
+        for (var value1 in mode.cateList.list) {
+          if (widget.item != null && value1.id == widget.item.id) continue;
+          items.addAll(
+              createDropdownMenuItem(value1, widget.item == null ? 0 : widget.item.id, context));
+        }
+
+        items.insert(
+            0,
+            DropdownMenuItem(
+              value: mode.top,
+              child: Text(
+                mode.top.name,
+                style: TextStyle(fontSize: 15, color: Config.fontColor),
+              ),
+            ));
+        return DropdownButton(
+          items: items,
+          hint: Container(
+            width: MediaQuery.of(context).size.width - 55,
+            child: Text(mode.current.name),
+          ),
+          onChanged: (value) {
+            mode.currentChange(value);
+          },
+        );
+      } else {
+        return Padding(
+            padding: EdgeInsets.only(top: 10),
+            child: Text(
+              "顶级",
+              style: TextStyle(fontSize: 15, color: Config.fontColor),
+            ));
+      }
     });
   }
 
-  _buildCreate() {
-//    return
+  Widget buildTop() {
+    return Row(
+      children: <Widget>[
+        Expanded(
+          child: Padding(
+              padding: EdgeInsets.only(top: 10),
+              child: Text(
+                "分类信息获取失败",
+                style: TextStyle(fontSize: 15, color: Config.fontColor),
+              )),
+        ),
+        IconButton(
+            icon: Icon(Icons.refresh),
+            onPressed: () {
+              Provide.value<CategoryListModule>(context).updateList();
+            })
+      ],
+    );
+  }
+
+  void _update() {
+    var mode = Provide.value<CategoryListModule>(context);
+    Category category = Category.fromParams(
+        id: widget.item != null ? widget.item.id : 0,
+        parentId: mode.current.id,
+        description: _desCtl.text,
+        name: _nameCtl.text,
+        slugName: _singeCtl.text);
+
+    if (widget.item != null && widget.modify) {
+      //更新
+      Provide.value<CategoryListModule>(context).update(category);
+    } else {
+      //创建
+      Provide.value<CategoryListModule>(context).update(category);
+    }
   }
 }

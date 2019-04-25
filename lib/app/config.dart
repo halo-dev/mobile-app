@@ -15,4 +15,5 @@ class Config {
   static const String SpKey = "Site_Key";
   static const Color background = Color.fromARGB(255, 233, 239, 243);
   static const Color fontColor = Color.fromARGB(255, 61, 89, 109);
+  static const Color fontLightColor = Color.fromARGB(255, 102, 142, 170);
 }

@@ -2,7 +2,6 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:halo/module/category_list.dart';
-import 'package:halo/module/tag_list.dart';
 import 'package:halo/net/api.dart';
 import 'package:halo/net/api_request.dart';
 import 'package:halo/util/Utils.dart';
@@ -12,9 +11,12 @@ class CategoryListModule extends ChangeNotifier {
   CategoryList cateList;
   int status;
 
-  void updateList(BuildContext context) {
+  void updateList() {
     ApiRequest<CategoryList>(Api.categoryTreeView, GET, (data) {
       cateList = data;
+      if (cateList != null && cateList.list.isEmpty) {
+        cateList.list = List();
+      }
       notifyListeners();
     }, (code, msg) {
       status = code;
@@ -23,9 +25,9 @@ class CategoryListModule extends ChangeNotifier {
     }, () {});
   }
 
-  void delete(Category tag) {
-    ApiRequest<CategoryList>(Api.deleteTags(tag.id), DELETE, (data) {
-      cateList.list.remove(tag);
+  void delete(Category category) {
+    ApiRequest<CategoryList>(Api.deleteTags(category.id), DELETE, (data) {
+      cateList.list.remove(category);
       notifyListeners();
     }, (code, msg) {
       ToastUtil.showToast(msg);
@@ -33,29 +35,26 @@ class CategoryListModule extends ChangeNotifier {
     }, () {});
   }
 
-  void update(Tag tag) {
+  void update(Category category) {
     Map params = HashMap<String, dynamic>();
-    params["tagId"] = tag.id;
-    ApiWithQuery<TagList>(Api.category, DELETE, params, (data) {
-      cateList.list.remove(tag);
-      notifyListeners();
+    params["slugName"] = category.slugName;
+    params["description"] = category.description;
+    params["name"] = category.name;
+    params["parentId"] = category.parentId;
+    ApiWithQuery<Category>(Api.category, POST, params, (data) {
+      updateList();
     }, (code, msg) {
       ToastUtil.showToast(msg);
       notifyListeners();
     }, () {});
   }
 
-  void create(String name, String slug, String description, String parentId) {
-    ///{
-    //  "description": "string",
-    //  "name": "父分类",
-    //  "parentId": 1,
-    //  "slugName": "string"
-    //}
+  void create(Category category) {
     Map params = HashMap<String, dynamic>();
-    params["description"] = description;
-    params["slugName"] = slug;
-    params["parentId"] = slug;
+    params["slugName"] = category.slugName;
+    params["description"] = category.description;
+    params["name"] = category.name;
+    params["parentId"] = category.parentId;
     ApiWithQuery<Category>(Api.category, POST, params, (data) {
       cateList.list.add(data);
       notifyListeners();
@@ -63,5 +62,35 @@ class CategoryListModule extends ChangeNotifier {
       ToastUtil.showToast(msg);
       notifyListeners();
     }, () {});
+  }
+
+  Category top = Category.fromParams(id: 0, parentId: 0, description: "", name: "顶级");
+
+  Category findParentById(List<Category> list, int id) {
+    Category defaultData;
+    list.forEach((data) {
+      if (id == data.id) {
+        defaultData = data;
+      } else {
+        if (data.children != null) {
+          defaultData = findParentById(data.children, id);
+        }
+      }
+    });
+    return defaultData;
+  }
+
+  Category current;
+
+  Category currentCategory(Category item) {
+    if (item.parentId == 0) {
+      current = top;
+    } else
+      current = findParentById(cateList.list, item.parentId);
+  }
+
+  Category currentChange(Category item) {
+    current = item;
+    notifyListeners();
   }
 }

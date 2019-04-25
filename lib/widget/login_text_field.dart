@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:halo/app/config.dart';
 
 Widget loginTextField(
   hintText,
@@ -7,6 +8,7 @@ Widget loginTextField(
   bool show = false,
   TextInputAction action,
   TextInputType inputType,
+  TextStyle labelStyle,
 }) {
   return Row(
     crossAxisAlignment: CrossAxisAlignment.end,
@@ -29,11 +31,14 @@ Widget loginTextField(
               controller: controller,
               autofocus: true,
               obscureText: show,
+              focusNode: null,
               keyboardType: inputType,
               textInputAction: action,
               decoration: new InputDecoration(
                   labelText: hintText,
-                  labelStyle: TextStyle(fontSize: 15),
+                  labelStyle: labelStyle == null
+                      ? TextStyle(fontSize: 15, color: Config.fontLightColor)
+                      : labelStyle,
                   contentPadding: EdgeInsets.fromLTRB(0, 15, 0, 5),
                   enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
