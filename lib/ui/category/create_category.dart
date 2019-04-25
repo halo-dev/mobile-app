@@ -62,7 +62,8 @@ class _CreateCategoryPageView extends State<CreateCategoryPage> {
       _singeCtl.text = widget.item.slugName;
       Provide.value<CategoryListModule>(context).currentCategory(widget.item);
     } else
-      Provide.value<CategoryListModule>(context).currentCategory(Category.fromParams(id: 0));
+      Provide.value<CategoryListModule>(context)
+          .currentChange(Provide.value<CategoryListModule>(context).top);
     //创建
 
     return SingleChildScrollView(
