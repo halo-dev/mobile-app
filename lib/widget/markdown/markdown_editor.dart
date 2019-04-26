@@ -10,6 +10,11 @@ class MarkdownText {
 
   final String title;
   final String text;
+
+  @override
+  String toString() {
+    return 'MarkdownText{title: $title, text: $text}';
+  }
 }
 
 enum PageType { editor, preview }

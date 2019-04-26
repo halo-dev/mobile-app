@@ -1,6 +1,6 @@
 import 'dart:convert' show json;
 
-class Article {
+class Post {
   int number;
   int numberOfElements;
   int size;
@@ -13,7 +13,7 @@ class Article {
   Pageable pageable;
   Sort sort;
 
-  Article.fromParams(
+  Post.fromParams(
       {this.number,
       this.numberOfElements,
       this.size,
@@ -26,13 +26,11 @@ class Article {
       this.pageable,
       this.sort});
 
-  factory Article(jsonStr) => jsonStr == null
+  factory Post(jsonStr) => jsonStr == null
       ? null
-      : jsonStr is String
-          ? new Article.fromJson(json.decode(jsonStr))
-          : new Article.fromJson(jsonStr);
+      : jsonStr is String ? new Post.fromJson(json.decode(jsonStr)) : new Post.fromJson(jsonStr);
 
-  Article.fromJson(jsonRes) {
+  Post.fromJson(jsonRes) {
     number = jsonRes['number'];
     numberOfElements = jsonRes['numberOfElements'];
     size = jsonRes['size'];
@@ -107,15 +105,15 @@ class Content {
   int visits;
   bool disallowComment;
   String createFrom;
-  String createTime;
-  String editTime;
+  int createTime;
+  int editTime;
   String status;
   String summary;
   String template;
   String thumbnail;
   String title;
   String type;
-  String updateTime;
+  int updateTime;
   String url;
   List<Categories> categories;
   List<Tag> tags;

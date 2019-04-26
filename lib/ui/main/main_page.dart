@@ -164,6 +164,6 @@ class _MainPageView extends State<MainPage> {
   }
 
   _openNew(BuildContext context) {
-    pushToNewPage(context, EditPostPage());
+    pushToNewPage(context, EditPostPage(false, null));
   }
 }

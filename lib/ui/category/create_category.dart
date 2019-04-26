@@ -7,7 +7,7 @@ import 'package:halo/ui/category/dropdownmenu_item.dart';
 import 'package:halo/util/Utils.dart';
 import 'package:halo/widget/login_text_field.dart';
 
-class CreateCategoryPage extends StatefulWidget {
+class CreateCategoryPage extends StatelessWidget {
   Category item;
   bool modify;
 
@@ -17,51 +17,44 @@ class CreateCategoryPage extends StatefulWidget {
     modify = false;
   }
 
-  @override
-  State<StatefulWidget> createState() {
-    return _CreateCategoryPageView();
-  }
-}
-
-class _CreateCategoryPageView extends State<CreateCategoryPage> {
   final TextEditingController _nameCtl = new TextEditingController();
   final TextEditingController _desCtl = new TextEditingController();
   final TextEditingController _singeCtl = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-//    Provide.value<CategoryListModule>(context).updateList();
     return Scaffold(
       backgroundColor: Config.background,
       appBar: AppBar(
         elevation: 0,
-        title: Text((widget.modify && widget.item != null)
-            ? "修改分类"
-            : (!widget.modify && widget.item != null) ? widget.item.name : "创建分类"),
+        title: Text(
+            (modify && item != null) ? "修改分类" : (!modify && item != null) ? item.name : "创建分类"),
         actions: <Widget>[
           IconButton(
               icon: Icon(
                 Icons.done,
                 color: Colors.white,
               ),
-              onPressed: _update)
+              onPressed: () {
+                _update(context);
+              })
         ],
       ),
       body: Container(
         color: Colors.white,
         padding: EdgeInsets.fromLTRB(15, 15, 15, 2),
-        child: _buildCreate(),
+        child: _buildCreate(context),
       ),
     );
   }
 
-  _buildCreate() {
+  _buildCreate(BuildContext context) {
     //修改
-    if (widget.modify && widget.item != null) {
-      _nameCtl.text = widget.item.name;
-      _desCtl.text = widget.item.description;
-      _singeCtl.text = widget.item.slugName;
-      Provide.value<CategoryListModule>(context).currentCategory(widget.item);
+    if (modify && item != null) {
+      _nameCtl.text = item.name;
+      _desCtl.text = item.description;
+      _singeCtl.text = item.slugName;
+      Provide.value<CategoryListModule>(context).currentCategory(item);
     } else
       Provide.value<CategoryListModule>(context)
           .currentChange(Provide.value<CategoryListModule>(context).top);
@@ -88,15 +81,14 @@ class _CreateCategoryPageView extends State<CreateCategoryPage> {
   Widget _buildDropMenu() {
     return Provide<CategoryListModule>(builder: (context, child, mode) {
       if (mode.cateList == null) {
-        return buildTop();
+        return buildTop(context);
       } else if (mode.cateList != null && mode.cateList.list.isNotEmpty) {
         //创建和更新
 
         List<DropdownMenuItem<Category>> items = new List<DropdownMenuItem<Category>>();
         for (var value1 in mode.cateList.list) {
-//          if (widget.item != null && value1.id == widget.item.id) continue;
-          items.addAll(
-              createDropdownMenuItem(value1, widget.item == null ? 0 : widget.item.id, context));
+//          if (item != null && value1.id == item.id) continue;
+          items.addAll(createDropdownMenuItem(value1, item == null ? 0 : item.id, context));
         }
 
         items.insert(
@@ -111,11 +103,6 @@ class _CreateCategoryPageView extends State<CreateCategoryPage> {
         return DropdownButton(
           items: items,
           hint: Text(mode.current.name),
-
-//          Container(
-//            width: MediaQuery.of(context).size.width - 55,
-//            child: Text(mode.current.name),
-//          ),
           onChanged: (value) {
             mode.currentChange(value);
           },
@@ -131,7 +118,7 @@ class _CreateCategoryPageView extends State<CreateCategoryPage> {
     });
   }
 
-  Widget buildTop() {
+  Widget buildTop(BuildContext context) {
     return Row(
       children: <Widget>[
         Expanded(
@@ -151,21 +138,21 @@ class _CreateCategoryPageView extends State<CreateCategoryPage> {
     );
   }
 
-  void _update() {
+  void _update(BuildContext context) {
     var mode = Provide.value<CategoryListModule>(context);
-    if (widget.item != null && widget.item.id == mode.current.id) {
+    if (item != null && item.id == mode.current.id) {
       ToastUtil.showToast("父级分类不能是自己");
       return;
     }
 
     Category category = Category.fromParams(
-        id: widget.item != null ? widget.item.id : 0,
+        id: item != null ? item.id : 0,
         parentId: mode.current.id,
         description: _desCtl.text,
         name: _nameCtl.text,
         slugName: _singeCtl.text);
 
-    if (widget.item != null && widget.modify) {
+    if (item != null && modify) {
       //更新
       Provide.value<CategoryListModule>(context).update(category, context);
     } else {

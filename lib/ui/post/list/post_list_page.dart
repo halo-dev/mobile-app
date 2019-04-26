@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:halo/app/config.dart' as cf;
 import 'package:halo/app/provide.dart';
-import 'package:halo/module/article.dart';
 import 'package:halo/ui/post/edit/edit_page.dart';
 import 'package:halo/ui/post/list/list_item.dart';
 import 'package:halo/ui/post/post_manager_module.dart';
 import 'package:halo/util/jump_page.dart';
+import 'package:halo/widget/loading_dialog.dart';
 import 'package:halo/widget/refresh_list.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -42,7 +42,7 @@ class _ArticleListPageView extends State<PostListPage> with PullRefreshMixIn {
         ),
         tooltip: "发布新文章",
         onPressed: () {
-          pushToNewPage(context, EditPostPage());
+          pushToNewPage(context, EditPostPage(false, null));
         },
         foregroundColor: Colors.white,
         backgroundColor: Color.fromARGB(255, 0, 135, 190),
@@ -51,14 +51,14 @@ class _ArticleListPageView extends State<PostListPage> with PullRefreshMixIn {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       body: Provide<PostListModule>(builder: (context, child, mode) {
-        return _buildList(context, mode.articleList);
+        return _buildList(context, mode);
       }),
     );
   }
 
   Widget _buildList(
     BuildContext context,
-    List<Content> articleList,
+    PostListModule mode,
   ) {
     if (controller.headerStatus == RefreshStatus.refreshing ||
         controller.footerStatus == RefreshStatus.refreshing) {
@@ -66,16 +66,16 @@ class _ArticleListPageView extends State<PostListPage> with PullRefreshMixIn {
           controller.headerStatus == RefreshStatus.refreshing, RefreshStatus.completed);
     }
     IndexedWidgetBuilder builder;
-    if (articleList.isEmpty) {
+    if (mode.articleList.isEmpty) {
       builder = (BuildContext context, int index) {
-        return CircularProgressIndicator();
+        return loadWithStatus(mode.status);
       };
     } else {
       builder = (BuildContext context, int index) {
-        return ListItemPage(articleList[index]);
+        return ListItemPage(mode.articleList[index]);
       };
     }
-    return buildRefresh(builderList(articleList.length, builder), (up) {
+    return buildRefresh(builderList(mode.articleList.length, builder), (up) {
       Provide.value<PostListModule>(context).refresh(up);
     }, controller);
   }

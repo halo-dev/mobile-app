@@ -7,9 +7,10 @@ import 'package:halo/module/user/profile.dart';
 import 'package:halo/util/Utils.dart';
 
 class EntityFactory {
+  /// Json generate code
   static T generateOBJ<T>(json) {
     if (T.toString() == "Article") {
-      return Article.fromJson(json) as T;
+      return Post.fromJson(json) as T;
     } else if (T.toString() == "Counts") {
       return Counts.fromJson(json) as T;
     } else if (T.toString() == "Profile") {
@@ -22,6 +23,8 @@ class EntityFactory {
       return CategoryList.fromJson(json) as T;
     } else if (T.toString() == "Category") {
       return Category.fromJson(json) as T;
+    } else if (T.toString() == "Post") {
+      return Post.fromJson(json) as T;
     } else {
       Log("实体类${T.toString()}没有注册", key: "EntityFactory");
       return null;

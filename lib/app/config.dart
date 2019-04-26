@@ -16,4 +16,6 @@ class Config {
   static const Color background = Color.fromARGB(255, 233, 239, 243);
   static const Color fontColor = Color.fromARGB(255, 61, 89, 109);
   static const Color fontLightColor = Color.fromARGB(255, 102, 142, 170);
+  static const Color lightColor = Color.fromARGB(255, 13, 141, 193);
+  static const Color titleColor = Color.fromARGB(255, 0, 135, 190);
 }

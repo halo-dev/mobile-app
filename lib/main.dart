@@ -8,6 +8,7 @@ import 'package:halo/ui/category/category_manager_module.dart';
 import 'package:halo/ui/comment/comment_list_module.dart';
 import 'package:halo/ui/login/site_login.dart';
 import 'package:halo/ui/main/main_page.dart';
+import 'package:halo/ui/post/edit/edit_post_module.dart';
 import 'package:halo/ui/post/post_manager_module.dart';
 import 'package:halo/ui/tag/tag_manager_module.dart';
 import 'package:halo/util/string_util.dart';
@@ -20,6 +21,7 @@ void main() {
         ..provide(Provider<TagListModule>.value(TagListModule()))
         ..provide(Provider<CommentListModule>.value(CommentListModule()))
         ..provide(Provider<CategoryListModule>.value(CategoryListModule()))
+        ..provide(Provider<EditPostModule>.value(EditPostModule()))
         ..provide(Provider<PostListModule>.value(PostListModule())),
       child: MyApp(),
     ),
@@ -46,7 +48,7 @@ class MyApp extends StatelessWidget {
           ],
           title: (site.site != null && isNotEmpty(site.site.title)) ? site.site.title : "HaloBlog",
           theme: ThemeData(
-              appBarTheme: AppBarTheme(elevation: 2),
+              appBarTheme: AppBarTheme(elevation: 2, color: Config.titleColor),
               primarySwatch: Colors.blue,
               textTheme: TextTheme(title: TextStyle(color: Config.fontColor))),
           home: (site.site == null || isEmpty(site.site.address)) ? SiteLogin() : MainPage());

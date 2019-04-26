@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:halo/app/config.dart';
 import 'package:halo/widget/markdown/action.dart';
 import 'package:halo/widget/markdown/edit_perform.dart';
 
@@ -95,10 +96,15 @@ class MdEditorState extends State<MdEditor> {
                         TextStyle(
                           fontWeight: FontWeight.w600,
                           fontSize: 20.0,
-                          color: const Color.fromARGB(255, 135, 166, 188),
+                          color: Config.fontColor,
                         ),
                     decoration: InputDecoration(
                       hintText: widget.hintTitle ?? '标题',
+                      hintStyle: TextStyle(
+                        fontWeight: FontWeight.w300,
+//                        fontSize: 20.0,
+                        color: Config.fontLightColor,
+                      ),
                       border: InputBorder.none,
                     ),
                   ),
@@ -122,7 +128,10 @@ class MdEditorState extends State<MdEditor> {
                       if (widget.textChange != null) widget.textChange();
                     },
                     decoration: InputDecoration(
-                      hintText: widget.hintText ?? '请输入内容',
+                      hintText: widget.hintText ?? '在此处分享你的故事...',
+                      hintStyle: TextStyle(
+                        color: Config.fontLightColor,
+                      ),
                       border: InputBorder.none,
                     ),
                     style: TextStyle(
