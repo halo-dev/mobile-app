@@ -26,22 +26,7 @@ class CategoryListModule extends ChangeNotifier {
   }
 
   void delete(Category category) {
-    ApiRequest<CategoryList>(Api.deleteTags(category.id), DELETE, (data) {
-      cateList.list.remove(category);
-      notifyListeners();
-    }, (code, msg) {
-      ToastUtil.showToast(msg);
-      notifyListeners();
-    }, () {});
-  }
-
-  void update(Category category) {
-    Map params = HashMap<String, dynamic>();
-    params["slugName"] = category.slugName;
-    params["description"] = category.description;
-    params["name"] = category.name;
-    params["parentId"] = category.parentId;
-    ApiWithQuery<Category>(Api.category, POST, params, (data) {
+    ApiRequest<CategoryList>(Api.deleteCategory(category.id), DELETE, (data) {
       updateList();
     }, (code, msg) {
       ToastUtil.showToast(msg);
@@ -49,18 +34,34 @@ class CategoryListModule extends ChangeNotifier {
     }, () {});
   }
 
-  void create(Category category) {
+  void update(Category category, BuildContext context) {
+    Map params = HashMap<String, dynamic>();
+    params["slugName"] = category.slugName;
+    params["description"] = category.description;
+    params["name"] = category.name;
+    params["parentId"] = category.parentId;
+//    params["id"] = category.id;
+    ApiWithQuery<Category>(Api.deleteCategory(category.id), PUT, params, (data) {
+      ToastUtil.showToast("修改成功");
+      Navigator.pop(context);
+    }, (code, msg) {
+      ToastUtil.showToast(msg);
+      notifyListeners();
+    }, () {});
+  }
+
+  void create(Category category, BuildContext context) {
     Map params = HashMap<String, dynamic>();
     params["slugName"] = category.slugName;
     params["description"] = category.description;
     params["name"] = category.name;
     params["parentId"] = category.parentId;
     ApiWithQuery<Category>(Api.category, POST, params, (data) {
-      cateList.list.add(data);
-      notifyListeners();
+      ///创建成功
+      ToastUtil.showToast("分类创建成功");
+      Navigator.pop(context);
     }, (code, msg) {
       ToastUtil.showToast(msg);
-      notifyListeners();
     }, () {});
   }
 

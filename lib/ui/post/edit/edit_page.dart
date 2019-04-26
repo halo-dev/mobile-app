@@ -30,7 +30,7 @@ void main() {
 Enjoy!
 """;
 
-class EditPage extends StatelessWidget {
+class EditPostPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

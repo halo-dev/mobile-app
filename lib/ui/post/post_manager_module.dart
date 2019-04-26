@@ -3,7 +3,7 @@ import 'package:halo/module/article.dart';
 import 'package:halo/net/api.dart';
 import 'package:halo/net/api_request.dart';
 
-class ArticleListModule extends ChangeNotifier {
+class PostListModule extends ChangeNotifier {
   List<Content> articleList = List();
 
   void refresh(bool up) {

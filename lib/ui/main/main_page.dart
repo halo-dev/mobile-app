@@ -3,12 +3,12 @@ import 'package:halo/app/config.dart';
 import 'package:halo/app/module/site.dart';
 import 'package:halo/app/module/site_module.dart';
 import 'package:halo/app/provide.dart';
-import 'package:halo/ui/article/edit/edit_page.dart';
-import 'package:halo/ui/article/list/article_list.dart';
 import 'package:halo/ui/category/category_manager.dart';
 import 'package:halo/ui/comment/comment_list.dart';
 import 'package:halo/ui/login/site_login.dart';
 import 'package:halo/ui/main/site_view.dart';
+import 'package:halo/ui/post/edit/edit_page.dart';
+import 'package:halo/ui/post/list/post_list_page.dart';
 import 'package:halo/ui/setting/setting_page.dart';
 import 'package:halo/ui/tag/tag_manager.dart';
 import 'package:halo/util/jump_page.dart';
@@ -63,7 +63,7 @@ class _MainPageView extends State<MainPage> {
     widgets.add(createLabel("发布"));
 //    widgets.add(createItem(Icons.assessment, "站点页面"));
     widgets.add(createItem(Icons.library_books, "博客文章", () {
-      pushToNewPage(context, ArticleListPage());
+      pushToNewPage(context, PostListPage());
     }));
     widgets.add(createItem(
         Image.asset(
@@ -164,6 +164,6 @@ class _MainPageView extends State<MainPage> {
   }
 
   _openNew(BuildContext context) {
-    pushToNewPage(context, EditPage());
+    pushToNewPage(context, EditPostPage());
   }
 }

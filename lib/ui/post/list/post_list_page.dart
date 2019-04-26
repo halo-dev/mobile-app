@@ -2,21 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:halo/app/config.dart' as cf;
 import 'package:halo/app/provide.dart';
 import 'package:halo/module/article.dart';
-import 'package:halo/ui/article/edit/edit_page.dart';
-import 'package:halo/ui/article/list/article_list_module.dart';
-import 'package:halo/ui/article/list/list_item.dart';
+import 'package:halo/ui/post/edit/edit_page.dart';
+import 'package:halo/ui/post/list/list_item.dart';
+import 'package:halo/ui/post/post_manager_module.dart';
 import 'package:halo/util/jump_page.dart';
 import 'package:halo/widget/refresh_list.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class ArticleListPage extends StatefulWidget {
+class PostListPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     return _ArticleListPageView();
   }
 }
 
-class _ArticleListPageView extends State<ArticleListPage> with PullRefreshMixIn {
+class _ArticleListPageView extends State<PostListPage> with PullRefreshMixIn {
   RefreshController controller;
 
   @override
@@ -27,7 +27,7 @@ class _ArticleListPageView extends State<ArticleListPage> with PullRefreshMixIn 
 
   @override
   Widget build(BuildContext context) {
-    Provide.value<ArticleListModule>(context).refresh(true);
+    Provide.value<PostListModule>(context).refresh(true);
     return Scaffold(
       backgroundColor: cf.Config.background,
       appBar: AppBar(
@@ -42,7 +42,7 @@ class _ArticleListPageView extends State<ArticleListPage> with PullRefreshMixIn 
         ),
         tooltip: "发布新文章",
         onPressed: () {
-          pushToNewPage(context, EditPage());
+          pushToNewPage(context, EditPostPage());
         },
         foregroundColor: Colors.white,
         backgroundColor: Color.fromARGB(255, 0, 135, 190),
@@ -50,7 +50,7 @@ class _ArticleListPageView extends State<ArticleListPage> with PullRefreshMixIn 
         highlightElevation: 10.0,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      body: Provide<ArticleListModule>(builder: (context, child, mode) {
+      body: Provide<PostListModule>(builder: (context, child, mode) {
         return _buildList(context, mode.articleList);
       }),
     );
@@ -76,7 +76,7 @@ class _ArticleListPageView extends State<ArticleListPage> with PullRefreshMixIn 
       };
     }
     return buildRefresh(builderList(articleList.length, builder), (up) {
-      Provide.value<ArticleListModule>(context).refresh(up);
+      Provide.value<PostListModule>(context).refresh(up);
     }, controller);
   }
 }

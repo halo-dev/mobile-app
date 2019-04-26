@@ -4,11 +4,11 @@ import 'package:halo/app/config.dart';
 import 'package:halo/app/module/site_module.dart';
 import 'package:halo/app/provide.dart';
 import 'package:halo/app/request_info.dart';
-import 'package:halo/ui/article/list/article_list_module.dart';
 import 'package:halo/ui/category/category_manager_module.dart';
 import 'package:halo/ui/comment/comment_list_module.dart';
 import 'package:halo/ui/login/site_login.dart';
 import 'package:halo/ui/main/main_page.dart';
+import 'package:halo/ui/post/post_manager_module.dart';
 import 'package:halo/ui/tag/tag_manager_module.dart';
 import 'package:halo/util/string_util.dart';
 
@@ -20,7 +20,7 @@ void main() {
         ..provide(Provider<TagListModule>.value(TagListModule()))
         ..provide(Provider<CommentListModule>.value(CommentListModule()))
         ..provide(Provider<CategoryListModule>.value(CategoryListModule()))
-        ..provide(Provider<ArticleListModule>.value(ArticleListModule())),
+        ..provide(Provider<PostListModule>.value(PostListModule())),
       child: MyApp(),
     ),
   );

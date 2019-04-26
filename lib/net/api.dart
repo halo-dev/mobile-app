@@ -47,5 +47,8 @@ class Api {
 
   ///
   static final String category = "/api/admin/categories";
+
+  ///删除分类
+  static String deleteCategory(id) => "/api/admin/categories/$id";
   static final String categoryTreeView = "/api/admin/categories/tree_view";
 }

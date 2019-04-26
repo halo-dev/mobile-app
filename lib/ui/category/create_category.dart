@@ -4,6 +4,7 @@ import 'package:halo/app/provide.dart';
 import 'package:halo/module/category_list.dart';
 import 'package:halo/ui/category/category_manager_module.dart';
 import 'package:halo/ui/category/dropdownmenu_item.dart';
+import 'package:halo/util/Utils.dart';
 import 'package:halo/widget/login_text_field.dart';
 
 class CreateCategoryPage extends StatefulWidget {
@@ -46,7 +47,7 @@ class _CreateCategoryPageView extends State<CreateCategoryPage> {
               onPressed: _update)
         ],
       ),
-      body: new Container(
+      body: Container(
         color: Colors.white,
         padding: EdgeInsets.fromLTRB(15, 15, 15, 2),
         child: _buildCreate(),
@@ -76,9 +77,8 @@ class _CreateCategoryPageView extends State<CreateCategoryPage> {
           ),
           _buildDropMenu(),
           loginTextField("* 分类名称", _nameCtl, null,
-              inputType: TextInputType.url,
               labelStyle: TextStyle(fontSize: 15, color: Colors.pink)),
-          loginTextField("分类描述", _desCtl, null, inputType: TextInputType.url),
+          loginTextField("分类描述", _desCtl, null),
           loginTextField("slug", _singeCtl, null, inputType: TextInputType.url),
         ],
       ),
@@ -94,7 +94,7 @@ class _CreateCategoryPageView extends State<CreateCategoryPage> {
 
         List<DropdownMenuItem<Category>> items = new List<DropdownMenuItem<Category>>();
         for (var value1 in mode.cateList.list) {
-          if (widget.item != null && value1.id == widget.item.id) continue;
+//          if (widget.item != null && value1.id == widget.item.id) continue;
           items.addAll(
               createDropdownMenuItem(value1, widget.item == null ? 0 : widget.item.id, context));
         }
@@ -110,10 +110,12 @@ class _CreateCategoryPageView extends State<CreateCategoryPage> {
             ));
         return DropdownButton(
           items: items,
-          hint: Container(
-            width: MediaQuery.of(context).size.width - 55,
-            child: Text(mode.current.name),
-          ),
+          hint: Text(mode.current.name),
+
+//          Container(
+//            width: MediaQuery.of(context).size.width - 55,
+//            child: Text(mode.current.name),
+//          ),
           onChanged: (value) {
             mode.currentChange(value);
           },
@@ -151,6 +153,11 @@ class _CreateCategoryPageView extends State<CreateCategoryPage> {
 
   void _update() {
     var mode = Provide.value<CategoryListModule>(context);
+    if (widget.item != null && widget.item.id == mode.current.id) {
+      ToastUtil.showToast("父级分类不能是自己");
+      return;
+    }
+
     Category category = Category.fromParams(
         id: widget.item != null ? widget.item.id : 0,
         parentId: mode.current.id,
@@ -160,10 +167,10 @@ class _CreateCategoryPageView extends State<CreateCategoryPage> {
 
     if (widget.item != null && widget.modify) {
       //更新
-      Provide.value<CategoryListModule>(context).update(category);
+      Provide.value<CategoryListModule>(context).update(category, context);
     } else {
       //创建
-      Provide.value<CategoryListModule>(context).update(category);
+      Provide.value<CategoryListModule>(context).create(category, context);
     }
   }
 }

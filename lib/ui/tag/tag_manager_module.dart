@@ -36,8 +36,9 @@ class TagListModule extends ChangeNotifier {
 
   void update(Tag tag) {
     Map params = HashMap<String, dynamic>();
-    params["tagId"] = tag.id;
-    ApiWithQuery<TagList>(Api.listTags, DELETE, params, (data) {
+    params["name"] = tag.name;
+    params["slugName"] = tag.slugName;
+    ApiWithQuery<TagList>(Api.deleteTags(tag.id), PUT, params, (data) {
       tagList.list.remove(tag);
       notifyListeners();
     }, (code, msg) {
