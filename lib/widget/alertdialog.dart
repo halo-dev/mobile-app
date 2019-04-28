@@ -7,10 +7,10 @@ class AlertContentDialog {
   Widget child;
 
   AlertContentDialog(this.context, this.title, this.done, this.child) {
-    _showTextFieldDialog();
+    _showDialog();
   }
 
-  void _showTextFieldDialog() {
+  void _showDialog() {
     showDialog(
       context: context,
       builder: (context) {

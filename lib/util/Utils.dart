@@ -14,4 +14,12 @@ class Utils {
     final double hue = (360.0 * hash / (1 << 15)) % 360.0;
     return HSVColor.fromAHSV(1.0, hue, 0.4, 0.90).toColor();
   }
+
+  static double getWidth(BuildContext context) {
+    return MediaQuery.of(context).size.width;
+  }
+
+  static double getHeight(BuildContext context) {
+    return MediaQuery.of(context).size.height;
+  }
 }

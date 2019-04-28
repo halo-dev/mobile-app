@@ -1,5 +1,8 @@
 import 'dart:convert' show json;
 
+import 'package:halo/module/category_list.dart';
+import 'package:halo/module/tag_list.dart';
+
 class Post {
   int number;
   int numberOfElements;
@@ -115,7 +118,7 @@ class Content {
   String type;
   int updateTime;
   String url;
-  List<Categories> categories;
+  List<Category> categories;
   List<Tag> tags;
 
   Content();
@@ -162,7 +165,7 @@ class Content {
     categories = jsonRes['categories'] == null ? null : [];
 
     for (var categoriesItem in categories == null ? [] : jsonRes['categories']) {
-      categories.add(categoriesItem == null ? null : new Categories.fromJson(categoriesItem));
+      categories.add(categoriesItem == null ? null : new Category.fromJson(categoriesItem));
     }
 
     tags = jsonRes['tags'] == null ? null : [];
@@ -175,47 +178,5 @@ class Content {
   @override
   String toString() {
     return '{"commentCount": $commentCount,"id": $id,"likes": $likes,"topPriority": $topPriority,"visits": $visits,"disallowComment": $disallowComment,"createFrom": ${createFrom != null ? '${json.encode(createFrom)}' : 'null'},"createTime": ${createTime != null ? '${json.encode(createTime)}' : 'null'},"editTime": ${editTime != null ? '${json.encode(editTime)}' : 'null'},"status": ${status != null ? '${json.encode(status)}' : 'null'},"summary": ${summary != null ? '${json.encode(summary)}' : 'null'},"template": ${template != null ? '${json.encode(template)}' : 'null'},"thumbnail": ${thumbnail != null ? '${json.encode(thumbnail)}' : 'null'},"title": ${title != null ? '${json.encode(title)}' : 'null'},"type": ${type != null ? '${json.encode(type)}' : 'null'},"updateTime": ${updateTime != null ? '${json.encode(updateTime)}' : 'null'},"url": ${url != null ? '${json.encode(url)}' : 'null'},"categories": $categories,"tags": $tags}';
-  }
-}
-
-class Tag {
-  int id;
-  String name;
-  String slugName;
-
-  Tag.fromParams({this.id, this.name, this.slugName});
-
-  Tag.fromJson(jsonRes) {
-    id = jsonRes['id'];
-    name = jsonRes['name'];
-    slugName = jsonRes['slugName'];
-  }
-
-  @override
-  String toString() {
-    return '{"id": $id,"name": ${name != null ? '${json.encode(name)}' : 'null'},"slugName": ${slugName != null ? '${json.encode(slugName)}' : 'null'}}';
-  }
-}
-
-class Categories {
-  int id;
-  int parentId;
-  String description;
-  String name;
-  String slugName;
-
-  Categories.fromParams({this.id, this.parentId, this.description, this.name, this.slugName});
-
-  Categories.fromJson(jsonRes) {
-    id = jsonRes['id'];
-    parentId = jsonRes['parentId'];
-    description = jsonRes['description'];
-    name = jsonRes['name'];
-    slugName = jsonRes['slugName'];
-  }
-
-  @override
-  String toString() {
-    return '{"id": $id,"parentId": $parentId,"description": ${description != null ? '${json.encode(description)}' : 'null'},"name": ${name != null ? '${json.encode(name)}' : 'null'},"slugName": ${slugName != null ? '${json.encode(slugName)}' : 'null'}}';
   }
 }
