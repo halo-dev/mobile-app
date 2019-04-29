@@ -24,23 +24,16 @@ List<DropdownMenuItem<Category>> findChildItem(
 
 DropdownMenuItem<Category> createItem(Category item, int padding, BuildContext context) {
   return DropdownMenuItem(
-      value: item,
-      child: Container(
-          width: MediaQuery.of(context).size.width - 55,
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                  child: Padding(
-                      padding: EdgeInsets.only(left: padding.toDouble()),
-                      child: Text(
-                        item.name,
-                        softWrap: false,
-                        style: TextStyle(fontSize: 15, color: Config.fontColor),
-                      ))),
-              Offstage(
-                offstage: true,
-                child: Icon(Icons.done, size: 24, color: Config.fontColor),
-              ),
-            ],
-          )));
+    value: item,
+    child: Container(
+        width: MediaQuery.of(context).size.width - 55,
+        padding: EdgeInsets.only(left: padding.toDouble()),
+        child: Padding(
+            padding: EdgeInsets.only(left: padding.toDouble()),
+            child: Text(
+              item.name,
+              softWrap: false,
+              style: TextStyle(fontSize: 15, color: Config.fontColor),
+            ))),
+  );
 }

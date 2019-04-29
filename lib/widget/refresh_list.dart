@@ -26,7 +26,7 @@ class PullRefreshMixIn {
       enablePullDown: enableRefresh,
       enableOverScroll: true,
       footerConfig: LoadConfig(autoLoad: autoLoad),
-      headerConfig: RefreshConfig(completeDuration: 200),
+      headerConfig: RefreshConfig(completeDuration: 200, height: 60),
       onRefresh: refresh,
       child: view,
     );

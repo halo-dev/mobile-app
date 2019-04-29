@@ -21,8 +21,8 @@ class Popup extends StatelessWidget {
         child: Stack(
           children: <Widget>[
             Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
+              width: double.infinity,
+              height: double.infinity,
               color: Colors.transparent,
             ),
             Positioned(

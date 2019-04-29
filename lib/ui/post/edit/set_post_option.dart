@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:halo/app/config.dart';
 import 'package:halo/app/provide.dart';
 import 'package:halo/module/tag_list.dart';
@@ -11,6 +12,7 @@ import 'package:halo/ui/tag/tag_manager_module.dart';
 import 'package:halo/util/Utils.dart';
 import 'package:halo/widget/alertdialog.dart';
 import 'package:halo/widget/login_text_field.dart';
+import 'package:multi_image_picker/multi_image_picker.dart';
 
 class SetPostOptionPage extends StatelessWidget {
   final TextEditingController _passwordCtl = new TextEditingController();
@@ -22,6 +24,18 @@ class SetPostOptionPage extends StatelessWidget {
         backgroundColor: Config.background,
         appBar: AppBar(
           title: Text("文章设置"),
+          actions: <Widget>[
+            IconButton(
+                onPressed: () {
+                  _send(context);
+                },
+                icon: Image.asset(
+                  "assest/images/post.png",
+                  color: Colors.white,
+                  width: 25,
+                  height: 25,
+                ))
+          ],
         ),
         body: buildBody(context));
   }
@@ -87,15 +101,61 @@ class SetPostOptionPage extends StatelessWidget {
                   style: TextStyle(
                       fontSize: 13, fontWeight: FontWeight.w600, color: Config.lightColor),
                 ),
-                Padding(
-                    padding: EdgeInsets.only(top: 15),
-                    child: FlatButton(
-                        color: Config.lightColor,
-                        onPressed: () {},
-                        child: Text(
-                          "选择推荐图片",
-                          style: TextStyle(fontSize: 13, color: Colors.white),
-                        )))
+                (mode.selectThumbList != null && mode.selectThumbList.isNotEmpty)
+                    ? Padding(
+                        padding: EdgeInsets.only(top: 25, bottom: 15),
+                        child: Stack(
+                          alignment: AlignmentDirectional(1.0, -1.0),
+                          overflow: Overflow.visible,
+                          children: <Widget>[
+                            AspectRatio(
+                                aspectRatio: 16 / 9,
+                                child: AssetThumb(
+                                  asset: mode.selectThumbList[0],
+                                  width: 300,
+                                  height: 300,
+                                )),
+                            Positioned(
+                              right: -22,
+                              top: -22,
+                              child: InkWell(
+                                  child: Padding(
+                                      padding: EdgeInsets.all(10.0),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            color: Config.lightColor,
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(15.0),
+                                            )),
+                                        child: Icon(
+                                          Icons.clear,
+                                          color: Colors.white,
+                                          size: 30,
+                                        ),
+                                      )),
+                                  onTap: () => mode.removeThumbList()),
+                            ),
+                            Positioned(
+                                left: 0,
+                                top: -20,
+                                child: Text(
+                                  "图片将会在发布时上传",
+                                  style: TextStyle(fontSize: 13, color: Config.fontLightColor),
+                                ))
+                          ],
+                        ))
+                    : Padding(
+                        padding: EdgeInsets.only(top: 10),
+                        child: FlatButton(
+                            color: Config.lightColor,
+                            onPressed: () {
+                              mode.loadAssets(1);
+//                          pushToNewPage(context, SelectImagePicker());
+                            },
+                            child: Text(
+                              "选择推荐图片",
+                              style: TextStyle(fontSize: 13, color: Colors.white),
+                            )))
               ],
             )),
       );
@@ -263,5 +323,9 @@ class SetPostOptionPage extends StatelessWidget {
       child: Wrap(spacing: 12, runSpacing: 12, alignment: WrapAlignment.start, children: tiles),
     );
     return content;
+  }
+
+  _send(BuildContext context) {
+    Provide.value<EditPostModule>(context).send();
   }
 }

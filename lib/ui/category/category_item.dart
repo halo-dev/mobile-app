@@ -4,23 +4,23 @@ import 'package:halo/app/provide.dart';
 import 'package:halo/module/category_list.dart';
 import 'package:halo/ui/category/category_manager_module.dart';
 import 'package:halo/ui/category/create_category.dart';
+import 'package:halo/ui/post/edit/edit_post_module.dart';
 import 'package:halo/util/Utils.dart';
 
-Widget createCategoryItem(item, BuildContext context) {
-  return findChildItem(item, 15, context);
+Widget createCategoryItem(item, BuildContext context, {bool select = true}) {
+  return findChildItem(item, 15, context, select);
 }
 
-Widget findChildItem(Category item, int padding, BuildContext context) {
+Widget findChildItem(Category item, int padding, BuildContext context, bool select) {
   if (item.children != null && item.children.isNotEmpty) {
     List<Widget> list = new List();
-    list.add(createItem(item, padding, context));
-
+    list.add(select ? createItem(item, padding, context) : buildSelectItem(item, padding, context));
     item.children.forEach((data) {
-      list.add(findChildItem(data, padding + 15, context));
+      list.add(findChildItem(data, padding + 15, context, select));
     });
     return Column(children: list);
   } else
-    return createItem(item, padding, context);
+    return select ? createItem(item, padding, context) : buildSelectItem(item, padding, context);
 }
 
 Widget createItem(Category item, int padding, BuildContext context) {
@@ -97,5 +97,38 @@ Widget createItem(Category item, int padding, BuildContext context) {
       pushToNewPage(context, CreateCategoryPage(item, true));
 //      pushToNewPage(context, CreateCategoryPage(item, false));
     },
+  );
+}
+
+Widget buildSelectItem(Category item, int padding, BuildContext context) {
+  ///判断是否是选中的item
+  return InkWell(
+    onTap: () {
+      ///判断是否进行添加或者移除
+      Provide.value<EditPostModule>(context).addOrRemoveCategory(item);
+    },
+    child: Column(children: <Widget>[
+      Container(
+        height: 45,
+        color: Colors.white,
+        padding: EdgeInsets.fromLTRB(padding.toDouble(), 0, 15, 0),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Expanded(
+                child: Text(
+              item.name,
+              softWrap: false,
+              style: TextStyle(fontSize: 15, color: Config.fontColor),
+            )),
+            Offstage(
+              offstage: !Provide.value<EditPostModule>(context).hasCategory(item),
+              child: Icon(Icons.done, size: 24, color: Config.fontColor),
+            ),
+          ],
+        ),
+      ),
+      Divider(height: 1, color: Colors.transparent)
+    ]),
   );
 }

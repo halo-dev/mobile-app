@@ -1,10 +1,13 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:halo/module/category_list.dart';
 import 'package:halo/module/post_param.dart';
 import 'package:halo/module/tag_list.dart';
 import 'package:halo/util/Utils.dart';
 import 'package:halo/widget/markdown/markdown_editor.dart';
+import 'package:multi_image_picker/multi_image_picker.dart';
 
 ///默认状态
 
@@ -22,7 +25,7 @@ class EditPostModule extends ChangeNotifier {
 //  Post editPost;
   PostParam param;
   List<Tag> selectTag = List();
-  List<Tag> selectCategory = List();
+  List<Category> selectCategory = List();
 
   void setPostParam(PostParam newPost) {
     if (newPost == null) {
@@ -83,39 +86,59 @@ class EditPostModule extends ChangeNotifier {
 
   ///添加选择的tag
   void addTagSelect(Tag tag) {
-    if (!selectTag.contains(tag)) {
+    if (!hasTag(selectTag, tag)) {
       selectTag.add(tag);
     }
     notifyListeners();
   }
 
+  ///删除选中的tag
   void deleteTagSelect(Tag tag) {
-    if (selectTag.contains(tag)) {
-      selectTag.remove(tag);
+    if (hasTag(selectTag, tag)) {
+      selectTag.removeWhere((data) => data.id == tag.id);
     }
     notifyListeners();
   }
 
   ///
-  ///
+  ///筛选出 未选中的TAG
   List<Tag> getUnSelectTag(List<Tag> all) {
     List<Tag> list = new List();
     all.forEach((tag) {
-      if (!hasTag(tag)) {
+      if (!hasTag(selectTag, tag)) {
         list.add(tag);
       }
     });
     return list;
   }
 
-  bool hasTag(Tag tag) {
+  bool hasTag(List<Tag> list, Tag tag) {
     bool has = false;
-    selectTag.forEach((it) {
+    list.forEach((it) {
       if (it.id == tag.id && it.name == tag.name) {
         has = true;
       }
     });
     return has;
+  }
+
+  bool hasCategory(Category tag) {
+    bool has = false;
+    selectCategory.forEach((it) {
+      if (it.id == tag.id && it.name == tag.name) {
+        has = true;
+      }
+    });
+    return has;
+  }
+
+  void addOrRemoveCategory(Category cate) {
+    if (hasCategory(cate)) {
+      selectCategory.removeWhere((data) => data.id == cate.id);
+    } else {
+      selectCategory.add(cate);
+    }
+    notifyListeners();
   }
 
   String getSelectTag() {
@@ -140,5 +163,50 @@ class EditPostModule extends ChangeNotifier {
       });
       return select.substring(0, select.length - 1);
     }
+  }
+
+  ///发送文章
+  void send() {
+    ///数据收集
+    param.categoryIds = List();
+    selectCategory.forEach((cate) => param.categoryIds.add(cate.id));
+    param.tagIds = List();
+    selectTag.forEach((tag) => param.tagIds.add(tag.id));
+  }
+
+  List<Asset> selectThumbList;
+
+  void loadAssets(int max) async {
+    try {
+      selectThumbList = await MultiImagePicker.pickImages(
+        maxImages: 1,
+        enableCamera: true,
+        materialOptions: MaterialOptions(
+          actionBarTitle: "选择照片",
+          allViewTitle: "选择照片",
+          actionBarColor: "#0087be",
+          actionBarTitleColor: "#FFFFFF",
+          lightStatusBar: false,
+          statusBarColor: '#006b98',
+          startInAllView: true,
+          selectCircleStrokeColor: "#FFFFFF",
+        ),
+        cupertinoOptions: CupertinoOptions(
+          selectionFillColor: "#ff11ab",
+          selectionTextColor: "#FFFFFF",
+          selectionCharacter: "✓",
+        ),
+      );
+    } on PlatformException catch (e) {
+      ToastUtil.showToast(e.toString());
+    }
+    if (selectThumbList != null && selectThumbList.isNotEmpty) {
+      notifyListeners();
+    }
+  }
+
+  removeThumbList() {
+    if (selectThumbList != null) selectThumbList.clear();
+    notifyListeners();
   }
 }
