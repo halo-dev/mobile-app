@@ -22,9 +22,9 @@ class PostListModule extends ChangeNotifier {
       }
       notifyListeners();
     }, () {
-      articleList.clear();
-      articleList.add(Content());
-      notifyListeners();
+//      articleList.clear();
+//      articleList.add(Content());
+//      notifyListeners();
     });
   }
 

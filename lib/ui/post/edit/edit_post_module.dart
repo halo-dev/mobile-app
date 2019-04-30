@@ -5,6 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:halo/module/category_list.dart';
 import 'package:halo/module/post_param.dart';
 import 'package:halo/module/tag_list.dart';
+import 'package:halo/net/api.dart';
+import 'package:halo/net/api_request.dart';
 import 'package:halo/util/Utils.dart';
 import 'package:halo/widget/markdown/markdown_editor.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
@@ -24,14 +26,21 @@ final HashMap<bool, String> comments = HashMap<bool, String>()
 class EditPostModule extends ChangeNotifier {
 //  Post editPost;
   PostParam param;
+  PostParam oldDate;
+
   List<Tag> selectTag = List();
   List<Category> selectCategory = List();
 
   void setPostParam(PostParam newPost) {
-    if (newPost == null) {
-      param = PostParam.fromParams(status: PUBLISHED);
-    } else
-      param = newPost;
+    if (param == null) {
+      if (newPost == null) {
+        param = PostParam.fromParams(status: PUBLISHED);
+      } else {
+        //进入编辑模式
+        oldDate = newPost;
+        param = newPost;
+      }
+    }
   }
 
   String getTitle() {
@@ -69,9 +78,6 @@ class EditPostModule extends ChangeNotifier {
   }
 
   void saveParam(MarkdownText mk) {
-    if (isNotEmpty(param.originalContent) && param.originalContent == mk.text) {
-      ///没有修改
-    }
     param.originalContent = mk.text;
     param.title = mk.title;
   }
@@ -166,12 +172,20 @@ class EditPostModule extends ChangeNotifier {
   }
 
   ///发送文章
-  void send() {
+  void send(BuildContext context) {
     ///数据收集
     param.categoryIds = List();
     selectCategory.forEach((cate) => param.categoryIds.add(cate.id));
     param.tagIds = List();
     selectTag.forEach((tag) => param.tagIds.add(tag.id));
+    ApiWithQuery(Api.posts, POST, param.toJson(), (data) {
+      ToastUtil.showToast("文章已${param.status == PUBLISHED ? "发布" : "存为草稿"}");
+      Navigator.pop(context);
+    }, (code, msg) {
+      ToastUtil.showToast(msg);
+    }, () {
+      notifyListeners();
+    });
   }
 
   List<Asset> selectThumbList;
@@ -208,5 +222,34 @@ class EditPostModule extends ChangeNotifier {
   removeThumbList() {
     if (selectThumbList != null) selectThumbList.clear();
     notifyListeners();
+  }
+
+  ///如果编辑文章时做了改变事退出，提示
+  bool onBackNotSave() {
+    if (oldDate == null) {
+      return true;
+    } else {
+      return isNotChanged();
+    }
+  }
+
+  /// 新建文章时候退出，
+  bool hasChanged() {
+    return param != null && (isNotEmpty(param.title) || isNotEmpty(param.originalContent));
+  }
+
+  //文章是否有改变
+  bool isNotChanged() {
+    return param.toString() == oldDate.toString();
+  }
+
+  void cleanData() {
+    selectTag.clear();
+    selectCategory.clear();
+    if (selectThumbList != null) {
+      selectThumbList.clear();
+    }
+    param = null;
+    oldDate = null;
   }
 }

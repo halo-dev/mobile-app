@@ -326,6 +326,6 @@ class SetPostOptionPage extends StatelessWidget {
   }
 
   _send(BuildContext context) {
-    Provide.value<EditPostModule>(context).send();
+    Provide.value<EditPostModule>(context).send(context);
   }
 }

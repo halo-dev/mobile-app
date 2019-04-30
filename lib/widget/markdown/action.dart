@@ -74,9 +74,6 @@ class ActionImageState extends State<ActionImage> {
 
             var padding =
                 EdgeInsets.fromLTRB(offset.dx - 40, top, size.width - offset.dx - 80, bottom);
-            print(_HeadingList().length);
-            print(listHeight + offset.dy);
-            print(padding);
             ShowOverlayPop pop = ShowOverlayPop(context, padding);
             pop.createView(
               Container(
@@ -156,33 +153,30 @@ class ActionImageState extends State<ActionImage> {
   Widget createItem(String image, String text) {
     return SizedBox(
         height: 40,
-        child: Align(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 5),
-            child: Row(
-              children: [
-                Expanded(
-                  child: text == "default"
-                      ? Text(
-                          text,
-                          style: TextStyle(color: Color.fromARGB(255, 135, 166, 188), fontSize: 16),
-                        )
-                      : Image.asset(
-                          image,
-                          color: Color.fromARGB(255, 135, 166, 188),
-                          width: 25.0,
-                          height: 20.0,
-                        ),
-                ),
-                Checkbox(
-                    value: text == "default" ? true : false,
-                    onChanged: null,
-                    checkColor: Color.fromARGB(255, 135, 166, 188),
-                    activeColor: Color.fromARGB(255, 135, 166, 188)),
-              ],
-            ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 5),
+          child: Row(
+            children: [
+              Expanded(
+                child: text == "default"
+                    ? Text(
+                        text,
+                        style: TextStyle(color: Color.fromARGB(255, 135, 166, 188), fontSize: 16),
+                      )
+                    : Image.asset(
+                        image,
+                        color: Color.fromARGB(255, 135, 166, 188),
+                        width: 25.0,
+                        height: 20.0,
+                      ),
+              ),
+              Checkbox(
+                  value: text == "default" ? true : false,
+                  onChanged: null,
+                  checkColor: Color.fromARGB(255, 135, 166, 188),
+                  activeColor: Color.fromARGB(255, 135, 166, 188)),
+            ],
           ),
-          alignment: Alignment.center,
         ));
   }
 }

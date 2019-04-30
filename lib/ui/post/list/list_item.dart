@@ -35,7 +35,7 @@ class ListItemPage extends StatelessWidget {
                 Padding(
                     padding: EdgeInsets.symmetric(vertical: 5),
                     child: Text(
-                      '欢迎使用WordPress，这是你的第一篇文章。删除或编辑它，然后开始写作吧！',
+                      '欢迎使用Halo，这是你的第一篇文章。删除或编辑它，然后开始写作吧！',
                       softWrap: true,
                       maxLines: 2,
                       style: new TextStyle(
@@ -58,23 +58,23 @@ class ListItemPage extends StatelessWidget {
                     ),
                   ],
                 ),
-                Padding(
-                    padding: EdgeInsets.only(top: 5),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: <Widget>[
-                        Icon(
-                          Icons.description,
-                          size: 13,
-                          color: draftColor,
-                        ),
-                        const SizedBox(width: 3.0),
-                        Text(
-                          "草稿",
-                          style: TextStyle(color: draftColor, fontSize: 13),
-                        ),
-                      ],
-                    )),
+//                Padding(
+//                    padding: EdgeInsets.only(top: 5),
+//                    child: Row(
+//                      mainAxisSize: MainAxisSize.max,
+//                      children: <Widget>[
+//                        Icon(
+//                          Icons.description,
+//                          size: 13,
+//                          color: draftColor,
+//                        ),
+//                        const SizedBox(width: 3.0),
+//                        Text(
+//                          "草稿",
+//                          style: TextStyle(color: draftColor, fontSize: 13),
+//                        ),
+//                      ],
+//                    )),
               ],
             ),
           ),
