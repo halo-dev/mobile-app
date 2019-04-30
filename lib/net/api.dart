@@ -22,6 +22,7 @@ class Api {
 
   static final String login = "/api/admin/login";
   static final String posts = "/api/admin/posts";
+  static String postDetail(postID) => "/api/admin/posts/$postID";
 
   /// tag ///
   /// tag list

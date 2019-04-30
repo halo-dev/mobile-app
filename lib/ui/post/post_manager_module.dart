@@ -8,6 +8,7 @@ import 'package:halo/util/Utils.dart';
 class PostListModule extends ChangeNotifier {
   List<Content> articleList = List();
   int status;
+
   void refresh(bool up) {
     ApiRequest<Post>(Api.posts, GET, (data) {
       if (up) {

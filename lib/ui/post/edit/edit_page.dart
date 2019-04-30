@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:halo/app/provide.dart';
-import 'package:halo/module/post_param.dart';
 import 'package:halo/ui/post/edit/edit_post_module.dart';
 import 'package:halo/ui/post/edit/set_post_option.dart';
 import 'package:halo/util/Utils.dart';
+import 'package:halo/widget/loading_dialog.dart';
 import 'package:halo/widget/markdown/markdown_editor.dart';
 
 class EditPostPage extends StatelessWidget {
   bool _isEdit = false;
-  PostParam _param;
+  int postDetailsId;
 
-  EditPostPage(this._isEdit, this._param);
+  EditPostPage(this._isEdit, this.postDetailsId);
 
   GlobalKey<MarkdownEditorWidgetState> Mykey = GlobalKey<MarkdownEditorWidgetState>();
 
   @override
   Widget build(BuildContext context) {
-    Provide.value<EditPostModule>(context).setPostParam(_param);
+    Provide.value<EditPostModule>(context).setPostParam(postDetailsId);
     return WillPopScope(
       child: Scaffold(
           appBar: AppBar(
@@ -47,12 +47,16 @@ class EditPostPage extends StatelessWidget {
             ],
           ),
           body: Provide<EditPostModule>(builder: (context, child, mode) {
-            return MarkdownEditor(
-              key: Mykey,
-              padding: EdgeInsets.fromLTRB(10, 5, 10, 0),
-              initTitle: mode.getTitle(),
-              initText: mode.getContent(),
-            );
+            if (mode.param == null) {
+              return Center(child: loading());
+            } else {
+              return MarkdownEditor(
+                key: Mykey,
+                padding: EdgeInsets.fromLTRB(10, 5, 10, 0),
+                initTitle: mode.getTitle(),
+                initText: mode.getContent(),
+              );
+            }
           })),
       onWillPop: () {
         _onBackNotSave(context);
@@ -78,7 +82,9 @@ class EditPostPage extends StatelessWidget {
 
   bool _onBackNotSave(BuildContext context) {
     ///保存正在编辑的内容
-    Provide.value<EditPostModule>(context).saveParam(Mykey.currentState.getMarkDownText());
+    if (Mykey.currentState == null) {
+      Provide.value<EditPostModule>(context).saveParam(Mykey.currentState.getMarkDownText());
+    }
     //比较
     var chenaged = Provide.value<EditPostModule>(context).onBackNotSave();
     if (!chenaged) {

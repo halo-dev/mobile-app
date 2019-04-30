@@ -1,6 +1,7 @@
 import 'package:halo/module/admin/counts.dart';
 import 'package:halo/module/article.dart';
 import 'package:halo/module/category_list.dart';
+import 'package:halo/module/post_param.dart';
 import 'package:halo/module/tag_list.dart';
 import 'package:halo/module/user/profile.dart';
 import 'package:halo/util/Utils.dart';
@@ -22,6 +23,8 @@ class EntityFactory {
       return CategoryList.fromJson(json) as T;
     } else if (T.toString() == "Category") {
       return Category.fromJson(json) as T;
+    } else if (T.toString() == "PostParam") {
+      return PostParam.fromJson(json) as T;
     } else if (T.toString() == "Post") {
       return Post.fromJson(json) as T;
     } else {

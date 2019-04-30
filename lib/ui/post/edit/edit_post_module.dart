@@ -31,14 +31,13 @@ class EditPostModule extends ChangeNotifier {
   List<Tag> selectTag = List();
   List<Category> selectCategory = List();
 
-  void setPostParam(PostParam newPost) {
+  void setPostParam(int postDetailsId) {
     if (param == null) {
-      if (newPost == null) {
+      if (postDetailsId == null || postDetailsId == 0) {
         param = PostParam.fromParams(status: PUBLISHED);
       } else {
         //进入编辑模式
-        oldDate = newPost;
-        param = newPost;
+        _getPostDetails(postDetailsId);
       }
     }
   }
@@ -78,8 +77,10 @@ class EditPostModule extends ChangeNotifier {
   }
 
   void saveParam(MarkdownText mk) {
-    param.originalContent = mk.text;
-    param.title = mk.title;
+    if (param != null) {
+      param.originalContent = mk.text;
+      param.title = mk.title;
+    }
   }
 
   String getStatus() {
@@ -178,14 +179,17 @@ class EditPostModule extends ChangeNotifier {
     selectCategory.forEach((cate) => param.categoryIds.add(cate.id));
     param.tagIds = List();
     selectTag.forEach((tag) => param.tagIds.add(tag.id));
-    ApiWithQuery(Api.posts, POST, param.toJson(), (data) {
-      ToastUtil.showToast("文章已${param.status == PUBLISHED ? "发布" : "存为草稿"}");
-      Navigator.pop(context);
-    }, (code, msg) {
-      ToastUtil.showToast(msg);
-    }, () {
-      notifyListeners();
-    });
+    if (oldDate == null) {
+      ApiWithQuery(oldDate == null ? Api.posts : Api.postDetail(oldDate.id), POST, param.toJson(),
+          (data) {
+        ToastUtil.showToast("文章已${param.status == PUBLISHED ? "发布" : "存为草稿"}");
+        Navigator.pop(context);
+      }, (code, msg) {
+        ToastUtil.showToast(msg);
+      }, () {
+        notifyListeners();
+      });
+    }
   }
 
   List<Asset> selectThumbList;
@@ -235,7 +239,9 @@ class EditPostModule extends ChangeNotifier {
 
   /// 新建文章时候退出，
   bool hasChanged() {
-    return param != null && (isNotEmpty(param.title) || isNotEmpty(param.originalContent));
+    return param != null &&
+        (isNotEmpty(param.title) || isNotEmpty(param.originalContent)) &&
+        oldDate == null;
   }
 
   //文章是否有改变
@@ -251,5 +257,15 @@ class EditPostModule extends ChangeNotifier {
     }
     param = null;
     oldDate = null;
+  }
+
+  void _getPostDetails(int id) {
+    ApiRequest<PostParam>(Api.postDetail(id), GET, (data) {
+      oldDate = data;
+      param = data;
+      notifyListeners();
+    }, (code, msg) {
+      ToastUtil.showToast(msg);
+    }, () {});
   }
 }
