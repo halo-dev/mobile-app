@@ -112,7 +112,7 @@ class _MainPageView extends State<MainPage> {
           SiteView(
             site.avatar,
             site.title,
-            site.address,
+            site.host,
             padding: EdgeInsets.all(10),
           ),
           InkWell(

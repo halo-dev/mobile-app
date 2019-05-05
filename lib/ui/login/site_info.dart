@@ -7,6 +7,7 @@ import 'package:halo/app/module/site_module.dart';
 import 'package:halo/app/provide.dart';
 import 'package:halo/app/request_info.dart';
 import 'package:halo/module/user/profile.dart';
+import 'package:halo/module/user/token.dart';
 import 'package:halo/ui/login/site_login.dart';
 import 'package:halo/ui/main/main_page.dart';
 import 'package:halo/ui/main/site_view.dart';
@@ -15,9 +16,10 @@ import 'package:halo/util/sp_util.dart';
 
 class SiteInfo extends StatelessWidget {
   Profile profile;
-  String pwd;
+  Token token;
+  String title;
 
-  SiteInfo(this.profile, this.pwd);
+  SiteInfo(this.profile, this.token, this.title);
 
   Color loginInfoFont = Color.fromARGB(255, 85, 123, 149);
 
@@ -81,7 +83,7 @@ class SiteInfo extends StatelessWidget {
               style: TextStyle(fontSize: 15, color: loginInfoFont),
             ),
           ),
-          SiteView(profile.avatar, profile.getNick(), RequestInfo().HOST),
+          SiteView(profile.avatar, title, RequestInfo().HOST),
           Expanded(
               child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
@@ -124,11 +126,14 @@ class SiteInfo extends StatelessWidget {
 
   void _saveSiteToMain(BuildContext context) {
     Site site = Site.fromParams(
-        password: pwd,
-        account: profile.username,
-        address: RequestInfo().HOST,
+        accessToken: token.access_token,
+        refreshToken: token.refresh_token,
+        host: RequestInfo().HOST,
+        username: profile.username,
+        nickname: profile.nickname,
+        expired: token.expired_in,
         avatar: profile.avatar,
-        title: "${profile.getNick()}s'Blog");
+        title: title);
     SPUtil.save(Config.SpKey, site.toString());
     Provide.value<SiteModule>(context).loadData();
 

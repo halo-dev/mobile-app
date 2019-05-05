@@ -8,8 +8,10 @@ class DioRequestInterceptor extends Interceptor {
     return opt;
   }
 
-  /// 时间戳
+//  /// token
   RequestOptions tokenInterceptor(RequestOptions options) {
+//    HashMap<String, String> params = HashMap();
+//    params["ADMIN-Authorization"] = RequestInfo().TOKEN;
     options.headers
       ..clear()
       ..addAll(RequestInfo().params);

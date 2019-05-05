@@ -12,8 +12,7 @@ class SettingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Provide<SiteModule>(builder: (context, child, site) {
-      _userCtl.text = site.site.account;
-      _passwdCtl.text = site.site.password;
+      _userCtl.text = site.site.username;
       return Scaffold(
         backgroundColor: Config.background,
         appBar: AppBar(

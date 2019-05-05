@@ -11,8 +11,9 @@ class CategoryListModule extends ChangeNotifier {
   CategoryList cateList;
   int status;
 
-  void updateList() {
+  void updateList({onFinish}) {
     ApiRequest<CategoryList>(Api.categoryTreeView, GET, (data) {
+      status = 200;
       cateList = data;
       if (cateList != null && cateList.list.isEmpty) {
         cateList.list = List();
@@ -22,7 +23,7 @@ class CategoryListModule extends ChangeNotifier {
       status = code;
       ToastUtil.showToast(msg);
       notifyListeners();
-    }, () {});
+    }, onFinish == null ? () {} : onFinish);
   }
 
   void delete(Category category) {

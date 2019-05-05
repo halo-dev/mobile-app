@@ -11,6 +11,7 @@ class PostListModule extends ChangeNotifier {
 
   void refresh(bool up) {
     ApiRequest<Post>(Api.posts, GET, (data) {
+      status = 200;
       if (up) {
         articleList.clear();
       }

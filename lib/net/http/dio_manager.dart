@@ -24,8 +24,8 @@ class DioManager {
 //      LogInterceptor logInterceptor = LogInterceptor();
       BaseOptions options = new BaseOptions(
           baseUrl: RequestInfo().HOST,
-          connectTimeout: 5000,
-          receiveTimeout: 3000,
+          connectTimeout: 50000,
+          receiveTimeout: 30000,
           responseType: ResponseType.json);
       _dio = new Dio(options);
 //      _dio.options.validateStatus = (int status) {
@@ -40,23 +40,30 @@ class DioManager {
       //日志拦截
       _dio.interceptors.add(PrintLogInterceptor());
       //代理
-//      (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate = (client) {
-//        // config the http client
-//        client.findProxy = (uri) {
-//          //proxy all request to localhost:8888
-//          return "PROXY 192.168.4.94:8888";
-//        };
-//        // you can also create a new HttpClient to dio
-//        // return new HttpClient();
-//      };
+      (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate = (client) {
+        // config the http client
+        client.findProxy = (uri) {
+          //proxy all request to localhost:8888
+          return "PROXY 192.168.4.94:8888";
+        };
+        // you can also create a new HttpClient to dio
+        // return new HttpClient();
+      };
       return _dio;
     }
   }
 
-  void update(String host) {
+  void updateHost(String host) {
     if (_dio == null) {
       dio();
     }
     _dio.options.baseUrl = host;
+  }
+
+  void updateToken(String token) {
+    if (_dio == null) {
+      dio();
+    }
+    _dio.options.headers["ADMIN-Authorization"] = token;
   }
 }

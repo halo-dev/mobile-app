@@ -1,9 +1,6 @@
-import 'dart:async';
-
 import 'package:connectivity/connectivity.dart';
 import 'package:dio/dio.dart';
 import 'package:halo/app/config.dart';
-import 'package:halo/net/api_request.dart';
 import 'package:halo/net/http/dio_manager.dart';
 import 'package:halo/net/http/result_data.dart';
 import 'package:halo/util/log_util.dart';
@@ -11,21 +8,6 @@ import 'package:halo/util/log_util.dart';
 typedef void OnResponse(ResultData data);
 
 class Http {
-  ///get请求
-  static Future<ResultData> put(String url, {Map<String, dynamic> query, OnResponse res}) async {
-    request(url, params: query, method: PUT, res: res);
-  }
-
-  ///get请求
-  static Future<ResultData> get(String url, {Map<String, dynamic> query, OnResponse res}) async {
-    request(url, params: query, method: GET, res: res);
-  }
-
-  ///post请求
-  static void post(String url, {Map<String, dynamic> params, OnResponse res}) async {
-    request(url, params: params, method: POST, res: res);
-  }
-
   static void request(String url,
       {Map<String, dynamic> params, String method, OnResponse res}) async {
     var connectivityResult = await (Connectivity().checkConnectivity());
@@ -41,8 +23,7 @@ class Http {
         //默认get
         method = "";
       }
-      switch (method) {
-        case "GET":
+      switch (method.toLowerCase()) {
         case "get":
           if (params != null && params.isNotEmpty) {
             response = await DioManager().dio().get(url, queryParameters: params);
@@ -50,7 +31,6 @@ class Http {
             response = await DioManager().dio().get(url);
           }
           break;
-        case "PUT":
         case "put":
           if (params != null && params.isNotEmpty) {
             response = await DioManager().dio().put(url, data: params);
@@ -58,7 +38,6 @@ class Http {
             response = await DioManager().dio().put(url);
           }
           break;
-        case "POST":
         case "post":
           if (params != null && params.isNotEmpty) {
             response = await DioManager().dio().post(url, data: params);
@@ -66,7 +45,6 @@ class Http {
             response = await DioManager().dio().post(url);
           }
           break;
-        case "DELETE":
         case "delete":
           if (params != null && params.isNotEmpty) {
             response = await DioManager().dio().delete(url, queryParameters: params);

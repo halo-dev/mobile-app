@@ -12,14 +12,22 @@ class RequestInfo {
   RequestInfo._internal();
 
   String _HOST = "";
+//  String _TOKEN = "";
   HashMap<String, String> _params = HashMap();
-
+//
   HashMap<String, String> get params => _params;
 
   set HOST(String value) {
     _HOST = value;
-    DioManager().update(value);
+    DioManager().updateHost(value);
   }
+
+  set TOKEN(String value) {
+//    _TOKEN = value;
+    params["ADMIN-Authorization"] = value;
+  }
+
+//  String get TOKEN => _TOKEN;
 
   String get HOST => _HOST;
 }

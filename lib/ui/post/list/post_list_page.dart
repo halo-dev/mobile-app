@@ -23,7 +23,12 @@ class _ArticleListPageView extends State<PostListPage> with PullRefreshMixIn {
   void initState() {
     super.initState();
     controller = RefreshController();
-    PostListModule().refresh(true);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    Provide.value<PostListModule>(context).refresh(true);
   }
 
   @override

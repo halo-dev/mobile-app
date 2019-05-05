@@ -11,17 +11,18 @@ class TagListModule extends ChangeNotifier {
   TagList tagList;
   int status;
 
-  void updateList(BuildContext context) {
+  void updateList({onFinish}) {
     Map params = HashMap<String, dynamic>();
     params["more"] = true;
     ApiWithQuery<TagList>(Api.listTags, GET, params, (data) {
+      status = 200;
       tagList = data;
       notifyListeners();
     }, (code, msg) {
       status = code;
       ToastUtil.showToast(msg);
       notifyListeners();
-    }, () {});
+    }, onFinish == null ? () {} : onFinish);
   }
 
   void delete(Tag tag) {

@@ -22,7 +22,7 @@ class SelectTagPage extends StatelessWidget {
 //  }
   @override
   Widget build(BuildContext context) {
-    Provide.value<TagListModule>(context).updateList(context);
+    Provide.value<TagListModule>(context).updateList();
     return Scaffold(
         backgroundColor: Config.background,
         appBar: AppBar(

@@ -38,11 +38,11 @@ class SiteView extends StatelessWidget {
                     title,
                     softWrap: false,
                     style: TextStyle(
-                        fontWeight: FontWeight.w900, height: 1.5, color: Config.fontColor),
+                        fontWeight: FontWeight.w900, height: 1.4, color: Config.fontColor),
                   ),
                   Text(
                     address,
-                    style: TextStyle(height: 1.5, color: Config.fontColor),
+                    style: TextStyle(height: 1.3, color: Config.fontColor),
                   ),
                 ],
               )),

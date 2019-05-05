@@ -36,7 +36,8 @@ class MyApp extends StatelessWidget {
     return Provide<SiteModule>(builder: (context, child, site) {
       if (site.site != null && isNotEmpty(site.site.title)) {
         //配置信息
-        RequestInfo().HOST = site.site.address;
+        RequestInfo().HOST = site.site.host;
+        RequestInfo().TOKEN = site.site.accessToken;
       }
       return MaterialApp(
           localizationsDelegates: [
@@ -51,7 +52,7 @@ class MyApp extends StatelessWidget {
               appBarTheme: AppBarTheme(elevation: 2, color: Config.titleColor),
               primarySwatch: Colors.blue,
               textTheme: TextTheme(title: TextStyle(color: Config.fontColor))),
-          home: (site.site == null || isEmpty(site.site.address)) ? SiteLogin() : MainPage());
+          home: (site.site == null || isEmpty(site.site.host)) ? SiteLogin() : MainPage());
 //          home: MainPage()),
     });
   }

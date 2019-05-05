@@ -14,7 +14,14 @@ import 'package:halo/widget/alertdialog.dart';
 import 'package:halo/widget/login_text_field.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 
-class SetPostOptionPage extends StatelessWidget {
+class SetPostOptionPage extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _SetPostOptionPageView();
+  }
+}
+
+class _SetPostOptionPageView extends State<SetPostOptionPage> {
   final TextEditingController _passwordCtl = new TextEditingController();
   final TextEditingController _slugCtl = new TextEditingController();
 
@@ -62,102 +69,18 @@ class SetPostOptionPage extends StatelessWidget {
               style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: Config.lightColor),
             )),
       );
-      if (mode.param.categoryIds == null || mode.param.categoryIds.isEmpty) {
-        widgets.add(createItem("分类", mode.getSelectCategory(), () {
-          pushToNewPage(context, SelectCategoryPage());
-        }));
-      } else {}
+      widgets.add(createItem("分类", mode.getCategory(context), () {
+        pushToNewPage(context, SelectCategoryPage());
+      }));
 
       widgets.add(Divider(height: 1));
-      if (mode.param.tagIds == null || mode.param.tagIds.isEmpty) {
-        widgets.add(createItem("标签", mode.getSelectTag(), () {
-          pushToNewPage(context, SelectTagPage());
-        }));
-      } else {
-        TagList tagList = Provide.value<TagListModule>(context).tagList;
-        if (tagList == null) {
-          Provide.value<TagListModule>(context).updateList(context);
-        }
-        Provide<TagListModule>(builder: (context, child, tagModlue) {
-          ///对tag进行检测
-          return buildChildren(tagModlue.tagList.list.map((tag) {
-            if (mode.param.tagIds.contains(tag.id)) {
-              return tag;
-            }
-          }), context);
-        });
-      }
+      widgets.add(createItem("标签", mode.getTag(context), () {
+        pushToNewPage(context, SelectTagPage());
+      }));
 
       widgets.add(Divider(height: 15, color: Colors.transparent));
       widgets.add(
-        Container(
-            color: Colors.white,
-            padding: EdgeInsets.fromLTRB(24, 15, 24, 5),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  "推荐图片",
-                  style: TextStyle(
-                      fontSize: 13, fontWeight: FontWeight.w600, color: Config.lightColor),
-                ),
-                (mode.selectThumbList != null && mode.selectThumbList.isNotEmpty)
-                    ? Padding(
-                        padding: EdgeInsets.only(top: 25, bottom: 15),
-                        child: Stack(
-                          alignment: AlignmentDirectional(1.0, -1.0),
-                          overflow: Overflow.visible,
-                          children: <Widget>[
-                            AspectRatio(
-                                aspectRatio: 16 / 9,
-                                child: AssetThumb(
-                                  asset: mode.selectThumbList[0],
-                                  width: 300,
-                                  height: 300,
-                                )),
-                            Positioned(
-                              right: -22,
-                              top: -22,
-                              child: InkWell(
-                                  child: Padding(
-                                      padding: EdgeInsets.all(10.0),
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                            color: Config.lightColor,
-                                            borderRadius: BorderRadius.all(
-                                              Radius.circular(15.0),
-                                            )),
-                                        child: Icon(
-                                          Icons.clear,
-                                          color: Colors.white,
-                                          size: 30,
-                                        ),
-                                      )),
-                                  onTap: () => mode.removeThumbList()),
-                            ),
-                            Positioned(
-                                left: 0,
-                                top: -20,
-                                child: Text(
-                                  "图片将会在发布时上传",
-                                  style: TextStyle(fontSize: 13, color: Config.fontLightColor),
-                                ))
-                          ],
-                        ))
-                    : Padding(
-                        padding: EdgeInsets.only(top: 10),
-                        child: FlatButton(
-                            color: Config.lightColor,
-                            onPressed: () {
-                              mode.loadAssets(1);
-//                          pushToNewPage(context, SelectImagePicker());
-                            },
-                            child: Text(
-                              "选择推荐图片",
-                              style: TextStyle(fontSize: 13, color: Colors.white),
-                            )))
-              ],
-            )),
+        buildImageSelectContainer(mode),
       );
 
       widgets.add(Divider(height: 15, color: Colors.transparent));
@@ -323,6 +246,76 @@ class SetPostOptionPage extends StatelessWidget {
       child: Wrap(spacing: 12, runSpacing: 12, alignment: WrapAlignment.start, children: tiles),
     );
     return content;
+  }
+
+  Container buildImageSelectContainer(EditPostModule mode) {
+    return Container(
+        color: Colors.white,
+        padding: EdgeInsets.fromLTRB(24, 15, 24, 5),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              "推荐图片",
+              style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: Config.lightColor),
+            ),
+            (mode.selectThumbList != null && mode.selectThumbList.isNotEmpty)
+                ? Padding(
+                    padding: EdgeInsets.only(top: 25, bottom: 15),
+                    child: Stack(
+                      alignment: AlignmentDirectional(1.0, -1.0),
+                      overflow: Overflow.visible,
+                      children: <Widget>[
+                        AspectRatio(
+                            aspectRatio: 16 / 9,
+                            child: AssetThumb(
+                              asset: mode.selectThumbList[0],
+                              width: 300,
+                              height: 300,
+                            )),
+                        Positioned(
+                          right: -22,
+                          top: -22,
+                          child: InkWell(
+                              child: Padding(
+                                  padding: EdgeInsets.all(10.0),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color: Config.lightColor,
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(15.0),
+                                        )),
+                                    child: Icon(
+                                      Icons.clear,
+                                      color: Colors.white,
+                                      size: 30,
+                                    ),
+                                  )),
+                              onTap: () => mode.removeThumbList()),
+                        ),
+                        Positioned(
+                            left: 0,
+                            top: -20,
+                            child: Text(
+                              "图片将会在发布时上传",
+                              style: TextStyle(fontSize: 13, color: Config.fontLightColor),
+                            ))
+                      ],
+                    ))
+                : Padding(
+                    padding: EdgeInsets.only(top: 10),
+                    child: FlatButton(
+                        color: Config.lightColor,
+                        onPressed: () {
+                          mode.loadAssets(1);
+//                          pushToNewPage(context, SelectImagePicker());
+                        },
+                        child: Text(
+                          "选择推荐图片",
+                          style: TextStyle(fontSize: 13, color: Colors.white),
+                        )))
+          ],
+        ));
   }
 
   _send(BuildContext context) {

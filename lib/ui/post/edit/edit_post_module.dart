@@ -2,11 +2,14 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:halo/app/provide.dart';
 import 'package:halo/module/category_list.dart';
 import 'package:halo/module/post_param.dart';
 import 'package:halo/module/tag_list.dart';
 import 'package:halo/net/api.dart';
 import 'package:halo/net/api_request.dart';
+import 'package:halo/ui/category/category_manager_module.dart';
+import 'package:halo/ui/tag/tag_manager_module.dart';
 import 'package:halo/util/Utils.dart';
 import 'package:halo/widget/markdown/markdown_editor.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
@@ -148,28 +151,68 @@ class EditPostModule extends ChangeNotifier {
     notifyListeners();
   }
 
-  String getSelectTag() {
-    if (selectTag.isEmpty) {
+  String getTag(BuildContext context) {
+    if ((param.tagIds == null || param.tagIds.isEmpty) && (selectTag.isEmpty)) {
       return "未设置";
+    } else if (selectTag.isNotEmpty) {
+      return _getSelectTag();
     } else {
+      return _getOriginalTag(context);
+    }
+  }
+
+  String _getSelectTag() {
+    if (selectTag.isNotEmpty) {
       String select = "";
       selectTag.forEach((tag) {
         select += tag.name + "，";
       });
       return select.substring(0, select.length - 1);
+    } else
+      return "加载中...";
+  }
+
+  String getCategory(BuildContext context) {
+    if ((param.categoryIds == null || param.categoryIds.isEmpty) && (selectCategory.isEmpty)) {
+      return "未设置";
+    } else if (selectCategory.isNotEmpty) {
+      return _getSelectCategory();
+    } else {
+      CategoryList cateList = Provide.value<CategoryListModule>(context).cateList;
+      if (cateList == null) {
+        Provide.value<CategoryListModule>(context).updateList(onFinish: () {
+          notifyListeners();
+        });
+      } else {
+        ///对tag进行检测
+        selectCategory =
+            cateList.list.where((cate) => param.categoryIds.contains(cate.id)).toList();
+      }
+      return _getSelectCategory();
     }
   }
 
-  String getSelectCategory() {
-    if (selectCategory.isEmpty) {
-      return "未设置";
-    } else {
+  String _getSelectCategory() {
+    if (selectCategory.isNotEmpty) {
       String select = "";
       selectCategory.forEach((tag) {
         select += tag.name + "，";
       });
       return select.substring(0, select.length - 1);
+    } else
+      return "加载中...";
+  }
+
+  String _getOriginalTag(BuildContext context) {
+    TagList tagList = Provide.value<TagListModule>(context).tagList;
+    if (tagList == null) {
+      Provide.value<TagListModule>(context).updateList(onFinish: () {
+        notifyListeners();
+      });
+    } else {
+      selectTag = tagList.list.where((tag) => param.tagIds.contains(tag.id)).toList();
     }
+    return _getSelectTag();
   }
 
   ///发送文章

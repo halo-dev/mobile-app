@@ -1,7 +1,3 @@
-import 'package:halo/net/http/http_manager.dart';
-import 'package:halo/net/http/result_data.dart';
-import 'package:rxdart/rxdart.dart';
-
 const String BaseUrl = "http://www.apkdv.com";
 
 class Api {
@@ -14,13 +10,16 @@ class Api {
   /// 获取用户信息
   /// @param system_type
   /// @return User
-//修改密码
-  static Observable<ResultData> updatePassword(Map<String, dynamic> query) =>
-      Observable.fromFuture(Http.get("/api/admin/posts", query: query));
 
   /// 登陆
-
   static final String login = "/api/admin/login";
+
+  //user
+  static final String profiles = "/api/admin/users/profiles";
+
+  ///options
+  static final String options = "/api/admin/options/map_view";
+
   static final String posts = "/api/admin/posts";
   static String postDetail(postID) => "/api/admin/posts/$postID";
 

@@ -28,7 +28,7 @@ class _TagManagerPageView extends State<TagManagerPage> with PullRefreshMixIn {
 
   @override
   Widget build(BuildContext context) {
-    Provide.value<TagListModule>(context).updateList(context);
+    Provide.value<TagListModule>(context).updateList();
     return Scaffold(
       backgroundColor: cf.Config.background,
       appBar: AppBar(
@@ -79,7 +79,7 @@ class _TagManagerPageView extends State<TagManagerPage> with PullRefreshMixIn {
       };
     }
     return buildRefresh(builderList(1, builder), (up) {
-      Provide.value<TagListModule>(context).updateList(context);
+      Provide.value<TagListModule>(context).updateList();
     }, controller);
   }
 
