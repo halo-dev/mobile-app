@@ -5,6 +5,7 @@ import 'package:halo/module/category_list.dart';
 import 'package:halo/ui/category/category_manager_module.dart';
 import 'package:halo/ui/category/create_category.dart';
 import 'package:halo/ui/post/edit/edit_post_module.dart';
+import 'package:halo/ui/post/list/post_list_page.dart';
 import 'package:halo/util/Utils.dart';
 
 Widget createCategoryItem(item, BuildContext context, {bool select = true}) {
@@ -94,8 +95,7 @@ Widget createItem(Category item, int padding, BuildContext context) {
       ],
     ),
     onTap: () {
-      pushToNewPage(context, CreateCategoryPage(item, true));
-//      pushToNewPage(context, CreateCategoryPage(item, false));
+      pushToNewPage(context, PostListPage(category: item));
     },
   );
 }

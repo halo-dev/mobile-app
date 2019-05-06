@@ -19,11 +19,14 @@ class SiteModule extends ChangeNotifier {
 
   void loadData() {
     SPUtil.get(Config.SpKey).then((json) {
-      print(json);
       if (isNotEmpty(json)) {
         _site = Site(json);
         notifyListeners();
       }
     });
+  }
+
+  void saveSite(Site site) {
+    SPUtil.save(Config.SpKey, site.toString());
   }
 }

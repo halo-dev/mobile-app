@@ -12,6 +12,12 @@ class TextFieldDialog {
     _showTextFieldDialog();
   }
 
+  TextFieldDialog.update(this.context, this.title, name, slug, this.done) {
+    _nameCtl.text = name;
+    _singeCtl.text = slug;
+    _showTextFieldDialog();
+  }
+
   final TextEditingController _nameCtl = new TextEditingController();
   final TextEditingController _singeCtl = new TextEditingController();
 

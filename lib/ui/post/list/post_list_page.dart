@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:halo/app/config.dart' as cf;
 import 'package:halo/app/provide.dart';
+import 'package:halo/module/category_list.dart';
 import 'package:halo/ui/post/edit/edit_page.dart';
 import 'package:halo/ui/post/list/list_item.dart';
 import 'package:halo/ui/post/post_manager_module.dart';
@@ -10,6 +11,11 @@ import 'package:halo/widget/refresh_list.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class PostListPage extends StatefulWidget {
+  Category category;
+  String keyWord, postStatus;
+
+  PostListPage({this.category, this.keyWord, this.postStatus});
+
   @override
   State<StatefulWidget> createState() {
     return _ArticleListPageView();
@@ -28,7 +34,12 @@ class _ArticleListPageView extends State<PostListPage> with PullRefreshMixIn {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    Provide.value<PostListModule>(context).refresh(true);
+    refresh(true);
+  }
+
+  void refresh(bool refresh) {
+    Provide.value<PostListModule>(context).refresh(refresh,
+        cate: widget.category, key: widget.keyWord, postStatus: widget.postStatus);
   }
 
   @override
@@ -81,7 +92,7 @@ class _ArticleListPageView extends State<PostListPage> with PullRefreshMixIn {
       };
     }
     return buildRefresh(builderList(mode.articleList.length, builder), (up) {
-      Provide.value<PostListModule>(context).refresh(up);
+      refresh(up);
     }, controller);
   }
 }

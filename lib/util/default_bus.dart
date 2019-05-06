@@ -21,10 +21,8 @@ class RxBus {
 
   static List<Bus> _list = List();
 
-  static RxBus get singleton => _singleton;
-
   /// 监听事件。每次监听开启都会新建一个[PublishSubject] 防止重复监听事件
-  static Observable<T> register<T>() {
+  Observable<T> register<T>() {
     Bus _eventBus;
     //已经注册过的tag不需要重新注册
     if (_eventBus == null) {
@@ -39,14 +37,14 @@ class RxBus {
   }
 
   ///发送事件
-  static void post(event) {
+  void post(event) {
     _list.forEach((rxBus) {
       rxBus.subject.sink.add(event);
     });
   }
 
   ///事件关闭
-  static void destroy() {
+  void destroy() {
     var toRemove = [];
     _list.forEach((rxBus) {
       rxBus.subject.close();

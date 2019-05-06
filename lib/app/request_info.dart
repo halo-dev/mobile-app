@@ -12,6 +12,7 @@ class RequestInfo {
   RequestInfo._internal();
 
   String _HOST = "";
+  String _REFRESH = "";
 //  String _TOKEN = "";
   HashMap<String, String> _params = HashMap();
 //
@@ -30,4 +31,13 @@ class RequestInfo {
 //  String get TOKEN => _TOKEN;
 
   String get HOST => _HOST;
+
+  String get REFRESH => _REFRESH;
+
+  update(String token, String host, String refreshToken) {
+    _HOST = host;
+    _REFRESH = refreshToken;
+    DioManager().updateHost(host);
+    params["ADMIN-Authorization"] = token;
+  }
 }

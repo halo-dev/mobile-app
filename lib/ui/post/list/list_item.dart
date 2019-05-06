@@ -64,7 +64,7 @@ class ListItemPage extends StatelessWidget {
                       ),
                       const SizedBox(width: 3.0),
                       Text(
-                        "前天",
+                        getTime(),
                         style: TextStyle(color: contentColor, fontSize: 13),
                       ),
                     ],
@@ -139,6 +139,11 @@ class ListItemPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String getTime() {
+    return Utils.getFormattedTime(
+        (item.updateTime == null || item.updateTime == 0) ? item.createTime : item.updateTime);
   }
 
   Widget _buildIcon(icon) {

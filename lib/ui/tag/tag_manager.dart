@@ -24,6 +24,7 @@ class _TagManagerPageView extends State<TagManagerPage> with PullRefreshMixIn {
     super.initState();
     controller = RefreshController();
 //    Provide.value<TagListModule>(context).updatelist();
+//    TagListModule().updateList()
   }
 
   @override
@@ -75,7 +76,7 @@ class _TagManagerPageView extends State<TagManagerPage> with PullRefreshMixIn {
       };
     } else {
       builder = (BuildContext context, int index) {
-        return buildChildren(mode.tagList.list);
+        return buildChildren(mode.tagList.list, context);
       };
     }
     return buildRefresh(builderList(1, builder), (up) {
@@ -83,23 +84,28 @@ class _TagManagerPageView extends State<TagManagerPage> with PullRefreshMixIn {
     }, controller);
   }
 
-  Widget buildChildren(List<Tag> children) {
+  Widget buildChildren(List<Tag> children, BuildContext context) {
     List<Widget> tiles = [];
     Widget content;
     for (var item in children) {
       tiles.add(
-        new Chip(
-          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          backgroundColor: Utils.nameToColor(item.name),
-          label: new Text(item.name),
-          deleteIcon: Icon(
-            Icons.close,
-            color: Colors.black,
-            size: 20,
-          ),
-          onDeleted: () {
-            Provide.value<TagListModule>(context).delete(item);
+        InkWell(
+          onTap: () {
+            _update(context, item.id, item.name, item.slugName);
           },
+          child: new Chip(
+            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            backgroundColor: Utils.nameToColor(item.name),
+            label: new Text(item.name),
+            deleteIcon: Icon(
+              Icons.close,
+              color: Colors.black,
+              size: 20,
+            ),
+            onDeleted: () {
+              Provide.value<TagListModule>(context).delete(item);
+            },
+          ),
         ),
       );
     }
@@ -113,6 +119,13 @@ class _TagManagerPageView extends State<TagManagerPage> with PullRefreshMixIn {
   void _addNew(BuildContext context) {
     TextFieldDialog(context, "创建新标签", (name, slug) {
       Provide.value<TagListModule>(context).create(name, slug);
+    });
+  }
+
+  void _update(BuildContext context, int id, String tagName, String slugName) {
+    TextFieldDialog.update(context, "更新标签", tagName, slugName, (name, slug) {
+      var tag = Tag.fromParams(id: id, name: name, slugName: slug);
+      Provide.value<TagListModule>(context).update(tag);
     });
   }
 }

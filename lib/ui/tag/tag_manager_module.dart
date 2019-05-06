@@ -39,9 +39,8 @@ class TagListModule extends ChangeNotifier {
     Map params = HashMap<String, dynamic>();
     params["name"] = tag.name;
     params["slugName"] = tag.slugName;
-    ApiWithQuery<TagList>(Api.deleteTags(tag.id), PUT, params, (data) {
-      tagList.list.remove(tag);
-      notifyListeners();
+    ApiWithQuery<Tag>(Api.deleteTags(tag.id), PUT, params, (data) {
+      updateList();
     }, (code, msg) {
       ToastUtil.showToast(msg);
       notifyListeners();
@@ -49,10 +48,6 @@ class TagListModule extends ChangeNotifier {
   }
 
   void create(String name, String slug) {
-    /// {
-    //  "name": "string",
-    //  "slugName": "string"
-    //}
     Map params = HashMap<String, dynamic>();
     params["name"] = name;
     params["slugName"] = slug;

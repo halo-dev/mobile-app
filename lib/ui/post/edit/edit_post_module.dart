@@ -1,5 +1,6 @@
 import 'dart:collection';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:halo/app/provide.dart';
@@ -9,6 +10,7 @@ import 'package:halo/module/tag_list.dart';
 import 'package:halo/net/api.dart';
 import 'package:halo/net/api_request.dart';
 import 'package:halo/ui/category/category_manager_module.dart';
+import 'package:halo/ui/post/list/post_list_page.dart';
 import 'package:halo/ui/tag/tag_manager_module.dart';
 import 'package:halo/util/Utils.dart';
 import 'package:halo/widget/markdown/markdown_editor.dart';
@@ -185,11 +187,22 @@ class EditPostModule extends ChangeNotifier {
         });
       } else {
         ///对tag进行检测
-        selectCategory =
-            cateList.list.where((cate) => param.categoryIds.contains(cate.id)).toList();
+        findSelectCategory(cateList.list);
       }
       return _getSelectCategory();
     }
+  }
+
+  ///查找分类
+  findSelectCategory(List<Category> list) {
+    list.forEach((data) {
+      if (data.children != null && data.children.isNotEmpty) {
+        findSelectCategory(data.children);
+      }
+      if (param.categoryIds.contains(data.id)) {
+        selectCategory.add(data);
+      }
+    });
   }
 
   String _getSelectCategory() {
@@ -222,17 +235,18 @@ class EditPostModule extends ChangeNotifier {
     selectCategory.forEach((cate) => param.categoryIds.add(cate.id));
     param.tagIds = List();
     selectTag.forEach((tag) => param.tagIds.add(tag.id));
-    if (oldDate == null) {
-      ApiWithQuery(oldDate == null ? Api.posts : Api.postDetail(oldDate.id), POST, param.toJson(),
-          (data) {
-        ToastUtil.showToast("文章已${param.status == PUBLISHED ? "发布" : "存为草稿"}");
-        Navigator.pop(context);
-      }, (code, msg) {
-        ToastUtil.showToast(msg);
-      }, () {
-        notifyListeners();
+    ApiWithQuery(oldDate == null ? Api.posts : Api.postDetail(oldDate.id),
+        oldDate == null ? POST : PUT, param.toJson(), (data) {
+      ToastUtil.showToast("文章已${param.status == PUBLISHED ? "发布" : "存为草稿"}");
+      Navigator.of(context).pushAndRemoveUntil(
+          CupertinoPageRoute(builder: (context) => new PostListPage()), (route) {
+        return route.settings.name == "/";
       });
-    }
+    }, (code, msg) {
+      ToastUtil.showToast(msg);
+    }, () {
+      notifyListeners();
+    });
   }
 
   List<Asset> selectThumbList;

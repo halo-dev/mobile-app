@@ -14,6 +14,9 @@ class Api {
   /// 登陆
   static final String login = "/api/admin/login";
 
+  ///刷新token
+  static String refresh(refreshToken) => "/api/admin/refresh/$refreshToken";
+
   //user
   static final String profiles = "/api/admin/users/profiles";
 
@@ -21,6 +24,7 @@ class Api {
   static final String options = "/api/admin/options/map_view";
 
   static final String posts = "/api/admin/posts";
+
   static String postDetail(postID) => "/api/admin/posts/$postID";
 
   /// tag ///
