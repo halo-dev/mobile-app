@@ -21,6 +21,7 @@ class SiteView extends StatelessWidget {
             height: 50,
             width: 50,
             imageUrl: icon,
+            fit: BoxFit.cover,
             placeholder: (context, url) => new CircularProgressIndicator(),
             errorWidget: (context, url, error) => Image.asset(
                   "assest/images/halo_avatar.png",

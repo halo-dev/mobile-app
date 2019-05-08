@@ -4,28 +4,27 @@ import 'package:halo/app/provide.dart';
 import 'package:halo/module/category_list.dart';
 import 'package:halo/ui/post/edit/edit_page.dart';
 import 'package:halo/ui/post/list/list_item.dart';
-import 'package:halo/ui/post/list/search_post_list_page.dart';
 import 'package:halo/ui/post/post_manager_module.dart';
 import 'package:halo/util/jump_page.dart';
 import 'package:halo/widget/loading_dialog.dart';
 import 'package:halo/widget/refresh_list.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class PostListPage extends StatefulWidget {
+class SearchPostListPage extends StatefulWidget {
   Category category;
   String keyWord, postStatus;
 
-  PostListPage({this.category, this.keyWord, this.postStatus});
+  SearchPostListPage({this.category, this.keyWord, this.postStatus});
 
   @override
   State<StatefulWidget> createState() {
-    return _ArticleListPageView();
+    return _SearchPostListPageView();
   }
 }
 
 bool onInit = false;
 
-class _ArticleListPageView extends State<PostListPage> with PullRefreshMixIn {
+class _SearchPostListPageView extends State<SearchPostListPage> with PullRefreshMixIn {
   RefreshController controller;
 
   @override
@@ -52,17 +51,24 @@ class _ArticleListPageView extends State<PostListPage> with PullRefreshMixIn {
     return Scaffold(
       backgroundColor: cf.Config.background,
       appBar: AppBar(
-        title: Text(widget.category == null ? "博客文章" : "${widget.category.name}下的文章"),
         actions: <Widget>[
+          TextField(
+//        controller: _searchQuery,
+            style: new TextStyle(
+              color: Colors.white,
+            ),
+            decoration: new InputDecoration(
+                prefixIcon: new Icon(Icons.search, color: Colors.white),
+                hintText: "Search...",
+                hintStyle: new TextStyle(color: Colors.white)),
+          ),
           IconButton(
               icon: Icon(
                 Icons.search,
                 color: Colors.white,
                 size: 25,
               ),
-              onPressed: () {
-                pushToNewPage(context, SearchPostListPage());
-              })
+              onPressed: null)
         ],
       ),
       floatingActionButton: FloatingActionButton(

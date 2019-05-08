@@ -51,6 +51,7 @@ class SiteInfo extends StatelessWidget {
                           child: CachedNetworkImage(
                             height: 50,
                             width: 50,
+                            fit: BoxFit.cover,
                             imageUrl: profile.avatar,
                             placeholder: (context, url) => new CircularProgressIndicator(),
                             errorWidget: (context, url, error) => Image.asset(
