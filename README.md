@@ -16,6 +16,6 @@ For help getting started with Flutter, view our
 samples, guidance on mobile development, and a full API reference.
 
 ![](Screenshot/edit.png)
-![https://github.com/halo-dev/halo-app/blob/master/Screenshot/edit_label.png]()
-![https://github.com/halo-dev/halo-app/blob/master/Screenshot/home.png]()
-![https://github.com/halo-dev/halo-app/blob/master/Screenshot/post_list.png]()
+![](Screenshot/edit_label.png)
+![](Screenshot/home.png)
+![](Screenshot/post_list.png)
