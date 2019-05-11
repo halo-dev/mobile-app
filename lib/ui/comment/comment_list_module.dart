@@ -1,28 +1,42 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
-import 'package:halo/module/comment.dart';
+import 'package:halo/module/comment_entity.dart';
 import 'package:halo/net/api.dart';
 import 'package:halo/net/api_request.dart';
 
 class CommentListModule extends ChangeNotifier {
-  List<Comment> commentList = List();
+  int indexPage = 0;
+  int indexSize = 20;
+  int status;
+  Comment comment;
 
-  void refresh(bool up) {
-    ApiRequest(Api.posts, GET, (data) {
+  void getComment(bool up,{String key,String statusType}) {
+    if (up) {
+      indexPage = 0;
+    }
+    Map params = HashMap<String, dynamic>();
+    params["page"] = indexPage;
+    params["size"] = indexSize;
+//page=$page&size=$size
+    ApiWithQuery<Comment>(Api.comments, GET, params, (data) {
+      status = 200;
       if (up) {
-        commentList.clear();
+        comment?.content?.clear();
       }
-      CommentList list = CommentList.fromJson(data);
-      commentList.addAll(list.list);
+      comment = data;
+      ++indexPage;
       notifyListeners();
     }, (code, msg) {
+      status = code;
       if (up) {
-        commentList.clear();
+        comment?.content?.clear();
       }
       notifyListeners();
     }, () {
-      commentList.clear();
-      commentList.add(Comment());
-      notifyListeners();
+//       attachments.content.clear();
+//      articleList.add(Content());
+//      notifyListeners();
     });
   }
 }

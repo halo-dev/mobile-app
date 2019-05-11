@@ -1,18 +1,26 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:halo/module/comment.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:halo/module/comment_entity.dart';
+import 'package:halo/util/Utils.dart';
 
-String icon =
-    "https://secure.gravatar.com/avatar/a08917f5098953adef7dbb3f09641b65";
+String icon = "https://secure.gravatar.com/avatar/";
 
 class CommentListItemPage extends StatelessWidget {
-  Comment item;
+  CommentContent item;
 
   CommentListItemPage(this.item);
 
   Color textColor = Color.fromARGB(255, 88, 125, 151);
   Color titleColor = Color.fromARGB(255, 46, 68, 83);
   Color draftColor = Color.fromARGB(255, 219, 158, 37);
+
+//  static TextTheme textTheme = new Typography(platform: TargetPlatform.android)
+//      .black
+//      .merge(new TextTheme(body1: new TextStyle(fontSize: 16.0)));
+//  static final ThemeData theme =
+//  new ThemeData.light().copyWith(textTheme: textTheme);
+//  final MarkdownStyleSheet style1 = new MarkdownStyleSheet.fromTheme(theme);
 
 //Color.fromARGB(255, 46, 68, 83)
   @override
@@ -31,7 +39,7 @@ class CommentListItemPage extends StatelessWidget {
               width: 50.0,
               height: 50.0,
               child: CircleAvatar(
-                backgroundImage: CachedNetworkImageProvider(icon),
+                backgroundImage: CachedNetworkImageProvider("$icon${item.gavatarMd5}"),
                 radius: 60,
               ),
             ),
@@ -45,7 +53,7 @@ class CommentListItemPage extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        "一位WordPress评论者 对 世界，你好！的评论",
+                        "${item.author} 对 ${item.post.title}的评论",
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: new TextStyle(
@@ -64,7 +72,7 @@ class CommentListItemPage extends StatelessWidget {
                         ),
                         const SizedBox(width: 3.0),
                         Text(
-                          "前天",
+                          Utils.getFormattedTime(item.createTime),
                           style: TextStyle(color: textColor, fontSize: 13),
                         ),
                       ],
@@ -73,14 +81,9 @@ class CommentListItemPage extends StatelessWidget {
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 5),
-                  child: Text(
-                    "嗨！这是一条评论。要开始审核、编辑及删除评论，请访问仪表盘的\"评论\"页面。",
-                    softWrap: true,
-                    maxLines: 2,
-                    style: new TextStyle(
-                      color: textColor,
-                      fontSize: 15,
-                    ),
+                  child: MarkdownBody(
+                    data: item.content,
+//                    styleSheet: style1,
                   ),
                 )
               ],

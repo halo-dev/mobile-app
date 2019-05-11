@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:halo/app/base/base_widget.dart';
 import 'package:halo/app/config.dart' as cf;
 import 'package:halo/app/provide.dart';
-import 'package:halo/module/comment.dart';
 import 'package:halo/ui/comment/comment_list_item.dart';
 import 'package:halo/ui/comment/comment_list_module.dart';
+import 'package:halo/widget/loading_dialog.dart';
 import 'package:halo/widget/refresh_list.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -12,8 +13,7 @@ class CommentListPage extends StatefulWidget {
   State<StatefulWidget> createState() => _CommentListPageView();
 }
 
-class _CommentListPageView extends State<CommentListPage>
-    with PullRefreshMixIn {
+class _CommentListPageView extends BaseState<CommentListPage> with PullRefreshMixIn {
   RefreshController controller;
 
   @override
@@ -24,7 +24,6 @@ class _CommentListPageView extends State<CommentListPage>
 
   @override
   Widget build(BuildContext context) {
-    Provide.value<CommentListModule>(context).refresh(true);
     return Scaffold(
       backgroundColor: cf.Config.background,
       appBar: AppBar(
@@ -32,32 +31,34 @@ class _CommentListPageView extends State<CommentListPage>
         title: Text("评论"),
       ),
       body: Provide<CommentListModule>(builder: (context, child, mode) {
-        return _buildList(context, mode.commentList);
+        return _buildList(context, mode);
       }),
     );
   }
 
   Widget _buildList(
     BuildContext context,
-    List<Comment> commentList,
+    CommentListModule mode,
   ) {
-    if (controller.headerStatus == RefreshStatus.refreshing ||
-        controller.footerStatus == RefreshStatus.refreshing) {
-      controller.sendBack(controller.headerStatus == RefreshStatus.refreshing,
-          RefreshStatus.completed);
-    }
+    finishRefresh(controller);
     IndexedWidgetBuilder builder;
-    if (commentList.isEmpty) {
+    if (mode.comment == null || mode.comment.isEmpty) {
       builder = (BuildContext context, int index) {
-        return CircularProgressIndicator();
+        return loadWithStatus(mode.status);
       };
     } else {
       builder = (BuildContext context, int index) {
-        return CommentListItemPage(commentList[index]);
+        return CommentListItemPage(mode.comment.content[index]);
       };
     }
-    return buildRefresh(builderList(commentList.length, builder), (up) {
-      Provide.value<CommentListModule>(context).refresh(up);
-    }, controller);
+    return buildRefresh(builderList(mode?.comment?.content?.length ?? 1, builder), (up) {
+      Provide.value<CommentListModule>(context).getComment(up);
+    }, controller,
+        enableLoadMore: mode?.comment?.hasNext ?? false, autoLoad: mode?.comment?.hasNext ?? false);
+  }
+
+  @override
+  void onFirstInit() {
+    Provide.value<CommentListModule>(context).getComment(true);
   }
 }
