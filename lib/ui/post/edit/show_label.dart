@@ -22,12 +22,17 @@ Widget buildChildren(List<Tag> children, BuildContext context,
   }
   content = Padding(
     padding: EdgeInsets.all(10),
-    child: Wrap(spacing: 12, runSpacing: 12, alignment: WrapAlignment.start, children: tiles),
+    child: Wrap(
+        spacing: 12,
+        runSpacing: 12,
+        alignment: WrapAlignment.start,
+        children: tiles),
   );
   return content;
 }
 
-Chip _buildChip(Tag item, bool delete, Function onDelete, BuildContext context) {
+Chip _buildChip(
+    Tag item, bool delete, Function onDelete, BuildContext context) {
   return Chip(
     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
     backgroundColor: Utils.nameToColor(item.name),

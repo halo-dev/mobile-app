@@ -14,7 +14,8 @@ class ToastUtil {
 
   static void show(String msg, BuildContext context) {
     FluttrToast.Toast.show(msg, context,
-        duration: FluttrToast.Toast.LENGTH_SHORT, gravity: FluttrToast.Toast.CENTER);
+        duration: FluttrToast.Toast.LENGTH_SHORT,
+        gravity: FluttrToast.Toast.CENTER);
   }
 
   static void showToast(String msg) {

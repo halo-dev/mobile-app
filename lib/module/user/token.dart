@@ -9,7 +9,9 @@ class Token {
 
   factory Token(jsonStr) => jsonStr == null
       ? null
-      : jsonStr is String ? new Token.fromJson(json.decode(jsonStr)) : new Token.fromJson(jsonStr);
+      : jsonStr is String
+          ? new Token.fromJson(json.decode(jsonStr))
+          : new Token.fromJson(jsonStr);
 
   Token.fromJson(jsonRes) {
     expired_in = jsonRes['expired_in'];

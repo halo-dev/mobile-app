@@ -27,12 +27,18 @@ void _request<T>(String url,
   });
 }
 
-void ApiWithQuery<T>(String url, String method, Map<String, dynamic> query, Success onSuccess,
-    Fail onFail, Function onFinish) {
+void ApiWithQuery<T>(String url, String method, Map<String, dynamic> query,
+    Success onSuccess, Fail onFail, Function onFinish) {
   _request<T>(url,
-      method: method, query: query, onSuccess: onSuccess, onFail: onFail, onFinish: onFinish);
+      method: method,
+      query: query,
+      onSuccess: onSuccess,
+      onFail: onFail,
+      onFinish: onFinish);
 }
 
-void ApiRequest<T>(String url, String method, Success onSuccess, Fail onFail, Function onFinish) {
-  _request<T>(url, method: method, onSuccess: onSuccess, onFail: onFail, onFinish: onFinish);
+void ApiRequest<T>(String url, String method, Success onSuccess, Fail onFail,
+    Function onFinish) {
+  _request<T>(url,
+      method: method, onSuccess: onSuccess, onFail: onFail, onFinish: onFinish);
 }

@@ -61,18 +61,20 @@ class MdEditorState extends State<MdEditor> {
 
   void _disposeText(String text, int index) {
     if (_textEditingController.selection.base.offset < 0) {
-      print('WRAN: The value is ${_textEditingController.selection.base.offset}');
+      print(
+          'WRAN: The value is ${_textEditingController.selection.base.offset}');
       return;
     }
-    var startText =
-        _textEditingController.text.substring(0, _textEditingController.selection.base.offset);
-    var endText =
-        _textEditingController.text.substring(_textEditingController.selection.base.offset);
+    var startText = _textEditingController.text
+        .substring(0, _textEditingController.selection.base.offset);
+    var endText = _textEditingController.text
+        .substring(_textEditingController.selection.base.offset);
 
     var str = startText + text + endText;
     _textEditingController.value = TextEditingValue(
         text: str,
-        selection: TextSelection.collapsed(offset: startText.length + text.length - index));
+        selection: TextSelection.collapsed(
+            offset: startText.length + text.length - index));
   }
 
   @override
@@ -120,7 +122,9 @@ class MdEditorState extends State<MdEditor> {
                     autofocus: true,
                     onChanged: (text) {
                       _editPerform.change(text);
-                      if (_maxLines != null && text != null && text.length > _maxLines) {
+                      if (_maxLines != null &&
+                          text != null &&
+                          text.length > _maxLines) {
                         setState(() {
                           _maxLines = null;
                         });

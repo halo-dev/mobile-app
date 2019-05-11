@@ -3,6 +3,7 @@ import 'package:halo/app/config.dart';
 import 'package:halo/app/module/site.dart';
 import 'package:halo/app/module/site_module.dart';
 import 'package:halo/app/provide.dart';
+import 'package:halo/ui/attachments/attachments_list_page.dart';
 import 'package:halo/ui/category/category_manager.dart';
 import 'package:halo/ui/comment/comment_list.dart';
 import 'package:halo/ui/login/site_login.dart';
@@ -85,7 +86,9 @@ class _MainPageView extends State<MainPage> {
         "标签管理", () {
       pushToNewPage(context, TagManagerPage());
     }));
-    widgets.add(createItem(Icons.image, "媒体", null));
+    widgets.add(createItem(Icons.image, "媒体", (){
+      pushToNewPage(context, AttachmentsListPage());
+    }));
     widgets.add(createItem(Icons.forum, "评论", () {
       pushToNewPage(context, CommentListPage());
     }));
@@ -117,7 +120,8 @@ class _MainPageView extends State<MainPage> {
           ),
           InkWell(
             child: Container(
-                decoration: new BoxDecoration(color: Color.fromARGB(255, 243, 246, 248)),
+                decoration: new BoxDecoration(
+                    color: Color.fromARGB(255, 243, 246, 248)),
                 child: ListTile(
                   leading: Icon(
                     Icons.keyboard_backspace,
@@ -154,7 +158,8 @@ class _MainPageView extends State<MainPage> {
     );
   }
 
-  TextStyle style = TextStyle(fontSize: 16, color: Color.fromARGB(255, 102, 142, 170));
+  TextStyle style =
+      TextStyle(fontSize: 16, color: Color.fromARGB(255, 102, 142, 170));
 
   Widget createLabel(txt) {
     return Padding(

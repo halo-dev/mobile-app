@@ -7,10 +7,11 @@ class DioResponseInterceptor extends Interceptor {
   onResponse(Response response) {
     if (null != response.data['status']) {
       var status = response.data['status'];
-      response.data =
-          ResultData.fromParams(status, response.data['data'], response.data['message']);
+      response.data = ResultData.fromParams(
+          status, response.data['data'], response.data['message']);
     } else {
-      response.data = ResultData.fromParams(Config.SERVER_ERROR, null, '服务器内部错误');
+      response.data =
+          ResultData.fromParams(Config.SERVER_ERROR, null, '服务器内部错误');
     }
     return response;
   }

@@ -39,7 +39,9 @@ class SiteView extends StatelessWidget {
                     title,
                     softWrap: false,
                     style: TextStyle(
-                        fontWeight: FontWeight.w900, height: 1.4, color: Config.fontColor),
+                        fontWeight: FontWeight.w900,
+                        height: 1.4,
+                        color: Config.fontColor),
                   ),
                   Text(
                     address,

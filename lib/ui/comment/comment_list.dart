@@ -12,7 +12,8 @@ class CommentListPage extends StatefulWidget {
   State<StatefulWidget> createState() => _CommentListPageView();
 }
 
-class _CommentListPageView extends State<CommentListPage> with PullRefreshMixIn {
+class _CommentListPageView extends State<CommentListPage>
+    with PullRefreshMixIn {
   RefreshController controller;
 
   @override
@@ -42,8 +43,8 @@ class _CommentListPageView extends State<CommentListPage> with PullRefreshMixIn 
   ) {
     if (controller.headerStatus == RefreshStatus.refreshing ||
         controller.footerStatus == RefreshStatus.refreshing) {
-      controller.sendBack(
-          controller.headerStatus == RefreshStatus.refreshing, RefreshStatus.completed);
+      controller.sendBack(controller.headerStatus == RefreshStatus.refreshing,
+          RefreshStatus.completed);
     }
     IndexedWidgetBuilder builder;
     if (commentList.isEmpty) {

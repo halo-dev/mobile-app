@@ -35,9 +35,7 @@ class SiteInfo extends StatelessWidget {
             " 登陆身份为",
             style: TextStyle(fontSize: 15, color: loginInfoFont),
           ),
-          SizedBox(
-            height: 10,
-          ),
+          SizedBox(height: 10),
           Card(
               elevation: 2,
               child: SizedBox(

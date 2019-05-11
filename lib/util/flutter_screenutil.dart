@@ -84,5 +84,6 @@ class ScreenUtil {
   ///@param fontSize 传入设计稿上字体的px ,
   ///@param allowFontScaling 控制字体是否要根据系统的“字体大小”辅助选项来进行缩放。默认值为true。
   ///@param allowFontScaling Specifies whether fonts should scale to respect Text Size accessibility settings. The default is true.
-  setSp(int fontSize) => allowFontScaling ? setW(fontSize) : setW(fontSize) / _textScaleFactor;
+  setSp(int fontSize) =>
+      allowFontScaling ? setW(fontSize) : setW(fontSize) / _textScaleFactor;
 }

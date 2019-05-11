@@ -13,8 +13,10 @@ class RequestInfo {
 
   String _HOST = "";
   String _REFRESH = "";
+
 //  String _TOKEN = "";
   HashMap<String, String> _params = HashMap();
+
 //
   HashMap<String, String> get params => _params;
 

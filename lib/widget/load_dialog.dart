@@ -4,10 +4,12 @@ class LoadingDialog extends Dialog {
   String text;
   bool cancelAble;
 
-  LoadingDialog({Key key, @required this.text, bool cancelAble = true}) : super(key: key) {
+  LoadingDialog({Key key, @required this.text, bool cancelAble = true})
+      : super(key: key) {
     this.cancelAble = cancelAble;
     this.text = text;
   }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

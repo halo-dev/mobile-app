@@ -12,16 +12,21 @@ Widget createCategoryItem(item, BuildContext context, {bool select = true}) {
   return findChildItem(item, 15, context, select);
 }
 
-Widget findChildItem(Category item, int padding, BuildContext context, bool select) {
+Widget findChildItem(
+    Category item, int padding, BuildContext context, bool select) {
   if (item.children != null && item.children.isNotEmpty) {
     List<Widget> list = new List();
-    list.add(select ? createItem(item, padding, context) : buildSelectItem(item, padding, context));
+    list.add(select
+        ? createItem(item, padding, context)
+        : buildSelectItem(item, padding, context));
     item.children.forEach((data) {
       list.add(findChildItem(data, padding + 15, context, select));
     });
     return Column(children: list);
   } else
-    return select ? createItem(item, padding, context) : buildSelectItem(item, padding, context);
+    return select
+        ? createItem(item, padding, context)
+        : buildSelectItem(item, padding, context);
 }
 
 Widget createItem(Category item, int padding, BuildContext context) {
@@ -52,7 +57,9 @@ Widget createItem(Category item, int padding, BuildContext context) {
                   Text(
                     item.description,
                     style: TextStyle(
-                        height: 1.0, fontSize: 14, color: Color.fromARGB(255, 102, 142, 170)),
+                        height: 1.0,
+                        fontSize: 14,
+                        color: Color.fromARGB(255, 102, 142, 170)),
                   ),
                 ],
               ))),
@@ -122,7 +129,8 @@ Widget buildSelectItem(Category item, int padding, BuildContext context) {
               style: TextStyle(fontSize: 15, color: Config.fontColor),
             )),
             Offstage(
-              offstage: !Provide.value<EditPostModule>(context).hasCategory(item),
+              offstage:
+                  !Provide.value<EditPostModule>(context).hasCategory(item),
               child: Icon(Icons.done, size: 24, color: Config.fontColor),
             ),
           ],

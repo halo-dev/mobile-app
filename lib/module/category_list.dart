@@ -34,7 +34,12 @@ class Category {
   List<Category> children;
 
   Category.fromParams(
-      {this.id, this.parentId, this.description, this.name, this.slugName, this.children});
+      {this.id,
+      this.parentId,
+      this.description,
+      this.name,
+      this.slugName,
+      this.children});
 
   Category.fromJson(jsonRes) {
     id = jsonRes['id'];
@@ -45,7 +50,8 @@ class Category {
     children = jsonRes['children'] == null ? null : [];
 
     for (var childrenItem in children == null ? [] : jsonRes['children']) {
-      children.add(childrenItem == null ? null : new Category.fromJson(childrenItem));
+      children.add(
+          childrenItem == null ? null : new Category.fromJson(childrenItem));
     }
   }
 

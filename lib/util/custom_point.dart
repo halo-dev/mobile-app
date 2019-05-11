@@ -33,24 +33,23 @@ class CustomViewPageState extends State<CustomViewPage>
     return (Scaffold(
       appBar: AppBar(
         title: Text('自定义View'),
-        ),
+      ),
       body: Container(
         color: Colors.cyan,
         width: 100.0,
         height: 100.0,
         margin: EdgeInsets.all(8.0),
         child: CustomPaint(
-          child: Center(
-              child: Text((_doubleAnimation.value / 3.6).round().toString())),
-              painter:
-
-              LabelViewPainter(
-                labelColor: Colors.redAccent,
-                labelAlignment: LabelAlignment.leftTop,
-                useAngle: true,)//书角标
-          ),
-        ),
-      ));
+            child: Center(
+                child: Text((_doubleAnimation.value / 3.6).round().toString())),
+            painter: LabelViewPainter(
+              labelColor: Colors.redAccent,
+              labelAlignment: LabelAlignment.leftTop,
+              useAngle: true,
+            ) //书角标
+            ),
+      ),
+    ));
   }
 
   void onAnimationStart() {
@@ -83,6 +82,7 @@ class LinePainter extends CustomPainter {
     canvas.drawCircle(Offset(100.0, 100.0), 50.0, _paint);
     canvas.drawColor(Colors.red, BlendMode.colorDodge);
   }
+
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {
     return false;
@@ -96,11 +96,10 @@ class LabelViewPainter extends CustomPainter {
   final bool useAngle;
 
   LabelViewPainter({
-                     this.labelColor = Colors.blue,
-                     this.labelAlignment = LabelAlignment.leftTop,
-                     this.useAngle = false,
-                   })
-  {
+    this.labelColor = Colors.blue,
+    this.labelAlignment = LabelAlignment.leftTop,
+    this.useAngle = false,
+  }) {
     _paint = Paint()
       ..color = labelColor
       ..strokeCap = StrokeCap.round
@@ -120,9 +119,9 @@ class LabelViewPainter extends CustomPainter {
   }
 
   void drawThisPath(
-      Size size,
-      Path path,
-      ) {
+    Size size,
+    Path path,
+  ) {
     switch (labelAlignment) {
       case LabelAlignment.leftTop:
         if (useAngle) {

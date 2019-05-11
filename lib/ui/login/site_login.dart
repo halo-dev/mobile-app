@@ -46,9 +46,11 @@ class SiteLogin extends StatelessWidget {
                 fontSize: 15,
               ),
             ),
-            loginTextField("站点地址", _addressCtl, "assest/images/site_address.png"),
+            loginTextField(
+                "站点地址", _addressCtl, "assest/images/site_address.png"),
             loginTextField("用户名", _userCtl, "assest/images/user_name.png"),
-            loginTextField("密码", _passwdCtl, "assest/images/password.png", show: true),
+            loginTextField("密码", _passwdCtl, "assest/images/password.png",
+                show: true),
             Expanded(
                 child: Row(
               mainAxisAlignment: MainAxisAlignment.end,

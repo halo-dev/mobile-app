@@ -16,7 +16,8 @@ class CategoryManagerPage extends StatefulWidget {
   }
 }
 
-class _CategoryManagerPageView extends State<CategoryManagerPage> with PullRefreshMixIn {
+class _CategoryManagerPageView extends State<CategoryManagerPage>
+    with PullRefreshMixIn {
   RefreshController controller;
 
   @override
@@ -70,7 +71,9 @@ class _CategoryManagerPageView extends State<CategoryManagerPage> with PullRefre
 
     return buildRefresh(
         builderList(
-            (mode.cateList == null || mode.cateList.list.isEmpty) ? 1 : mode.cateList.list.length,
+            (mode.cateList == null || mode.cateList.list.isEmpty)
+                ? 1
+                : mode.cateList.list.length,
             builder), (up) {
       Provide.value<CategoryListModule>(context).updateList();
     }, controller);

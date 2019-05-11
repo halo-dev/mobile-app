@@ -23,11 +23,12 @@ class ProviderNode extends StatefulWidget {
   final bool dispose;
 
   /// Constructor.
-  const ProviderNode({@required this.child, @required this.providers, this.dispose = true});
+  const ProviderNode(
+      {@required this.child, @required this.providers, this.dispose = true});
 
   @override
-  State<StatefulWidget> createState() =>
-      _ProviderNodeState(child: child, providers: providers, disposeProviders: dispose);
+  State<StatefulWidget> createState() => _ProviderNodeState(
+      child: child, providers: providers, disposeProviders: dispose);
 }
 
 class _ProviderNodeState extends State<ProviderNode> {
@@ -42,12 +43,16 @@ class _ProviderNodeState extends State<ProviderNode> {
   final bool disposeProviders;
 
   _ProviderNodeState(
-      {@required this.child, @required this.providers, @required this.disposeProviders});
+      {@required this.child,
+      @required this.providers,
+      @required this.disposeProviders});
 
   @override
   Widget build(BuildContext context) {
     return _InheritedProviders(
-        child: child, providers: providers, parent: _InheritedProviders.of(context));
+        child: child,
+        providers: providers,
+        parent: _InheritedProviders.of(context));
   }
 
   @override
@@ -94,7 +99,8 @@ class Providers {
   /// Creates a provider with the included providers.
   ///
   /// If a scope is provided, the values will be under that scope.
-  factory Providers.withProviders(Map<Type, Provider<dynamic>> providers, {ProviderScope scope}) =>
+  factory Providers.withProviders(Map<Type, Provider<dynamic>> providers,
+          {ProviderScope scope}) =>
       Providers()..provideAll(providers, scope: scope);
 
   /// Add a provider for a single type.
@@ -199,11 +205,13 @@ abstract class Provider<T> {
   ///
   /// The context can be used to obtain other values from the provider. However,
   /// care should be taken with this to not have circular dependencies.
-  factory Provider.function(ProviderFunction<T> function) => _LazyProvider<T>(function);
+  factory Provider.function(ProviderFunction<T> function) =>
+      _LazyProvider<T>(function);
 
   /// Creates a provider that provides a new value for each
   /// requestor of the value.
-  factory Provider.withFactory(ProviderFunction<T> function) => _FactoryProvider<T>(function);
+  factory Provider.withFactory(ProviderFunction<T> function) =>
+      _FactoryProvider<T>(function);
 
   /// Creates a provider that listens to a stream and caches the last
   /// received value of the stream.
@@ -271,7 +279,8 @@ class Provide<T> extends StatelessWidget {
       return ListeningBuilder(
         listenable: listenable,
         child: child,
-        builder: (buildContext, child) => builder(buildContext, child, provider.get(context)),
+        builder: (buildContext, child) =>
+            builder(buildContext, child, provider.get(context)),
       );
     } else if (value is Listenable) {
       return ListeningBuilder(
@@ -340,13 +349,15 @@ class ProvideMulti extends StatelessWidget {
     return ListeningBuilder(
       listenable: _MergedListenable(listenables),
       child: child,
-      builder: (buildContext, child) => builder(buildContext, child, _update(context, values)),
+      builder: (buildContext, child) =>
+          builder(buildContext, child, _update(context, values)),
     );
   }
 
   // When the provider is the one that is changing instead of the value,
   // the values in the map returned need to be updated.
-  ProvidedValues _update(BuildContext context, Map<ProviderScope, Map<Type, dynamic>> values) {
+  ProvidedValues _update(
+      BuildContext context, Map<ProviderScope, Map<Type, dynamic>> values) {
     final providers = _InheritedProviders.of(context);
 
     for (final providerScope in requestedScopedValues.keys) {
@@ -372,7 +383,8 @@ class ProvidedValues {
 
   /// Gets the value in question.
   /// [T] must be a type passed in as part of [requestedValues].
-  T get<T>({ProviderScope scope}) => _values[scope ?? Providers.defaultScope][T];
+  T get<T>({ProviderScope scope}) =>
+      _values[scope ?? Providers.defaultScope][T];
 }
 
 /// Builds a child for a [Provide] widget.
@@ -404,7 +416,8 @@ class _ValueProvider<T> extends TypedProvider<T> {
       _streamController ??= StreamController<T>.broadcast();
       value.addListener(_streamListener);
     } else {
-      throw UnsupportedError('Cannot create stream from a value that is not Listenable');
+      throw UnsupportedError(
+          'Cannot create stream from a value that is not Listenable');
     }
 
     return _streamController.stream;
@@ -472,7 +485,8 @@ class _LazyProvider<T> extends ChangeNotifier with TypedProvider<T> {
       _streamController ??= StreamController<T>.broadcast();
       value.addListener(_streamListener);
     } else {
-      throw UnsupportedError('Cannot create stream from a value that is not Listenable');
+      throw UnsupportedError(
+          'Cannot create stream from a value that is not Listenable');
     }
 
     return _streamController.stream;
@@ -548,7 +562,8 @@ class _InheritedProviders extends InheritedWidget {
 
   final Providers providers;
 
-  const _InheritedProviders({Widget child, this.providers, this.parent}) : super(child: child);
+  const _InheritedProviders({Widget child, this.providers, this.parent})
+      : super(child: child);
 
   /// Finds the closest _InheritedProviders widget abocve the current widget.
   static _InheritedProviders of(BuildContext context) {
@@ -564,12 +579,14 @@ class _InheritedProviders extends InheritedWidget {
 
   /// This is more type-safe than getFromType.
   Provider<T> getValue<T>({ProviderScope scope}) {
-    return providers.getFromType(T, scope: scope) ?? parent?.getValue<T>(scope: scope);
+    return providers.getFromType(T, scope: scope) ??
+        parent?.getValue<T>(scope: scope);
   }
 
   /// Needed because this works at runtime for ProvideMulti.
   Provider getFromType(Type type, {ProviderScope scope}) {
-    return providers.getFromType(type, scope: scope) ?? parent?.getFromType(type, scope: scope);
+    return providers.getFromType(type, scope: scope) ??
+        parent?.getFromType(type, scope: scope);
   }
 }
 

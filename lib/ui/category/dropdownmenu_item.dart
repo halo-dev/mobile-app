@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:halo/app/config.dart';
 import 'package:halo/module/category_list.dart';
 
-List<DropdownMenuItem<Category>> createDropdownMenuItem(item, int currentID, BuildContext context) {
+List<DropdownMenuItem<Category>> createDropdownMenuItem(
+    item, int currentID, BuildContext context) {
   return findChildItem(item, currentID, 15, context);
 }
 
 List<DropdownMenuItem<Category>> findChildItem(
     Category item, int currentID, int padding, BuildContext context) {
-  List<DropdownMenuItem<Category>> list = new List<DropdownMenuItem<Category>>();
+  List<DropdownMenuItem<Category>> list =
+      new List<DropdownMenuItem<Category>>();
   if (item.children != null && item.children.isNotEmpty) {
     list.add(createItem(item, padding, context));
     for (var value in item.children) {
@@ -22,7 +24,8 @@ List<DropdownMenuItem<Category>> findChildItem(
   return list;
 }
 
-DropdownMenuItem<Category> createItem(Category item, int padding, BuildContext context) {
+DropdownMenuItem<Category> createItem(
+    Category item, int padding, BuildContext context) {
   return DropdownMenuItem(
     value: item,
     child: Container(

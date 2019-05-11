@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 
 /// 撤销与前进
 class EditPerform {
-  EditPerform(this._textEditingController, {this.initText = '',})
-      : assert(_textEditingController != null);
+  EditPerform(
+    this._textEditingController, {
+    this.initText = '',
+  }) : assert(_textEditingController != null);
 
   /// 最大的存储长度
   final _maxLength = 50;
@@ -46,8 +48,7 @@ class EditPerform {
         _textEditingController.value = TextEditingValue(
           text: initText,
           selection: TextSelection(
-              extentOffset: initText.length,
-              baseOffset: initText.length),
+              extentOffset: initText.length, baseOffset: initText.length),
         );
       }
     }

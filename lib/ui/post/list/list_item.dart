@@ -143,7 +143,9 @@ class ListItemPage extends StatelessWidget {
 
   String getTime() {
     return Utils.getFormattedTime(
-        (item.updateTime == null || item.updateTime == 0) ? item.createTime : item.updateTime);
+        (item.updateTime == null || item.updateTime == 0)
+            ? item.createTime
+            : item.updateTime);
   }
 
   Widget _buildIcon(icon) {

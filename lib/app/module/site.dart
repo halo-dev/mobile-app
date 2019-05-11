@@ -22,7 +22,9 @@ class Site {
 
   factory Site(jsonStr) => jsonStr == null
       ? null
-      : jsonStr is String ? new Site.fromJson(json.decode(jsonStr)) : new Site.fromJson(jsonStr);
+      : jsonStr is String
+          ? new Site.fromJson(json.decode(jsonStr))
+          : new Site.fromJson(jsonStr);
 
   Site.fromJson(jsonRes) {
     expired = jsonRes['expired'];

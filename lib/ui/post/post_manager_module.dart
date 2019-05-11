@@ -11,11 +11,12 @@ import 'package:halo/util/Utils.dart';
 class PostListModule extends ChangeNotifier {
   List<Content> articleList = List();
   int status;
-  int indexPage = 1;
+  int indexPage = 0;
 
-  void refresh(bool up, {Category cate, String key = "", String postStatus = ""}) {
+  void refresh(bool up,
+      {Category cate, String key = "", String postStatus = ""}) {
     if (up) {
-      indexPage = 1;
+      indexPage = 0;
     }
     Map params = HashMap<String, dynamic>();
     params["categoryId"] = cate == null ? 0 : cate.id;

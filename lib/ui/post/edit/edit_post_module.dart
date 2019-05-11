@@ -93,7 +93,9 @@ class EditPostModule extends ChangeNotifier {
   }
 
   String allowComment() {
-    return (param.disallowComment == null || !param.disallowComment) ? "允许" : "不允许";
+    return (param.disallowComment == null || !param.disallowComment)
+        ? "允许"
+        : "不允许";
   }
 
   ///添加选择的tag
@@ -175,12 +177,14 @@ class EditPostModule extends ChangeNotifier {
   }
 
   String getCategory(BuildContext context) {
-    if ((param.categoryIds == null || param.categoryIds.isEmpty) && (selectCategory.isEmpty)) {
+    if ((param.categoryIds == null || param.categoryIds.isEmpty) &&
+        (selectCategory.isEmpty)) {
       return "未设置";
     } else if (selectCategory.isNotEmpty) {
       return _getSelectCategory();
     } else {
-      CategoryList cateList = Provide.value<CategoryListModule>(context).cateList;
+      CategoryList cateList =
+          Provide.value<CategoryListModule>(context).cateList;
       if (cateList == null) {
         Provide.value<CategoryListModule>(context).updateList(onFinish: () {
           notifyListeners();
@@ -223,7 +227,8 @@ class EditPostModule extends ChangeNotifier {
         notifyListeners();
       });
     } else {
-      selectTag = tagList.list.where((tag) => param.tagIds.contains(tag.id)).toList();
+      selectTag =
+          tagList.list.where((tag) => param.tagIds.contains(tag.id)).toList();
     }
     return _getSelectTag();
   }
@@ -239,7 +244,8 @@ class EditPostModule extends ChangeNotifier {
         oldDate == null ? POST : PUT, param.toJson(), (data) {
       ToastUtil.showToast("文章已${param.status == PUBLISHED ? "发布" : "存为草稿"}");
       Navigator.of(context).pushAndRemoveUntil(
-          CupertinoPageRoute(builder: (context) => new PostListPage()), (route) {
+          CupertinoPageRoute(builder: (context) => new PostListPage()),
+          (route) {
         return route.settings.name == "/";
       });
     }, (code, msg) {

@@ -1,5 +1,6 @@
 import 'package:halo/module/admin/counts.dart';
 import 'package:halo/module/article.dart';
+import 'package:halo/module/attachments.dart';
 import 'package:halo/module/category_list.dart';
 import 'package:halo/module/options.dart';
 import 'package:halo/module/post_param.dart';
@@ -33,6 +34,8 @@ class EntityFactory {
       return Token.fromJson(json) as T;
     } else if (T.toString() == "Options") {
       return Options.fromJson(json) as T;
+    } else if (T.toString() == "Attachments") {
+      return Attachments.fromJson(json) as T;
     } else {
       Log("实体类${T.toString()}没有注册到EntityFactory");
       return null;

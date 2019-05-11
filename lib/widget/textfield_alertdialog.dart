@@ -31,8 +31,10 @@ class TextFieldDialog {
           content: SizedBox(
             child: Column(
               children: [
-                loginTextField("Tag Name", _nameCtl, null, action: TextInputAction.next),
-                loginTextField("Slug Name", _singeCtl, null, inputType: TextInputType.url)
+                loginTextField("Tag Name", _nameCtl, null,
+                    action: TextInputAction.next),
+                loginTextField("Slug Name", _singeCtl, null,
+                    inputType: TextInputType.url)
               ],
             ),
             height: 120,

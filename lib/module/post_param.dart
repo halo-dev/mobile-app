@@ -74,7 +74,8 @@ class PostParam {
     url = jsonRes['url'];
     categoryIds = jsonRes['categoryIds'] == null ? null : [];
 
-    for (var categoryIdsItem in categoryIds == null ? [] : jsonRes['categoryIds']) {
+    for (var categoryIdsItem
+        in categoryIds == null ? [] : jsonRes['categoryIds']) {
       categoryIds.add(categoryIdsItem);
     }
 

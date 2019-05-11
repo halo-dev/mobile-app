@@ -13,11 +13,17 @@ class PullRefreshMixIn {
         return widgets[position];
       });
 
-  Widget builderList(int size, IndexedWidgetBuilder builder) => ListView.builder(
-      itemCount: size, padding: EdgeInsets.fromLTRB(0, 0, 0, 0), itemBuilder: builder);
+  Widget builderList(int size, IndexedWidgetBuilder builder) =>
+      ListView.builder(
+          itemCount: size,
+          padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+          itemBuilder: builder);
 
-  Widget buildRefresh(Widget view, OnRefresh refresh, RefreshController controller,
-      {bool enableLoadMore: false, bool enableRefresh: true, bool autoLoad: false}) {
+  Widget buildRefresh(
+      Widget view, OnRefresh refresh, RefreshController controller,
+      {bool enableLoadMore: false,
+      bool enableRefresh: true,
+      bool autoLoad: false}) {
     return SmartRefresher(
       enablePullUp: enableLoadMore,
       controller: controller,
@@ -46,8 +52,8 @@ class PullRefreshMixIn {
   void finishRefresh(RefreshController controller) {
     if (controller.headerStatus == RefreshStatus.refreshing ||
         controller.footerStatus == RefreshStatus.refreshing) {
-      controller.sendBack(
-          controller.headerStatus == RefreshStatus.refreshing, RefreshStatus.completed);
+      controller.sendBack(controller.headerStatus == RefreshStatus.refreshing,
+          RefreshStatus.completed);
     }
   }
 }

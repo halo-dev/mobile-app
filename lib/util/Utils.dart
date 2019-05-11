@@ -45,7 +45,9 @@ class Utils {
     var dateTime = DateTime.fromMillisecondsSinceEpoch(milliseconds);
     var now = DateTime.now();
 
-    var diff = Duration(milliseconds: now.millisecondsSinceEpoch - dateTime.millisecondsSinceEpoch);
+    var diff = Duration(
+        milliseconds:
+            now.millisecondsSinceEpoch - dateTime.millisecondsSinceEpoch);
     if (diff.inMinutes < 1) {
       return "刚刚";
     }

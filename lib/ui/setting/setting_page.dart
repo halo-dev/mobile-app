@@ -5,7 +5,8 @@ import 'package:halo/app/provide.dart';
 import 'package:halo/widget/login_text_field.dart';
 
 class SettingPage extends StatelessWidget {
-  TextStyle style = TextStyle(fontSize: 16, color: Color.fromARGB(255, 102, 142, 170));
+  TextStyle style =
+      TextStyle(fontSize: 16, color: Color.fromARGB(255, 102, 142, 170));
   final TextEditingController _userCtl = new TextEditingController();
   final TextEditingController _passwdCtl = new TextEditingController();
 

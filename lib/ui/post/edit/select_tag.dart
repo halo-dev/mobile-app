@@ -43,8 +43,10 @@ class SelectTagPage extends StatelessWidget {
             children: [
               Text(
                 "添加新标签",
-                style:
-                    TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: Config.lightColor),
+                style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                    color: Config.lightColor),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -60,7 +62,8 @@ class SelectTagPage extends StatelessWidget {
                         width: 25, height: 25, color: Config.lightColor),
                     onPressed: () {
                       if (isNotEmpty(_tagCtl.text)) {
-                        Provide.value<TagListModule>(context).create(_tagCtl.text, "");
+                        Provide.value<TagListModule>(context)
+                            .create(_tagCtl.text, "");
                         _tagCtl.text = "";
                       }
                     },
@@ -85,14 +88,17 @@ class SelectTagPage extends StatelessWidget {
               SizedBox(width: Utils.getWidth(context) - 38),
               Text(
                 "已经选择的标签",
-                style:
-                    TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: Config.lightColor),
+                style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                    color: Config.lightColor),
               ),
               Provide<EditPostModule>(builder: (context, child, mode) {
                 ///对tag进行检测
                 return buildChildren(mode.selectTag, context,
                     delete: false,
-                    click: (tag) => Provide.value<EditPostModule>(context).deleteTagSelect(tag));
+                    click: (tag) => Provide.value<EditPostModule>(context)
+                        .deleteTagSelect(tag));
               })
             ],
           ),
@@ -112,8 +118,10 @@ class SelectTagPage extends StatelessWidget {
               SizedBox(width: Utils.getWidth(context) - 38),
               Text(
                 "所有标签",
-                style:
-                    TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: Config.lightColor),
+                style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                    color: Config.lightColor),
               ),
               Provide<TagListModule>(builder: (context, child, mode) {
                 return _content(context, mode);
@@ -139,9 +147,11 @@ class SelectTagPage extends StatelessWidget {
     } else {
       return Provide<EditPostModule>(builder: (context, child, editMode) {
         ///对tag进行检测
-        return buildChildren(editMode.getUnSelectTag(mode.tagList.list), context,
+        return buildChildren(
+            editMode.getUnSelectTag(mode.tagList.list), context,
             delete: false,
-            click: (tag) => Provide.value<EditPostModule>(context).addTagSelect(tag));
+            click: (tag) =>
+                Provide.value<EditPostModule>(context).addTagSelect(tag));
       });
     }
   }

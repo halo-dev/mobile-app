@@ -12,7 +12,8 @@ SlideTransition createTransition(Animation<double> animation, Widget child) {
 }
 
 Future pushToNewPage(BuildContext context, Widget page) {
-  return Navigator.of(context).push(CupertinoPageRoute(builder: (BuildContext context) {
+  return Navigator.of(context)
+      .push(CupertinoPageRoute(builder: (BuildContext context) {
     return page;
   }));
 }

@@ -12,7 +12,8 @@ class EditPostPage extends StatelessWidget {
 
   EditPostPage(this._isEdit, this.postDetailsId);
 
-  GlobalKey<MarkdownEditorWidgetState> Mykey = GlobalKey<MarkdownEditorWidgetState>();
+  GlobalKey<MarkdownEditorWidgetState> Mykey =
+      GlobalKey<MarkdownEditorWidgetState>();
 
   @override
   Widget build(BuildContext context) {
@@ -65,25 +66,34 @@ class EditPostPage extends StatelessWidget {
   }
 
   get textStyle => TextStyle(
-      fontSize: 18.0, height: 1.3, textBaseline: TextBaseline.alphabetic, color: Colors.black);
+      fontSize: 18.0,
+      height: 1.3,
+      textBaseline: TextBaseline.alphabetic,
+      color: Colors.black);
 
   get highlightedTextStyle => TextStyle(
-      fontSize: 18.0, height: 1.3, textBaseline: TextBaseline.alphabetic, color: Colors.lightBlue);
+      fontSize: 18.0,
+      height: 1.3,
+      textBaseline: TextBaseline.alphabetic,
+      color: Colors.lightBlue);
 
   _send(BuildContext context) {
-    Provide.value<EditPostModule>(context).saveParam(Mykey.currentState.getMarkDownText());
+    Provide.value<EditPostModule>(context)
+        .saveParam(Mykey.currentState.getMarkDownText());
     Provide.value<EditPostModule>(context).send(context);
   }
 
   _setOption(BuildContext context) {
-    Provide.value<EditPostModule>(context).saveParam(Mykey.currentState.getMarkDownText());
+    Provide.value<EditPostModule>(context)
+        .saveParam(Mykey.currentState.getMarkDownText());
     pushToNewPage(context, SetPostOptionPage());
   }
 
   bool _onBackNotSave(BuildContext context) {
     ///保存正在编辑的内容
     if (Mykey.currentState == null) {
-      Provide.value<EditPostModule>(context).saveParam(Mykey.currentState.getMarkDownText());
+      Provide.value<EditPostModule>(context)
+          .saveParam(Mykey.currentState.getMarkDownText());
     }
     //比较
     var chenaged = Provide.value<EditPostModule>(context).onBackNotSave();

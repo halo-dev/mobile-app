@@ -36,7 +36,8 @@ class MdPreviewState extends State<MdPreview> {
 
   @override
   Widget build(BuildContext context) {
-    var style = widget.basicStyle ?? TextStyle(fontSize: 17.0, color: Colors.black);
+    var style =
+        widget.basicStyle ?? TextStyle(fontSize: 17.0, color: Colors.black);
 
     return SingleChildScrollView(
       child: Padding(

@@ -55,14 +55,16 @@ class MarkdownEditor extends StatefulWidget {
   State<StatefulWidget> createState() => MarkdownEditorWidgetState();
 }
 
-class MarkdownEditorWidgetState extends State<MarkdownEditor> with SingleTickerProviderStateMixin {
+class MarkdownEditorWidgetState extends State<MarkdownEditor>
+    with SingleTickerProviderStateMixin {
   final GlobalKey<MdEditorState> _editorKey = GlobalKey();
   TabController _controller;
   String _previewText = '';
 
   /// Get edited Markdown title and text
   MarkdownText getMarkDownText() {
-    return MarkdownText(_editorKey.currentState.getTitle(), _editorKey.currentState.getText());
+    return MarkdownText(
+        _editorKey.currentState.getTitle(), _editorKey.currentState.getText());
   }
 
   /// Change current [PageType]
@@ -81,8 +83,9 @@ class MarkdownEditorWidgetState extends State<MarkdownEditor> with SingleTickerP
         });
       }
       if (widget.tabChange != null) {
-        widget.tabChange(
-            _controller.index == PageType.editor.index ? PageType.editor : PageType.preview);
+        widget.tabChange(_controller.index == PageType.editor.index
+            ? PageType.editor
+            : PageType.preview);
       }
     });
   }

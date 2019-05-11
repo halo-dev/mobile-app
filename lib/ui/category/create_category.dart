@@ -27,8 +27,9 @@ class CreateCategoryPage extends StatelessWidget {
       backgroundColor: Config.background,
       appBar: AppBar(
         elevation: 0,
-        title: Text(
-            (modify && item != null) ? "修改分类" : (!modify && item != null) ? item.name : "创建分类"),
+        title: Text((modify && item != null)
+            ? "修改分类"
+            : (!modify && item != null) ? item.name : "创建分类"),
         actions: <Widget>[
           IconButton(
               icon: Icon(
@@ -85,10 +86,12 @@ class CreateCategoryPage extends StatelessWidget {
       } else if (mode.cateList != null && mode.cateList.list.isNotEmpty) {
         //创建和更新
 
-        List<DropdownMenuItem<Category>> items = new List<DropdownMenuItem<Category>>();
+        List<DropdownMenuItem<Category>> items =
+            new List<DropdownMenuItem<Category>>();
         for (var value1 in mode.cateList.list) {
 //          if (item != null && value1.id == item.id) continue;
-          items.addAll(createDropdownMenuItem(value1, item == null ? 0 : item.id, context));
+          items.addAll(createDropdownMenuItem(
+              value1, item == null ? 0 : item.id, context));
         }
 
         items.insert(

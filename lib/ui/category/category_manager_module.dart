@@ -42,7 +42,8 @@ class CategoryListModule extends ChangeNotifier {
     params["name"] = category.name;
     params["parentId"] = category.parentId;
 //    params["id"] = category.id;
-    ApiWithQuery<Category>(Api.deleteCategory(category.id), PUT, params, (data) {
+    ApiWithQuery<Category>(Api.deleteCategory(category.id), PUT, params,
+        (data) {
       ToastUtil.showToast("修改成功");
       Navigator.pop(context);
     }, (code, msg) {
@@ -66,7 +67,8 @@ class CategoryListModule extends ChangeNotifier {
     }, () {});
   }
 
-  Category top = Category.fromParams(id: 0, parentId: 0, description: "", name: "顶级");
+  Category top =
+      Category.fromParams(id: 0, parentId: 0, description: "", name: "顶级");
 
   Category findParentById(List<Category> list, int id) {
     Category defaultData;

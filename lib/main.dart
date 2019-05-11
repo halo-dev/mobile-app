@@ -7,6 +7,7 @@ import 'package:halo/app/provide.dart';
 import 'package:halo/app/request_info.dart';
 import 'package:halo/event/dialog_event.dart';
 import 'package:halo/event/login_change_event.dart';
+import 'package:halo/ui/attachments/attachments_manager_model.dart';
 import 'package:halo/ui/category/category_manager_module.dart';
 import 'package:halo/ui/comment/comment_list_module.dart';
 import 'package:halo/ui/login/site_login.dart';
@@ -27,6 +28,7 @@ void main() {
         ..provide(Provider<CommentListModule>.value(CommentListModule()))
         ..provide(Provider<CategoryListModule>.value(CategoryListModule()))
         ..provide(Provider<EditPostModule>.value(EditPostModule()))
+        ..provide(Provider<AttachmentsModule>.value(AttachmentsModule()))
         ..provide(Provider<PostListModule>.value(PostListModule())),
       child: MyApp(),
     ),
@@ -53,7 +55,8 @@ class _MyAppView extends State<MyApp> {
       }
     });
     RxBus().register<LoginChangeEvent>().listen((event) {
-      Navigator.of(context).pushAndRemoveUntil(CupertinoPageRoute(builder: (BuildContext context) {
+      Navigator.of(context).pushAndRemoveUntil(
+          CupertinoPageRoute(builder: (BuildContext context) {
         return MainPage();
       }), (Route<dynamic> route) => false);
     });
@@ -71,7 +74,8 @@ class _MyAppView extends State<MyApp> {
     return Provide<SiteModule>(builder: (context, child, site) {
       if (site.site != null && isNotEmpty(site.site.accessToken)) {
         //配置信息
-        RequestInfo().update(site.site.accessToken, site.site.host, site.site.refreshToken);
+        RequestInfo().update(
+            site.site.accessToken, site.site.host, site.site.refreshToken);
       }
       return MaterialApp(
           localizationsDelegates: [
@@ -81,12 +85,16 @@ class _MyAppView extends State<MyApp> {
           supportedLocales: [
             const Locale('zh', 'CN'),
           ],
-          title: (site.site != null && isNotEmpty(site.site.title)) ? site.site.title : "HaloBlog",
+          title: (site.site != null && isNotEmpty(site.site.title))
+              ? site.site.title
+              : "HaloBlog",
           theme: ThemeData(
               appBarTheme: AppBarTheme(elevation: 2, color: Config.titleColor),
               primarySwatch: Colors.blue,
               textTheme: TextTheme(title: TextStyle(color: Config.fontColor))),
-          home: (site.site == null || isEmpty(site.site.host) || isEmpty(site.site.accessToken))
+          home: (site.site == null ||
+                  isEmpty(site.site.host) ||
+                  isEmpty(site.site.accessToken))
               ? SiteLogin()
               : MainPage());
 //          home: MainPage()),

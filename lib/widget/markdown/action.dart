@@ -22,16 +22,20 @@ class ActionImage extends StatefulWidget {
 
 class ActionImageState extends State<ActionImage> {
   String _getImagePath() {
-    return _defaultImageAttributes.firstWhere((img) => img.type == widget.type)?.path;
+    return _defaultImageAttributes
+        .firstWhere((img) => img.type == widget.type)
+        ?.path;
   }
 
   void _disposeActionList(ActionType type) {
-    var firstWhere = _defaultImageAttributes.firstWhere((data) => data.type == type);
+    var firstWhere =
+        _defaultImageAttributes.firstWhere((data) => data.type == type);
     widget.tap(firstWhere.text, firstWhere.positionReverse);
   }
 
   void _disposeAction() {
-    var firstWhere = _defaultImageAttributes.firstWhere((img) => img.type == widget.type);
+    var firstWhere =
+        _defaultImageAttributes.firstWhere((img) => img.type == widget.type);
     if (widget.tap != null && firstWhere != null) {
       if (firstWhere.type == ActionType.image) {
         if (widget.imageSelect != null) {
@@ -72,8 +76,8 @@ class ActionImageState extends State<ActionImage> {
             var bottom = size.height - (offset.dy - 10);
             var top = size.height - (bottom + listHeight);
 
-            var padding =
-                EdgeInsets.fromLTRB(offset.dx - 40, top, size.width - offset.dx - 80, bottom);
+            var padding = EdgeInsets.fromLTRB(
+                offset.dx - 40, top, size.width - offset.dx - 80, bottom);
             ShowOverlayPop pop = ShowOverlayPop(context, padding);
             pop.createView(
               Container(
@@ -101,7 +105,9 @@ class ActionImageState extends State<ActionImage> {
           height: 25.0,
           image: AssetImage(_getImagePath()),
         ),
-        tooltip: _defaultImageAttributes.firstWhere((img) => img.type == widget.type)?.tip,
+        tooltip: _defaultImageAttributes
+            .firstWhere((img) => img.type == widget.type)
+            ?.tip,
         onPressed: _disposeAction,
       );
     }
@@ -161,7 +167,9 @@ class ActionImageState extends State<ActionImage> {
                 child: text == "default"
                     ? Text(
                         text,
-                        style: TextStyle(color: Color.fromARGB(255, 135, 166, 188), fontSize: 16),
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 135, 166, 188),
+                            fontSize: 16),
                       )
                     : Image.asset(
                         image,

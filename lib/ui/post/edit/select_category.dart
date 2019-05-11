@@ -54,13 +54,16 @@ class SelectCategoryPage extends StatelessWidget with PullRefreshMixIn {
       };
     } else {
       builder = (BuildContext context, int index) {
-        return createCategoryItem(mode.cateList.list[index], context, select: false);
+        return createCategoryItem(mode.cateList.list[index], context,
+            select: false);
       };
     }
     return Provide<EditPostModule>(builder: (context, child, editMode) {
       return buildRefresh(
           builderList(
-              (mode.cateList == null || mode.cateList.list.isEmpty) ? 1 : mode.cateList.list.length,
+              (mode.cateList == null || mode.cateList.list.isEmpty)
+                  ? 1
+                  : mode.cateList.list.length,
               builder), (up) {
         Provide.value<CategoryListModule>(context).updateList();
       }, controller);

@@ -62,7 +62,8 @@ class PrintLogInterceptor extends Interceptor {
     int groups = (msg.length / logSize).ceil();
     for (int i = 0; i < groups; ++i) {
       print((i > 0 ? '│ <<Log follows the previous line: ' : '│ ') +
-          msg.substring(i * logSize, math.min<int>(i * logSize + logSize, msg.length)));
+          msg.substring(
+              i * logSize, math.min<int>(i * logSize + logSize, msg.length)));
     }
   }
 }

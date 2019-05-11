@@ -2,7 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:halo/module/comment.dart';
 
-String icon = "https://secure.gravatar.com/avatar/a08917f5098953adef7dbb3f09641b65";
+String icon =
+    "https://secure.gravatar.com/avatar/a08917f5098953adef7dbb3f09641b65";
 
 class CommentListItemPage extends StatelessWidget {
   Comment item;

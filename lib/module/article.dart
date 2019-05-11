@@ -31,7 +31,9 @@ class Post {
 
   factory Post(jsonStr) => jsonStr == null
       ? null
-      : jsonStr is String ? new Post.fromJson(json.decode(jsonStr)) : new Post.fromJson(jsonStr);
+      : jsonStr is String
+          ? new Post.fromJson(json.decode(jsonStr))
+          : new Post.fromJson(jsonStr);
 
   Post.fromJson(jsonRes) {
     number = jsonRes['number'];
@@ -45,10 +47,13 @@ class Post {
     content = jsonRes['content'] == null ? null : [];
 
     for (var contentItem in content == null ? [] : jsonRes['content']) {
-      content.add(contentItem == null ? null : new Content.fromJson(contentItem));
+      content
+          .add(contentItem == null ? null : new Content.fromJson(contentItem));
     }
 
-    pageable = jsonRes['pageable'] == null ? null : new Pageable.fromJson(jsonRes['pageable']);
+    pageable = jsonRes['pageable'] == null
+        ? null
+        : new Pageable.fromJson(jsonRes['pageable']);
     sort = jsonRes['sort'] == null ? null : new Sort.fromJson(jsonRes['sort']);
   }
 
@@ -164,8 +169,11 @@ class Content {
     url = jsonRes['url'];
     categories = jsonRes['categories'] == null ? null : [];
 
-    for (var categoriesItem in categories == null ? [] : jsonRes['categories']) {
-      categories.add(categoriesItem == null ? null : new Category.fromJson(categoriesItem));
+    for (var categoriesItem
+        in categories == null ? [] : jsonRes['categories']) {
+      categories.add(categoriesItem == null
+          ? null
+          : new Category.fromJson(categoriesItem));
     }
 
     tags = jsonRes['tags'] == null ? null : [];

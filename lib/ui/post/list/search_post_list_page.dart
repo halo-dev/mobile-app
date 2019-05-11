@@ -24,7 +24,8 @@ class SearchPostListPage extends StatefulWidget {
 
 bool onInit = false;
 
-class _SearchPostListPageView extends State<SearchPostListPage> with PullRefreshMixIn {
+class _SearchPostListPageView extends State<SearchPostListPage>
+    with PullRefreshMixIn {
   RefreshController controller;
 
   @override
@@ -43,7 +44,9 @@ class _SearchPostListPageView extends State<SearchPostListPage> with PullRefresh
 
   void refresh(bool refresh) {
     Provide.value<PostListModule>(context).refresh(refresh,
-        cate: widget.category, key: widget.keyWord, postStatus: widget.postStatus);
+        cate: widget.category,
+        key: widget.keyWord,
+        postStatus: widget.postStatus);
   }
 
   @override
@@ -100,8 +103,8 @@ class _SearchPostListPageView extends State<SearchPostListPage> with PullRefresh
   ) {
     if (controller.headerStatus == RefreshStatus.refreshing ||
         controller.footerStatus == RefreshStatus.refreshing) {
-      controller.sendBack(
-          controller.headerStatus == RefreshStatus.refreshing, RefreshStatus.completed);
+      controller.sendBack(controller.headerStatus == RefreshStatus.refreshing,
+          RefreshStatus.completed);
     }
     IndexedWidgetBuilder builder;
     if (mode.articleList.isEmpty) {

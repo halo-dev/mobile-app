@@ -11,7 +11,8 @@ class PreviewMarkdown extends StatelessWidget {
   static TextTheme textTheme = new Typography(platform: TargetPlatform.android)
       .black
       .merge(new TextTheme(body1: new TextStyle(fontSize: 16.0)));
-  static final ThemeData theme = new ThemeData.light().copyWith(textTheme: textTheme);
+  static final ThemeData theme =
+      new ThemeData.light().copyWith(textTheme: textTheme);
 
   final MarkdownStyleSheet style1 = new MarkdownStyleSheet.fromTheme(theme);
 
