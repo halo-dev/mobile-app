@@ -19,7 +19,7 @@ class PrintLogInterceptor extends Interceptor {
       printKV("│ " + key, headers[key]);
     }
     print("└────────────────────────────────────");
-    if (options.data != null) {
+    if (options.data != null /*&& !options.data is FormData*/) {
       print("┝────── Params ────────────────────────");
       printAll(options.data);
       print("└────────────────────────────────────");
@@ -62,8 +62,7 @@ class PrintLogInterceptor extends Interceptor {
     int groups = (msg.length / logSize).ceil();
     for (int i = 0; i < groups; ++i) {
       print((i > 0 ? '│ <<Log follows the previous line: ' : '│ ') +
-          msg.substring(
-              i * logSize, math.min<int>(i * logSize + logSize, msg.length)));
+          msg.substring(i * logSize, math.min<int>(i * logSize + logSize, msg.length)));
     }
   }
 }

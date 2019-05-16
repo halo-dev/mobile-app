@@ -50,13 +50,12 @@ class _SetPostOptionPageView extends State<SetPostOptionPage> {
   Widget buildBody(BuildContext context) {
     return Provide<EditPostModule>(builder: (context, child, mode) {
       List<Widget> widgets = List();
-      widgets.add(_buildSelectMenu(createItem("状态", mode.getStatus(), () {}),
-          _buildSelectItem(status, context), (data) {
+      widgets.add(_buildSelectMenu(
+          createItem("状态", mode.getStatus(), () {}), _buildSelectItem(status, context), (data) {
         Provide.value<EditPostModule>(context).onStatusChange(data);
       }));
       widgets.add(Divider(height: 1));
-      widgets.add(createItem(
-          "密码", isEmpty(mode.param.password) ? "未设置" : mode.param.password, () {
+      widgets.add(createItem("密码", isEmpty(mode.param.password) ? "未设置" : mode.param.password, () {
         _passwordCtl.text = mode.param.password;
         _buildPassWordDialog(context);
       }));
@@ -67,10 +66,7 @@ class _SetPostOptionPageView extends State<SetPostOptionPage> {
             padding: EdgeInsets.fromLTRB(24, 15, 24, 0),
             child: Text(
               "分类&标签",
-              style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600,
-                  color: Config.lightColor),
+              style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: Config.lightColor),
             )),
       );
       widgets.add(createItem("分类", mode.getCategory(context), () {
@@ -82,6 +78,7 @@ class _SetPostOptionPageView extends State<SetPostOptionPage> {
         pushToNewPage(context, SelectTagPage());
       }));
 
+      /// 选择封面图
       widgets.add(Divider(height: 15, color: Colors.transparent));
       widgets.add(
         buildImageSelectContainer(mode),
@@ -94,19 +91,16 @@ class _SetPostOptionPageView extends State<SetPostOptionPage> {
             padding: EdgeInsets.fromLTRB(24, 15, 24, 0),
             child: Text("更多选项",
                 style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
-                    color: Config.lightColor))),
+                    fontSize: 13, fontWeight: FontWeight.w600, color: Config.lightColor))),
       );
-      widgets.add(createItem(
-          "slug", isEmpty(mode.param.url) ? "未设置" : mode.param.url, () {
+      widgets.add(createItem("slug", isEmpty(mode.param.url) ? "未设置" : mode.param.url, () {
         _slugCtl.text = mode.param.url;
         _buildSlugDialog(context);
       }));
       widgets.add(Divider(height: 1));
       widgets.add(_buildSelectMenu(
-          createItem("是否允许评论", mode.allowComment(), () {}),
-          _buildSelectItem(comments, context), (data) {
+          createItem("是否允许评论", mode.allowComment(), () {}), _buildSelectItem(comments, context),
+          (data) {
         Provide.value<EditPostModule>(context).onCommentChange(data);
       }));
       widgets.add(Divider(height: 1));
@@ -161,8 +155,7 @@ class _SetPostOptionPageView extends State<SetPostOptionPage> {
     );
   }
 
-  TextStyle style =
-      TextStyle(fontSize: 16, color: Color.fromARGB(255, 102, 142, 170));
+  TextStyle style = TextStyle(fontSize: 16, color: Color.fromARGB(255, 102, 142, 170));
 
   _openNew(BuildContext context) {
 //    pushToNewPage(context, EditPostPage());
@@ -202,14 +195,12 @@ class _SetPostOptionPageView extends State<SetPostOptionPage> {
   /// 设置密码
   _buildPassWordDialog(BuildContext context) {
     AlertContentDialog(context, "密码", () {
-      Provide.value<EditPostModule>(context)
-          .onPasswordChange(_passwordCtl.text);
+      Provide.value<EditPostModule>(context).onPasswordChange(_passwordCtl.text);
     },
         SizedBox(
           child: Column(
             children: [
-              loginTextField("只有知道此密码才能查看这篇文章", _passwordCtl, null,
-                  inputType: TextInputType.number)
+              loginTextField("只有知道此密码才能查看这篇文章", _passwordCtl, null, inputType: TextInputType.number)
             ],
           ),
           height: 60,
@@ -224,8 +215,7 @@ class _SetPostOptionPageView extends State<SetPostOptionPage> {
         SizedBox(
           child: Column(
             children: [
-              loginTextField("slug是文章标题URL友好型版本", _slugCtl, null,
-                  inputType: TextInputType.url)
+              loginTextField("slug是文章标题URL友好型版本", _slugCtl, null, inputType: TextInputType.url)
             ],
           ),
           height: 60,
@@ -254,11 +244,7 @@ class _SetPostOptionPageView extends State<SetPostOptionPage> {
     }
     content = Padding(
       padding: EdgeInsets.all(10),
-      child: Wrap(
-          spacing: 12,
-          runSpacing: 12,
-          alignment: WrapAlignment.start,
-          children: tiles),
+      child: Wrap(spacing: 12, runSpacing: 12, alignment: WrapAlignment.start, children: tiles),
     );
     return content;
   }
@@ -272,10 +258,7 @@ class _SetPostOptionPageView extends State<SetPostOptionPage> {
           children: <Widget>[
             Text(
               "推荐图片",
-              style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600,
-                  color: Config.lightColor),
+              style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: Config.lightColor),
             ),
             (mode.selectThumbList != null && mode.selectThumbList.isNotEmpty)
                 ? Padding(
@@ -316,8 +299,7 @@ class _SetPostOptionPageView extends State<SetPostOptionPage> {
                             top: -20,
                             child: Text(
                               "图片将会在发布时上传",
-                              style: TextStyle(
-                                  fontSize: 13, color: Config.fontLightColor),
+                              style: TextStyle(fontSize: 13, color: Config.fontLightColor),
                             ))
                       ],
                     ))

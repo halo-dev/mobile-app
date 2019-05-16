@@ -4,7 +4,6 @@ import 'package:halo/app/config.dart' as cf;
 import 'package:halo/app/provide.dart';
 import 'package:halo/ui/attachments/attach_item.dart';
 import 'package:halo/ui/attachments/attachments_manager_model.dart';
-import 'package:halo/ui/post/edit/edit_page.dart';
 import 'package:halo/ui/post/list/search_post_list_page.dart';
 import 'package:halo/util/Utils.dart';
 import 'package:halo/widget/loading_dialog.dart';
@@ -44,9 +43,9 @@ class AttachmentsListPage extends BaseState with PullRefreshMixIn {
           size: 24,
           color: Colors.white,
         ),
-        tooltip: "发布新文章",
+        tooltip: "上传新图片",
         onPressed: () {
-          pushToNewPage(context, EditPostPage(false, null));
+          Provide.value<AttachmentsModule>(context).loadAssets(1);
         },
         foregroundColor: Colors.white,
         backgroundColor: Color.fromARGB(255, 0, 135, 190),

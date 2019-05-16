@@ -45,6 +45,7 @@ class Api {
 
   //媒体
   static final String attachments = "/api/admin/attachments";
+
   /// 评论
   static final String comments = "/api/admin/posts/comments";
 }

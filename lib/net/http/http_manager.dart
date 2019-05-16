@@ -18,8 +18,7 @@ class Http {
 //    无网络连接
     ResultData data;
     if (connectivityResult == ConnectivityResult.none) {
-      data =
-          ResultData.fromParams(Config.NETWORK_CONNECTION_ERROR, null, '无网络连接');
+      data = ResultData.fromParams(Config.NETWORK_CONNECTION_ERROR, null, '无网络连接');
     }
     Response response;
     try {
@@ -30,8 +29,7 @@ class Http {
       switch (method.toLowerCase()) {
         case "get":
           if (params != null && params.isNotEmpty) {
-            response =
-                await DioManager().dio().get(url, queryParameters: params);
+            response = await DioManager().dio().get(url, queryParameters: params);
           } else {
             response = await DioManager().dio().get(url);
           }
@@ -52,16 +50,14 @@ class Http {
           break;
         case "delete":
           if (params != null && params.isNotEmpty) {
-            response =
-                await DioManager().dio().delete(url, queryParameters: params);
+            response = await DioManager().dio().delete(url, queryParameters: params);
           } else {
             response = await DioManager().dio().delete(url);
           }
           break;
         default:
           if (params != null && params.isNotEmpty) {
-            response =
-                await DioManager().dio().get(url, queryParameters: params);
+            response = await DioManager().dio().get(url, queryParameters: params);
           } else {
             response = await DioManager().dio().get(url);
           }
@@ -71,27 +67,21 @@ class Http {
         /// token过期
         /// 锁定状态
         DioManager().dio().lock();
-        DioManager()
-            .dio()
-            .post(Api.refresh(RequestInfo().REFRESH))
-            .then((data) {
+        DioManager().dio().post(Api.refresh(RequestInfo().REFRESH)).then((data) {
           Token token = Token.fromJson(data);
-          RequestInfo().update(
-              token.access_token, RequestInfo().HOST, token.refresh_token);
+          RequestInfo().update(token.access_token, RequestInfo().HOST, token.refresh_token);
           Utils.updateSite(token);
         }).catchError((err) {
           Utils.updateSite(Token.fromParams());
           RxBus().post(LoginChangeEvent());
-          response =
-              Response(data: ResultData.fromParams(400, null, "Token过期，请重新登陆"));
+          response = Response(data: ResultData.fromParams(400, null, "Token过期，请重新登陆"));
         });
         DioManager().dio().unlock();
         RequestOptions options = e.response.request;
         options.headers
           ..clear()
           ..addAll(RequestInfo().params);
-        response =
-            await DioManager().dio().request(options.path, options: options);
+        response = await DioManager().dio().request(options.path, options: options);
       } else
         response = onDioError(e);
     }
@@ -103,29 +93,19 @@ class Http {
     if (e.response != null) {
       var status = e.response.data['status'];
       if (status == 400 &&
-          e.response.data['message'] ==
-              "The refresh token may have been expired already") {
+          e.response.data['message'] == "The refresh token may have been expired already") {
         Utils.updateSite(Token.fromParams());
-        return Response(
-            data: ResultData.fromParams(status, null, "Token过期，请重新登陆"));
+        return Response(data: ResultData.fromParams(status, null, "Token过期，请重新登陆"));
       } else {
-        return Response(
-            data: ResultData.fromParams(
-                status, null, e.response.data['message']));
+        return Response(data: ResultData.fromParams(status, null, e.response.data['message']));
       }
     } else {
-      if (e.type == DioErrorType.CONNECT_TIMEOUT ||
-          e.type == DioErrorType.SEND_TIMEOUT) {
-        return Response(
-            data: ResultData.fromParams(
-                Config.TIME_OUT, null, '连接超时,请检查服务器地址是否正确'));
+      if (e.type == DioErrorType.CONNECT_TIMEOUT || e.type == DioErrorType.SEND_TIMEOUT) {
+        return Response(data: ResultData.fromParams(Config.TIME_OUT, null, '连接超时,请检查服务器地址是否正确'));
       } else if (e.type == DioErrorType.RECEIVE_TIMEOUT) {
-        return Response(
-            data:
-                ResultData.fromParams(Config.TIME_OUT, null, '连接超时，请检查是否连接网络'));
+        return Response(data: ResultData.fromParams(Config.TIME_OUT, null, '连接超时，请检查是否连接网络'));
       } else {
-        return Response(
-            data: ResultData.fromParams(Config.UNKNOW_ERROR, null, '未知错误'));
+        return Response(data: ResultData.fromParams(Config.UNKNOW_ERROR, null, '未知错误'));
       }
     }
   }
