@@ -8,12 +8,12 @@ import 'package:halo/widget/loading_dialog.dart';
 import 'package:halo/widget/refresh_list.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class CommentListPage extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() => _CommentListPageView();
-}
+//class CommentListPage extends StatefulWidget {
+//  @override
+//  State<StatefulWidget> createState() => _CommentListPageView();
+//}
 
-class _CommentListPageView extends BaseState<CommentListPage> with PullRefreshMixIn {
+class CommentListPage extends BaseState with PullRefreshMixIn {
   RefreshController controller;
 
   @override

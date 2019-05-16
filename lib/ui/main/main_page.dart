@@ -86,11 +86,11 @@ class _MainPageView extends State<MainPage> {
         "标签管理", () {
       pushToNewPage(context, TagManagerPage());
     }));
-    widgets.add(createItem(Icons.image, "媒体", (){
-      pushToNewPage(context, AttachmentsListPage());
+    widgets.add(createItem(Icons.image, "媒体", () {
+      pushToNewPageWithWidget(context, AttachmentsListPage());
     }));
     widgets.add(createItem(Icons.forum, "评论", () {
-      pushToNewPage(context, CommentListPage());
+      pushToNewPageWithWidget(context, CommentListPage());
     }));
     widgets.add(createLabel("配置"));
     widgets.add(createItem(Icons.settings, "设置", () {
@@ -120,8 +120,7 @@ class _MainPageView extends State<MainPage> {
           ),
           InkWell(
             child: Container(
-                decoration: new BoxDecoration(
-                    color: Color.fromARGB(255, 243, 246, 248)),
+                decoration: new BoxDecoration(color: Color.fromARGB(255, 243, 246, 248)),
                 child: ListTile(
                   leading: Icon(
                     Icons.keyboard_backspace,
@@ -158,8 +157,7 @@ class _MainPageView extends State<MainPage> {
     );
   }
 
-  TextStyle style =
-      TextStyle(fontSize: 16, color: Color.fromARGB(255, 102, 142, 170));
+  TextStyle style = TextStyle(fontSize: 16, color: Color.fromARGB(255, 102, 142, 170));
 
   Widget createLabel(txt) {
     return Padding(

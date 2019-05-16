@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:halo/app/base/base_widget.dart';
 import 'package:halo/app/config.dart' as cf;
 import 'package:halo/app/provide.dart';
 import 'package:halo/module/category_list.dart';
@@ -23,9 +24,7 @@ class PostListPage extends StatefulWidget {
   }
 }
 
-bool onInit = false;
-
-class _ArticleListPageView extends State<PostListPage> with PullRefreshMixIn {
+class _ArticleListPageView extends BaseState<PostListPage> with PullRefreshMixIn {
   RefreshController controller;
 
   @override
@@ -35,12 +34,8 @@ class _ArticleListPageView extends State<PostListPage> with PullRefreshMixIn {
   }
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (!onInit) {
-      onInit = true;
-      refresh(true);
-    }
+  void onFirstInit() {
+    refresh(true);
   }
 
   void refresh(bool refresh) {

@@ -11,12 +11,7 @@ import 'package:halo/widget/loading_dialog.dart';
 import 'package:halo/widget/refresh_list.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class AttachmentsListPage extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() => _AttachmentsListPageVIew();
-}
-
-class _AttachmentsListPageVIew extends BaseState<AttachmentsListPage> with PullRefreshMixIn {
+class AttachmentsListPage extends BaseState with PullRefreshMixIn {
   RefreshController controller;
 
   @override
@@ -88,7 +83,7 @@ class _AttachmentsListPageVIew extends BaseState<AttachmentsListPage> with PullR
     }
     return buildRefresh(
         GridView.builder(
-          itemCount: mode?.attachments?.content?.length??1,
+          itemCount: mode?.attachments?.content?.length ?? 1,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2, //横轴三个子widget
               childAspectRatio: 1 //宽高比为1时，子widget

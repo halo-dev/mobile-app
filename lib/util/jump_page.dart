@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:halo/app/base/base_widget.dart';
 
 SlideTransition createTransition(Animation<double> animation, Widget child) {
   return new SlideTransition(
@@ -12,8 +13,13 @@ SlideTransition createTransition(Animation<double> animation, Widget child) {
 }
 
 Future pushToNewPage(BuildContext context, Widget page) {
-  return Navigator.of(context)
-      .push(CupertinoPageRoute(builder: (BuildContext context) {
+  return Navigator.of(context).push(CupertinoPageRoute(builder: (BuildContext context) {
     return page;
+  }));
+}
+
+Future pushToNewPageWithWidget(BuildContext context, BaseState page) {
+  return Navigator.of(context).push(CupertinoPageRoute(builder: (BuildContext context) {
+    return BaseWidget(page);
   }));
 }
