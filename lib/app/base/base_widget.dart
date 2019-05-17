@@ -22,6 +22,7 @@ abstract class BaseState<T extends StatefulWidget> extends State<T> {
 
   @override
   void dispose() {
+    firstInit = false;
     RxBus().destroy();
     super.dispose();
   }
