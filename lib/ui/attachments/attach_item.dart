@@ -1,13 +1,15 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:halo/app/config.dart';
 import 'package:halo/module/attachments.dart';
+import 'package:halo/ui/attachments/preview/preview_images.dart';
+import 'package:halo/ui/attachments/preview/preview_images_page.dart';
+import 'package:halo/util/Utils.dart';
 
 class AttachListItem extends StatelessWidget {
   final AttachmentsContent item;
+  final int index;
 
-  AttachListItem(this.item);
+  AttachListItem(this.item, this.index);
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +17,7 @@ class AttachListItem extends StatelessWidget {
         onTap: () {
           if (item.mediaType.contains("image")) {
             /// 可查看大图
+            pushToNewPageWithWidget(context, PreviewImagePage(index));
           }
         },
         child: Card(
@@ -25,32 +28,15 @@ class AttachListItem extends StatelessWidget {
                 right: 0,
                 bottom: 0,
                 left: 0,
-                child: CachedNetworkImage(
-                    imageUrl: item.thumbPath,
-                    fit: BoxFit.fill,
-                    placeholder: (context, url) => new CircularProgressIndicator(),
-                    errorWidget: (context, url, error) =>
-                        Icon(Icons.error_outline, size: 30, color: Config.fontLightColor)),
+                child: buildCachedNetworkImage(item.thumbPath),
               ),
-              Positioned(
-                  top: 0,
-                  right: 0,
-                  child: new Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      IconButton(
-                          icon: Icon(Icons.info_outline, size: 24, color: Colors.white),
-                          onPressed: null)
-                    ],
-                  )),
               Positioned(
                 bottom: 0,
                 left: 0,
                 right: 0,
                 child: Container(
                   height: 40,
-                  color: Colors.black26,
+                  color: Colors.grey.withOpacity(0.2),
                   child: new Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.end,

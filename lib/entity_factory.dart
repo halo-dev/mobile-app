@@ -39,6 +39,8 @@ class EntityFactory {
       return Attachments.fromJson(json) as T;
     } else if (T.toString() == "Comment") {
       return Comment.fromJson(json) as T;
+    } else if (T.toString() == "AttachmentsContent") {
+      return AttachmentsContent.fromJson(json) as T;
     } else {
       Log("实体类${T.toString()}没有注册到EntityFactory");
       return null;

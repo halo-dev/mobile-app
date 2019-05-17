@@ -3,16 +3,15 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:halo/app/base/base_notifier.dart';
 import 'package:halo/module/attachments.dart';
 import 'package:halo/net/api.dart';
 import 'package:halo/net/api_request.dart';
 import 'package:halo/util/Utils.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 
-class AttachmentsModule extends ChangeNotifier {
+class AttachmentsModule extends BaseNotifier {
   int indexPage = 0;
   int indexSize = 20;
   int status;
@@ -20,6 +19,7 @@ class AttachmentsModule extends ChangeNotifier {
   List<Asset> selectImageList;
 
   void getAttachment(bool up, {String key, String type, String strong}) {
+    showLoading();
     if (up) {
       indexPage = 0;
     }
@@ -42,6 +42,7 @@ class AttachmentsModule extends ChangeNotifier {
       }
       notifyListeners();
     }, () {
+      hideLoading();
 //       attachments.content.clear();
 //      articleList.add(Content());
 //      notifyListeners();
@@ -49,26 +50,42 @@ class AttachmentsModule extends ChangeNotifier {
   }
 
   void uploadFile(Asset asset) async {
+    showLoading(msg: "上传中...");
+    String suff = asset.name.substring(asset.name.lastIndexOf("."), asset.name.length);
     ByteData byteData = await asset.requestOriginal(quality: 50);
     List<int> imageData = byteData.buffer.asUint8List();
     FormData formData = new FormData.from({
-      "file": new UploadFileInfo.fromBytes(imageData, asset.name, contentType: ContentType("", "")),
+      "file": new UploadFileInfo.fromBytes(imageData, asset.name,
+          contentType: ContentType.parse(getContentType(suff))),
     });
 
-    ApiWithQuery<Attachments>(Api.upload, POST, formData, (data) {
-      status = 200;
-
-      attachments = data;
-      ++indexPage;
+    ApiWithQuery<AttachmentsContent>(Api.upload, POST, formData, (data) {
+      ToastUtil.showToast("上传成功^_^");
+      attachments.content.insert(0, data);
       notifyListeners();
     }, (code, msg) {
-      status = code;
-
+      ToastUtil.showToast(msg);
       notifyListeners();
     }, () {
+      hideLoading();
 //       attachments.content.clear();
 //      articleList.add(Content());
 //      notifyListeners();
+    });
+  }
+
+  //删除媒体文件
+  void delete(int id) {
+    showLoading(msg: "正在删除...");
+    ApiRequest(Api.deleteAttach(id), DELETE, (data) {
+      ToastUtil.showToast("删除成功^_^");
+      attachments.content.removeWhere((item) => item.id == id);
+      notifyListeners();
+    }, (code, msg) {
+      ToastUtil.showToast(msg);
+      notifyListeners();
+    }, () {
+      hideLoading();
     });
   }
 

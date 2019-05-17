@@ -42,6 +42,8 @@ class Api {
 
   ///上传文件
   static final String upload = "/api/admin/attachments/upload";
+  //删除文件
+  static String deleteAttach(id) => "/api/admin/attachments/$id";
 
   //媒体
   static final String attachments = "/api/admin/attachments";

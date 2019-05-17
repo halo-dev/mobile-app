@@ -84,7 +84,7 @@ class _MainPageView extends State<MainPage> {
           color: Config.fontColor,
         ),
         "标签管理", () {
-      pushToNewPage(context, TagManagerPage());
+      pushToNewPageWithWidget(context, TagManagerPage());
     }));
     widgets.add(createItem(Icons.image, "媒体", () {
       pushToNewPageWithWidget(context, AttachmentsListPage());

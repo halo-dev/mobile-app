@@ -40,15 +40,15 @@ class DioManager {
       //日志拦截
       _dio.interceptors.add(PrintLogInterceptor());
       //代理
-      (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate = (client) {
-        // config the http client
-        client.findProxy = (uri) {
-          //proxy all request to localhost:8888
-          return "PROXY 192.168.99.104:8888";
-        };
-        // you can also create a new HttpClient to dio
-        // return new HttpClient();
-      };
+//      (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate = (client) {
+//        // config the http client
+//        client.findProxy = (uri) {
+//          //proxy all request to localhost:8888
+//          return "PROXY 192.168.99.104:8888";
+//        };
+//        // you can also create a new HttpClient to dio
+//        // return new HttpClient();
+//      };
       return _dio;
     }
   }

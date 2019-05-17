@@ -6,7 +6,9 @@ import 'package:halo/util/Utils.dart';
 import 'package:intl/intl.dart';
 
 export 'color_util.dart';
+export 'content_type_utils.dart';
 export 'default_bus.dart';
+export 'file_util.dart';
 export 'jump_page.dart';
 export 'log_util.dart';
 export 'sp_util.dart';
@@ -45,9 +47,7 @@ class Utils {
     var dateTime = DateTime.fromMillisecondsSinceEpoch(milliseconds);
     var now = DateTime.now();
 
-    var diff = Duration(
-        milliseconds:
-            now.millisecondsSinceEpoch - dateTime.millisecondsSinceEpoch);
+    var diff = Duration(milliseconds: now.millisecondsSinceEpoch - dateTime.millisecondsSinceEpoch);
     if (diff.inMinutes < 1) {
       return "刚刚";
     }

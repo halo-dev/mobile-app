@@ -1,17 +1,18 @@
 import 'dart:collection';
 
-import 'package:flutter/material.dart';
+import 'package:halo/app/base/base_notifier.dart';
 import 'package:halo/module/tag_list.dart';
 import 'package:halo/net/api.dart';
 import 'package:halo/net/api_request.dart';
 import 'package:halo/util/Utils.dart';
 import 'package:halo/util/toast.dart';
 
-class TagListModule extends ChangeNotifier {
+class TagListModule extends BaseNotifier {
   TagList tagList;
   int status;
 
   void updateList({onFinish}) {
+    showLoading();
     Map params = HashMap<String, dynamic>();
     params["more"] = true;
     ApiWithQuery<TagList>(Api.listTags, GET, params, (data) {
@@ -22,7 +23,12 @@ class TagListModule extends ChangeNotifier {
       status = code;
       ToastUtil.showToast(msg);
       notifyListeners();
-    }, onFinish == null ? () {} : onFinish);
+    },
+        onFinish == null
+            ? () {
+                hideLoading();
+              }
+            : onFinish);
   }
 
   void delete(Tag tag) {

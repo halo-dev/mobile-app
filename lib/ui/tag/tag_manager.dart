@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:halo/app/base/base_widget.dart';
 import 'package:halo/app/config.dart' as cf;
 import 'package:halo/app/provide.dart';
 import 'package:halo/module/tag_list.dart';
@@ -9,14 +10,7 @@ import 'package:halo/widget/refresh_list.dart';
 import 'package:halo/widget/textfield_alertdialog.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class TagManagerPage extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return _TagManagerPageView();
-  }
-}
-
-class _TagManagerPageView extends State<TagManagerPage> with PullRefreshMixIn {
+class TagManagerPage extends BaseState with PullRefreshMixIn {
   RefreshController controller;
 
   @override
@@ -29,7 +23,6 @@ class _TagManagerPageView extends State<TagManagerPage> with PullRefreshMixIn {
 
   @override
   Widget build(BuildContext context) {
-    Provide.value<TagListModule>(context).updateList();
     return Scaffold(
       backgroundColor: cf.Config.background,
       appBar: AppBar(
@@ -66,8 +59,8 @@ class _TagManagerPageView extends State<TagManagerPage> with PullRefreshMixIn {
   ) {
     if (controller.headerStatus == RefreshStatus.refreshing ||
         controller.footerStatus == RefreshStatus.refreshing) {
-      controller.sendBack(controller.headerStatus == RefreshStatus.refreshing,
-          RefreshStatus.completed);
+      controller.sendBack(
+          controller.headerStatus == RefreshStatus.refreshing, RefreshStatus.completed);
     }
     IndexedWidgetBuilder builder;
     if (mode.tagList == null || mode.tagList.list.isEmpty) {
@@ -111,11 +104,7 @@ class _TagManagerPageView extends State<TagManagerPage> with PullRefreshMixIn {
     }
     content = Padding(
       padding: EdgeInsets.all(10),
-      child: Wrap(
-          spacing: 12,
-          runSpacing: 12,
-          alignment: WrapAlignment.start,
-          children: tiles),
+      child: Wrap(spacing: 12, runSpacing: 12, alignment: WrapAlignment.start, children: tiles),
     );
     return content;
   }
@@ -131,5 +120,10 @@ class _TagManagerPageView extends State<TagManagerPage> with PullRefreshMixIn {
       var tag = Tag.fromParams(id: id, name: name, slugName: slug);
       Provide.value<TagListModule>(context).update(tag);
     });
+  }
+
+  @override
+  void onFirstInit() {
+    Provide.value<TagListModule>(context).updateList();
   }
 }

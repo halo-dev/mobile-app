@@ -10,6 +10,7 @@ import 'package:halo/widget/loading_dialog.dart';
 import 'package:halo/widget/refresh_list.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
+/// 媒体 附件 列表
 class AttachmentsListPage extends BaseState with PullRefreshMixIn {
   RefreshController controller;
 
@@ -77,7 +78,7 @@ class AttachmentsListPage extends BaseState with PullRefreshMixIn {
       };
     } else {
       builder = (BuildContext context, int index) {
-        return AttachListItem(mode.attachments.content[index]);
+        return AttachListItem(mode.attachments.content[index], index);
       };
     }
     return buildRefresh(
