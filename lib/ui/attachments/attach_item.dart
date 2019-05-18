@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:halo/module/attachments.dart';
+import 'package:halo/ui/attachments/attachments_info_page.dart';
 import 'package:halo/ui/attachments/preview/preview_images.dart';
 import 'package:halo/ui/attachments/preview/preview_images_page.dart';
 import 'package:halo/util/Utils.dart';
@@ -8,8 +9,9 @@ import 'package:halo/util/Utils.dart';
 class AttachListItem extends StatelessWidget {
   final AttachmentsContent item;
   final int index;
+  final int type;
 
-  AttachListItem(this.item, this.index);
+  AttachListItem(this.item, this.index, this.type);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +19,11 @@ class AttachListItem extends StatelessWidget {
         onTap: () {
           if (item.mediaType.contains("image")) {
             /// 可查看大图
-            pushToNewPageWithWidget(context, PreviewImagePage(index));
+            if (type == avatar) {
+              Navigator.of(context).pop(item.path);
+            } else {
+              pushToNewPageWithWidget(context, PreviewImagePage(index));
+            }
           }
         },
         child: Card(
@@ -34,6 +40,7 @@ class AttachListItem extends StatelessWidget {
                 bottom: 0,
                 left: 0,
                 right: 0,
+                height: type == avatar ? 0 : 40,
                 child: Container(
                   height: 40,
                   color: Colors.grey.withOpacity(0.2),

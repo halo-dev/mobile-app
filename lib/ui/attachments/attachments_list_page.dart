@@ -78,7 +78,7 @@ class AttachmentsListPage extends BaseState with PullRefreshMixIn {
       };
     } else {
       builder = (BuildContext context, int index) {
-        return AttachListItem(mode.attachments.content[index], index);
+        return AttachListItem(mode.attachments.content[index], index, null);
       };
     }
     return buildRefresh(

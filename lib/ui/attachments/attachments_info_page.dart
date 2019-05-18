@@ -11,9 +11,16 @@ import 'package:halo/widget/loading_dialog.dart';
 import 'package:halo/widget/refresh_list.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
+const int avatar = 0x000329;
+
 /// 媒体详情
 class AttachmentsListPage extends BaseState with PullRefreshMixIn {
   RefreshController controller;
+  int type;
+
+  AttachmentsListPage.byType(this.type);
+
+  AttachmentsListPage();
 
   @override
   void initState() {
@@ -79,14 +86,14 @@ class AttachmentsListPage extends BaseState with PullRefreshMixIn {
       };
     } else {
       builder = (BuildContext context, int index) {
-        return AttachListItem(mode.attachments.content[index], index);
+        return AttachListItem(mode.attachments.content[index], index, type);
       };
     }
     return buildRefresh(
         GridView.builder(
           itemCount: mode?.attachments?.content?.length ?? 1,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2, //横轴三个子widget
+              crossAxisCount: type == avatar ? 4 : 2, //横轴三个子widget
               childAspectRatio: 1 //宽高比为1时，子widget
               ),
           itemBuilder: builder,

@@ -9,6 +9,8 @@ Widget loginTextField(
   TextInputAction action,
   TextInputType inputType,
   TextStyle labelStyle,
+  String helperText,
+  int minLine,
 }) {
   return Row(
     crossAxisAlignment: CrossAxisAlignment.end,
@@ -32,13 +34,14 @@ Widget loginTextField(
               autofocus: true,
               obscureText: show,
               focusNode: null,
+              minLines: minLine ?? 1,
+              maxLines: minLine ?? 1,
               keyboardType: inputType,
               textInputAction: action,
               decoration: new InputDecoration(
                   labelText: hintText,
-                  labelStyle: labelStyle == null
-                      ? TextStyle(fontSize: 15, color: Config.fontLightColor)
-                      : labelStyle,
+                  hintText: helperText ?? "",
+                  labelStyle: labelStyle ?? TextStyle(fontSize: 15, color: Config.fontLightColor),
                   contentPadding: EdgeInsets.fromLTRB(0, 15, 0, 5),
                   enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(

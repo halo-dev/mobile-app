@@ -10,6 +10,7 @@ import 'package:halo/ui/login/site_login.dart';
 import 'package:halo/ui/main/site_view.dart';
 import 'package:halo/ui/post/edit/edit_page.dart';
 import 'package:halo/ui/post/list/post_list_page.dart';
+import 'package:halo/ui/setting/preferences/user_preferences_page.dart';
 import 'package:halo/ui/setting/setting_page.dart';
 import 'package:halo/ui/tag/tag_manager.dart';
 import 'package:halo/util/jump_page.dart';
@@ -93,7 +94,10 @@ class _MainPageView extends State<MainPage> {
       pushToNewPageWithWidget(context, CommentListPage());
     }));
     widgets.add(createLabel("配置"));
-    widgets.add(createItem(Icons.settings, "设置", () {
+    widgets.add(createItem(Icons.supervisor_account, "个人资料", () {
+      pushToNewPageWithWidget(context, SetUserPreferences());
+    }));
+    widgets.add(createItem(Icons.settings, "博客设置", () {
       pushToNewPage(context, SettingPage());
     }));
     widgets.add(createLabel("外部"));

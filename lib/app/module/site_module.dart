@@ -29,4 +29,11 @@ class SiteModule extends ChangeNotifier {
   void saveSite(Site site) {
     SPUtil.save(Config.SpKey, site.toString());
   }
+
+  void updateUserInfo(String avatar, String nickname, String username) {
+    site.avatar = avatar;
+    site.nickname = nickname;
+    site.username = username;
+    change(site);
+  }
 }

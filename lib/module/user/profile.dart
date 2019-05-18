@@ -50,4 +50,18 @@ class Profile {
   String toString() {
     return '{"createTime": $createTime,"id": $id,"updateTime": $updateTime,"avatar": ${avatar != null ? '${json.encode(avatar)}' : 'null'},"description": ${description != null ? '${json.encode(description)}' : 'null'},"email": ${email != null ? '${json.encode(email)}' : 'null'},"nickname": ${nickname != null ? '${json.encode(nickname)}' : 'null'},"username": ${username != null ? '${json.encode(username)}' : 'null'}}';
   }
+
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['createTime'] = this.createTime;
+    data['nickname'] = this.nickname;
+    data['description'] = this.description;
+    data['updateTime'] = this.updateTime;
+    data['id'] = this.id;
+    data['avatar'] = this.avatar;
+    data['email'] = this.email;
+    data['username'] = this.username;
+    return data;
+  }
 }

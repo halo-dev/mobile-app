@@ -35,7 +35,7 @@ abstract class BaseState<T extends StatefulWidget> extends State<T> {
         dialogShow(context, event.msg);
       }
 
-      if (showLoading && !event.show) {
+      if (showLoading != null && showLoading && !event.show) {
         showLoading = false;
         Navigator.of(context).pop();
       }
