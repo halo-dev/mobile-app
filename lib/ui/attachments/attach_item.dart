@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:halo/module/attachments.dart';
-import 'package:halo/ui/attachments/attachments_info_page.dart';
+import 'package:halo/ui/attachments/attachments_list_page.dart';
 import 'package:halo/ui/attachments/preview/preview_images.dart';
 import 'package:halo/ui/attachments/preview/preview_images_page.dart';
 import 'package:halo/util/Utils.dart';

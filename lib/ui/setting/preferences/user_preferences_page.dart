@@ -1,11 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:halo/app/base/base_widget.dart';
 import 'package:halo/app/config.dart' as cf;
 import 'package:halo/app/provide.dart';
 import 'package:halo/module/user/profile.dart';
-import 'package:halo/ui/attachments/attachments_info_page.dart';
+import 'package:halo/ui/attachments/attachments_list_page.dart';
 import 'package:halo/ui/setting/preferences/modify_preferences_page.dart';
 import 'package:halo/ui/setting/preferences/set_user_preferences_module.dart';
 import 'package:halo/util/Utils.dart';
