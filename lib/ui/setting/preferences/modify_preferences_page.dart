@@ -47,7 +47,7 @@ class ModifyPreferences extends BaseState {
               onPressed: () {
                 if (type != pwd) {
                   if (isEmpty(_textController.text)) {
-                    Navigator.of(context).pop();
+                    ToastUtil.showToast("你似乎什么都没有写...");
                     return;
                   }
                   Profile profile = Provide.value<SetUserPreferencesModule>(context).profile;
@@ -67,6 +67,25 @@ class ModifyPreferences extends BaseState {
                       break;
                   }
                   Provide.value<SetUserPreferencesModule>(context).update(profile, context);
+                } else {
+                  var _old = _textController.text;
+                  var _pwd = _pwdController.text;
+                  var _confirm = _confirmController.text;
+
+                  if (isEmpty(_old) || isEmpty(_pwd) || isEmpty(_confirm)) {
+                    ToastUtil.showToast("请完善信息后在提交...");
+                    return;
+                  }
+                  if (_pwd != _confirm) {
+                    ToastUtil.showToast("新密码两次输入不一致");
+                    return;
+                  }
+                  if (_pwd != _old) {
+                    ToastUtil.showToast("新密码和旧密码不能相同");
+                    return;
+                  }
+                  Provide.value<SetUserPreferencesModule>(context)
+                      .updatePasswd(_old, _pwd, context);
                 }
               })
         ],

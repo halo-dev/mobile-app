@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:halo/app/base/base_notifier.dart';
@@ -21,6 +23,21 @@ class SetUserPreferencesModule extends BaseNotifier {
       showMsg(msg);
       notifyListeners();
     }, () {});
+  }
+
+  void updatePasswd(String old, String newPwd, BuildContext context) {
+    showLoading(msg: "正在更新资料...");
+    Map params = HashMap<String, dynamic>();
+    params["oldPassword"] = old;
+    params["newPassword"] = newPwd;
+    ApiWithQuery(Api.password, PUT, params, (data) {
+      hideLoading();
+      Navigator.of(context).pop();
+    }, (code, msg) {
+      showMsg(msg);
+    }, () {
+      hideLoading();
+    });
   }
 
   void update(Profile profile, BuildContext context, {bool back = true}) {

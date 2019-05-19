@@ -19,6 +19,7 @@ class Api {
 
   //user
   static final String profiles = "/api/admin/users/profiles";
+  static final String password = "/api/admin/users/profiles/password";
 
   ///options
   static final String options = "/api/admin/options/map_view";
