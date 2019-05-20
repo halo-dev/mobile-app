@@ -3,7 +3,7 @@ import 'package:halo/app/base/base_widget.dart';
 import 'package:halo/app/config.dart' as cf;
 import 'package:halo/app/provide.dart';
 import 'package:halo/ui/attachments/attach_item.dart';
-import 'package:halo/ui/attachments/attachments_manager_model.dart';
+import 'package:halo/ui/attachments/attachments_manager_module.dart';
 import 'package:halo/ui/post/list/search_post_list_page.dart';
 import 'package:halo/util/Utils.dart';
 import 'package:halo/widget/loading_dialog.dart';

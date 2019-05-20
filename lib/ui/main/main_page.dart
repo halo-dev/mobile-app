@@ -98,7 +98,7 @@ class _MainPageView extends State<MainPage> {
       pushToNewPageWithWidget(context, SetUserPreferences());
     }));
     widgets.add(createItem(Icons.settings, "博客设置", () {
-      pushToNewPage(context, SettingPage());
+      pushToNewPageWithWidget(context, SettingPage());
     }));
     widgets.add(createLabel("外部"));
     widgets.add(createItem(Icons.language, "查看站点", null));

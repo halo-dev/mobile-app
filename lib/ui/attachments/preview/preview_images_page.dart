@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:halo/app/base/base_widget.dart';
 import 'package:halo/app/provide.dart';
 import 'package:halo/module/attachments.dart';
-import 'package:halo/ui/attachments/attachments_manager_model.dart';
+import 'package:halo/ui/attachments/attachments_manager_module.dart';
 import 'package:halo/util/Utils.dart';
 import 'package:halo/widget/alertdialog.dart';
 import 'package:halo/widget/extended_image/extended_image.dart';

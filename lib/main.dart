@@ -6,7 +6,7 @@ import 'package:halo/app/config.dart';
 import 'package:halo/app/module/site_module.dart';
 import 'package:halo/app/provide.dart';
 import 'package:halo/app/request_info.dart';
-import 'package:halo/ui/attachments/attachments_manager_model.dart';
+import 'package:halo/ui/attachments/attachments_manager_module.dart';
 import 'package:halo/ui/category/category_manager_module.dart';
 import 'package:halo/ui/comment/comment_list_module.dart';
 import 'package:halo/ui/login/site_login.dart';

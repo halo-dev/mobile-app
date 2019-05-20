@@ -1,43 +1,76 @@
 import 'package:flutter/material.dart';
+import 'package:halo/app/base/base_widget.dart';
 import 'package:halo/app/config.dart';
-import 'package:halo/app/module/site_module.dart';
-import 'package:halo/app/provide.dart';
-import 'package:halo/widget/login_text_field.dart';
 
-class SettingPage extends StatelessWidget {
-  TextStyle style =
-      TextStyle(fontSize: 16, color: Color.fromARGB(255, 102, 142, 170));
-  final TextEditingController _userCtl = new TextEditingController();
-  final TextEditingController _passwdCtl = new TextEditingController();
-
+class SettingPage extends BaseState {
   @override
   Widget build(BuildContext context) {
-    return Provide<SiteModule>(builder: (context, child, site) {
-      _userCtl.text = site.site.username;
-      return Scaffold(
+    return Scaffold(
         backgroundColor: Config.background,
         appBar: AppBar(
-          title: Text(site.site.title),
-          actions: <Widget>[
-            IconButton(
-              // action button
-              icon: new Icon(Icons.check),
-              onPressed: () {},
-            )
-          ],
+          title: Text("博客设置"),
         ),
-        body: Padding(
-          padding: EdgeInsets.all(15),
-          child: new Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("账户", style: style),
-              loginTextField("用户名", _userCtl, null),
-              loginTextField("密码", _passwdCtl, null, show: true),
-            ],
-          ),
-        ),
-      );
-    });
+//          home: isEmpty(site.site.address) ? SiteLogin() : te.site.title),
+//          home: isEmpty(sitebuildSettings) ? SiteLogin() : MainPage()),
+        body: buildSetting(context));
   }
+
+  buildSetting(BuildContext context) {
+    List<Widget> widgets = List();
+    widgets.add(createItem(Icons.build, "常规设置", () {
+//      pushToNewPageWithWidget(context, SettingPage());
+    }));
+    widgets.add(createItem(Icons.language, "SEO 设置", () {
+//      pushToNewPageWithWidget(context, SettingPage());
+    }));
+    widgets.add(createItem(Icons.library_books, "文章设置", () {
+//      pushToNewPageWithWidget(context, SettingPage());
+    }));
+    widgets.add(createItem(Icons.forum, "评论设置", () {
+//      pushToNewPageWithWidget(context, SettingPage());
+    }));
+    widgets.add(createItem(Icons.attachment, "附件设置", () {
+//      pushToNewPageWithWidget(context, SettingPage());
+    }));
+    widgets.add(createItem(Icons.mail_outline, "SMTP 设置", () {
+//      pushToNewPageWithWidget(context, SettingPage());
+    }));
+    widgets.add(createItem(Icons.format_list_bulleted, "其他设置", () {
+//      pushToNewPageWithWidget(context, SettingPage());
+    }));
+    return ListView.builder(
+        itemCount: widgets.length,
+        itemBuilder: (BuildContext context, int index) {
+          return widgets[index];
+        });
+  }
+
+  Widget createItem(icon, title, Function callBack) {
+    return Material(
+      shape: new BorderDirectional(
+          //BorderSide默认是BorderStyle.solid
+          bottom: new BorderSide(
+        color: Color(0x1d000000),
+        width: 0.5,
+      )),
+      color: Colors.white,
+      child: ListTile(
+        onTap: callBack,
+        leading: icon is Widget
+            ? icon
+            : Icon(
+                icon,
+                size: 24,
+                color: Config.fontColor,
+              ),
+        title: Text(
+          title,
+          style: TextStyle(fontSize: 16, color: Config.fontColor),
+        ),
+      ),
+    );
+  }
+
+  @override
+  void onFirstInit() {}
 }

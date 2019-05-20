@@ -43,6 +43,7 @@ class Api {
 
   ///上传文件
   static final String upload = "/api/admin/attachments/upload";
+
   //删除文件
   static String deleteAttach(id) => "/api/admin/attachments/$id";
 
@@ -51,4 +52,7 @@ class Api {
 
   /// 评论
   static final String comments = "/api/admin/posts/comments";
+
+  ///links
+  static final String links = "/api/admin/links";
 }
