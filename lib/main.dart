@@ -14,6 +14,8 @@ import 'package:halo/ui/main/main_page.dart';
 import 'package:halo/ui/post/edit/edit_post_module.dart';
 import 'package:halo/ui/post/post_manager_module.dart';
 import 'package:halo/ui/setting/preferences/set_user_preferences_module.dart';
+import 'package:halo/ui/setting/setting_module.dart';
+import 'package:halo/ui/setting/themes/set_themes_module.dart';
 import 'package:halo/ui/tag/tag_manager_module.dart';
 import 'package:halo/util/Utils.dart';
 import 'package:halo/util/string_util.dart';
@@ -29,6 +31,8 @@ void main() {
         ..provide(Provider<EditPostModule>.value(EditPostModule()))
         ..provide(Provider<AttachmentsModule>.value(AttachmentsModule()))
         ..provide(Provider<SetUserPreferencesModule>.value(SetUserPreferencesModule()))
+        ..provide(Provider<SetThemeModule>.value(SetThemeModule()))
+        ..provide(Provider<SettingModule>.value(SettingModule()))
         ..provide(Provider<PostListModule>.value(PostListModule())),
       child: BaseWidget(MyApp()),
     ),

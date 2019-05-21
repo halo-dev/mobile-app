@@ -1,0 +1,50 @@
+group 'com.flutter_webview_plugin'
+version '1.0-SNAPSHOT'
+
+def ANDROIDX_WARNING = "flutterPluginsAndroidXWarning";
+gradle.buildFinished { buildResult ->
+    if (buildResult.failure && !rootProject.ext.has(ANDROIDX_WARNING)) {
+        println '         *********************************************************'
+        println 'WARNING: This version of flutter_webview_plugin will break your Android build if it or its dependencies aren\'t compatible with AndroidX.'
+        println '         See https://goo.gl/CP92wY for more information on the problem and how to fix it.'
+        println '         This warning prints for all Android build failures. The real root cause of the error may be unrelated.'
+        println '         *********************************************************'
+        rootProject.ext.set(ANDROIDX_WARNING, true);
+    }
+}
+
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.3.2'
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
+
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 28
+
+    defaultConfig {
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        // NOTE(jeffmikels): When targetSdkVersion or minSdkVersion is not set or < 4, gradle adds 
+        // additional scary permissions such as WRITE_EXTERNAL_STORAGE and READ_PHONE_STATE.
+        minSdkVersion 16
+    }
+    lintOptions {
+        disable 'InvalidPackage'
+    }
+}
+dependencies {
+    implementation group: 'androidx.appcompat', name: 'appcompat', version: '1.0.0'
+}

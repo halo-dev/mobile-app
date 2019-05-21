@@ -114,6 +114,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_webview_plugin:
+    dependency: "direct main"
+    description:
+      path: flutter_webview_plugin
+      relative: true
+    source: path
+    version: "0.3.5"
   fluttertoast:
     dependency: "direct main"
     description:

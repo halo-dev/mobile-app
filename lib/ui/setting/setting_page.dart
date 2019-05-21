@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:halo/app/base/base_widget.dart';
 import 'package:halo/app/config.dart';
+import 'package:halo/app/provide.dart';
+import 'package:halo/ui/setting/seo/seo_set_page.dart';
+import 'package:halo/ui/setting/setting_module.dart';
+import 'package:halo/util/Utils.dart';
 
 class SettingPage extends BaseState {
   @override
@@ -21,7 +25,7 @@ class SettingPage extends BaseState {
 //      pushToNewPageWithWidget(context, SettingPage());
     }));
     widgets.add(createItem(Icons.language, "SEO 设置", () {
-//      pushToNewPageWithWidget(context, SettingPage());
+      pushToNewPageWithWidget(context, SeoSetPage());
     }));
     widgets.add(createItem(Icons.library_books, "文章设置", () {
 //      pushToNewPageWithWidget(context, SettingPage());
@@ -72,5 +76,7 @@ class SettingPage extends BaseState {
   }
 
   @override
-  void onFirstInit() {}
+  void onFirstInit() {
+    Provide.value<SettingModule>(context).getSiteTitle();
+  }
 }

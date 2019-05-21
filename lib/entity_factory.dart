@@ -6,6 +6,7 @@ import 'package:halo/module/comment_entity.dart';
 import 'package:halo/module/options.dart';
 import 'package:halo/module/post_param.dart';
 import 'package:halo/module/tag_list.dart';
+import 'package:halo/module/themes.dart';
 import 'package:halo/module/user/profile.dart';
 import 'package:halo/module/user/token.dart';
 import 'package:halo/util/Utils.dart';
@@ -41,6 +42,8 @@ class EntityFactory {
       return Comment.fromJson(json) as T;
     } else if (T.toString() == "AttachmentsContent") {
       return AttachmentsContent.fromJson(json) as T;
+    } else if (T.toString() == "ThemesList") {
+      return ThemesList.fromJson(json) as T;
     } else {
       Log("实体类${T.toString()}没有注册到EntityFactory");
       return null;

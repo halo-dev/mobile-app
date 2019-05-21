@@ -23,6 +23,7 @@ class Api {
 
   ///options
   static final String options = "/api/admin/options/map_view";
+  static final String savingOptions = "api/admin/options/saving";
 
   static final String posts = "/api/admin/posts";
 
@@ -55,4 +56,13 @@ class Api {
 
   ///links
   static final String links = "/api/admin/links";
+
+  //menus
+  static final String menus = "/api/admin/menus";
+
+  //themes
+  static final String themes = "/api/admin/themes";
+  //激活主题
+  static String activation(themeId) => "/api/admin/themes/$themeId/activation";
+  static String deleteTheme(themeId) => "/api/admin/themes/$themeId";
 }

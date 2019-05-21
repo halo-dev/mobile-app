@@ -12,6 +12,7 @@ import 'package:halo/ui/login/site_login.dart';
 import 'package:halo/ui/main/main_page.dart';
 import 'package:halo/ui/main/site_view.dart';
 import 'package:halo/util/jump_page.dart';
+import 'package:halo/widget/loading_dialog.dart';
 
 class SiteInfo extends StatelessWidget {
   Profile profile;
@@ -51,7 +52,7 @@ class SiteInfo extends StatelessWidget {
                             width: 50,
                             fit: BoxFit.cover,
                             imageUrl: profile.avatar,
-                            placeholder: (context, url) => new CircularProgressIndicator(),
+                            placeholder: (context, url) => loading(),
                             errorWidget: (context, url, error) => Image.asset(
                                   "assest/images/halo_avatar.png",
                                   width: 50,

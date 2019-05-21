@@ -36,6 +36,8 @@ dependencies:
   pull_to_refresh: ^1.2.0
   fluttertoast: ^3.0.4
   multi_image_picker: ^4.2.0
+  flutter_webview_plugin:
+    path: ./flutter_webview_plugin
 
 dev_dependencies:
   flutter_test:

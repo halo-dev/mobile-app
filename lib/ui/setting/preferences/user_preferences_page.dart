@@ -90,26 +90,25 @@ class SetUserPreferences extends BaseState with PullRefreshMixIn {
       child: InkWell(
         onTap: click,
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(16, 13, 16, 13),
+          padding: const EdgeInsets.fromLTRB(16, 13, 5, 13),
           child: Row(children: [
-            Expanded(child: Text(name, style: style)),
+            Text(name, style: style),
             avatar
-                ? _buildAvatar(data)
-                : Expanded(
-                    flex: 3,
+                ? Expanded(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: <Widget>[
-                        Text(
-                          data,
-                          style: style,
-                        ),
-                      ],
-                    )),
-            Padding(
-              padding: EdgeInsets.only(left: 5),
-              child: Icon(Icons.keyboard_arrow_right, size: 25, color: cf.Config.fontColor),
-            )
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: <Widget>[_buildAvatar(data)]))
+                : Expanded(
+                    child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: <Widget>[
+                      Text(
+                        data,
+                        style: style,
+                      ),
+                    ],
+                  )),
+            Icon(Icons.keyboard_arrow_right, size: 25, color: cf.Config.fontColor),
           ]),
         ),
       ),
