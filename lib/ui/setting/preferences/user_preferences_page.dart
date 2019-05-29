@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:halo/app/base/base_widget.dart';
 import 'package:halo/app/config.dart' as cf;
@@ -8,6 +7,7 @@ import 'package:halo/ui/attachments/attachments_list_page.dart';
 import 'package:halo/ui/setting/preferences/modify_preferences_page.dart';
 import 'package:halo/ui/setting/preferences/set_user_preferences_module.dart';
 import 'package:halo/util/Utils.dart';
+import 'package:halo/widget/avatar_text_set.dart';
 import 'package:halo/widget/loading_dialog.dart';
 import 'package:halo/widget/refresh_list.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -59,7 +59,7 @@ class SetUserPreferences extends BaseState with PullRefreshMixIn {
 
   _buildProfile(Profile profile) {
     return Column(children: [
-      _buildItem("个人头像", profile.avatar, () async {
+      buildAvatarTextItem("个人头像", profile.avatar, () async {
         String path = await pushToNewPageWithWidget(context, AttachmentsListPage.byType(avatar));
         if (isNotEmpty(path)) {
           profile.avatar = path;
@@ -67,68 +67,18 @@ class SetUserPreferences extends BaseState with PullRefreshMixIn {
         }
       }, avatar: true),
       Divider(height: 1),
-      _buildItem("用户名：", profile.username, () => pushToEdit(name)),
+      buildAvatarTextItem("用户名：", profile.username, () => pushToEdit(name)),
       Divider(height: 1),
-      _buildItem("昵称：", profile.nickname, () => pushToEdit(nick)),
+      buildAvatarTextItem("昵称：", profile.nickname, () => pushToEdit(nick)),
       Divider(height: 1),
-      _buildItem("密码修改：", "", () => pushToEdit(pwd)),
+      buildAvatarTextItem("密码修改：", "", () => pushToEdit(pwd)),
       Divider(height: 1),
-      _buildItem("邮箱：", profile.email, () => pushToEdit(mail)),
+      buildAvatarTextItem("邮箱：", profile.email, () => pushToEdit(mail)),
       Divider(height: 1),
-      _buildItem("个人说明：", profile.description, () => pushToEdit(info)),
+      buildAvatarTextItem("个人说明：", profile.description, () => pushToEdit(info)),
       Divider(height: 1)
     ]);
   }
 
   Future pushToEdit(int type) => pushToNewPageWithWidget(context, ModifyPreferences(type));
-
-  final TextStyle style = TextStyle(fontSize: 16, color: cf.Config.fontColor);
-
-  _buildItem(String name, String data, Function click, {bool avatar = false}) {
-    return Material(
-      color: Colors.white,
-      child: InkWell(
-        onTap: click,
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(16, 13, 5, 13),
-          child: Row(children: [
-            Text(name, style: style),
-            avatar
-                ? Expanded(
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: <Widget>[_buildAvatar(data)]))
-                : Expanded(
-                    child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: <Widget>[
-                      Text(
-                        data,
-                        style: style,
-                      ),
-                    ],
-                  )),
-            Icon(Icons.keyboard_arrow_right, size: 25, color: cf.Config.fontColor),
-          ]),
-        ),
-      ),
-    );
-  }
-
-  ClipOval _buildAvatar(String data) {
-    return ClipOval(
-      child: CachedNetworkImage(
-        height: 50,
-        width: 50,
-        fit: BoxFit.cover,
-        imageUrl: data,
-        placeholder: (context, url) => new CircularProgressIndicator(),
-        errorWidget: (context, url, error) => Image.asset(
-              "assest/images/halo_avatar.png",
-              width: 50,
-              height: 50,
-            ),
-      ),
-    );
-  }
 }

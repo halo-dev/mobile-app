@@ -39,7 +39,7 @@ class LoginToSite {
 
   void getSiteTitle(BuildContext context, Token token) {
     ApiRequest<Options>(Api.options, GET, (data) {
-      userProfile(context, token, data.blog_title);
+      userProfile(context, token, data.blogTitle);
     }, (code, msg) {
       ToastUtil.show(msg, context);
     }, () {});

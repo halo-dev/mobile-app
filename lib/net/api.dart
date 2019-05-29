@@ -23,7 +23,7 @@ class Api {
 
   ///options
   static final String options = "/api/admin/options/map_view";
-  static final String savingOptions = "api/admin/options/saving";
+  static final String savingOptions = "/api/admin/options/map_view/saving";
 
   static final String posts = "/api/admin/posts";
 

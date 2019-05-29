@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 import 'package:halo/app/base/base_notifier.dart';
 import 'package:halo/module/options.dart';
 import 'package:halo/net/api.dart';
@@ -24,10 +22,11 @@ class SettingModule extends BaseNotifier {
     });
   }
 
-  void saveSetting(HashMap<String, String> map) {
+  void saveSetting() {
     showLoading();
-    ApiWithQuery(Api.savingOptions, POST, map, (data) {
-      options = data;
+    ApiWithQuery(Api.savingOptions, POST, options.toJson(), (data) {
+      getSiteTitle();
+      showMsg("保存成功");
       hideLoading();
       notifyListeners();
     }, (code, msg) {
