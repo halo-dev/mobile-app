@@ -3,6 +3,7 @@ import 'package:halo/app/base/base_widget.dart';
 import 'package:halo/app/config.dart';
 import 'package:halo/app/provide.dart';
 import 'package:halo/ui/setting/general/general_set_page.dart';
+import 'package:halo/ui/setting/other/post_set_page.dart';
 import 'package:halo/ui/setting/seo/seo_set_page.dart';
 import 'package:halo/ui/setting/setting_module.dart';
 import 'package:halo/util/Utils.dart';
@@ -29,7 +30,7 @@ class SettingPage extends BaseState {
       pushToNewPageWithWidget(context, SeoSetPage());
     }));
     widgets.add(createItem(Icons.library_books, "文章设置", () {
-//      pushToNewPageWithWidget(context, SettingPage());
+      pushToNewPageWithWidget(context, PostSetPage());
     }));
     widgets.add(createItem(Icons.forum, "评论设置", () {
 //      pushToNewPageWithWidget(context, SettingPage());

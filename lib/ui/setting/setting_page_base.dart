@@ -13,7 +13,7 @@ abstract class SettingPageBase extends BaseState {
         backgroundColor: Config.background,
         appBar: AppBar(
           elevation: 0,
-          title: Text("个人资料"),
+          title: Text(getTitle()),
           actions: <Widget>[
             IconButton(
                 icon: Image.asset("assest/images/image_ok.png",
@@ -91,4 +91,6 @@ abstract class SettingPageBase extends BaseState {
   saveData() {
     Provide.value<SettingModule>(context).saveSetting();
   }
+
+  String getTitle();
 }

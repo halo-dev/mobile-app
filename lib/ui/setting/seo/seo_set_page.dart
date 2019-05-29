@@ -49,4 +49,9 @@ class SeoSetPage extends SettingPageBase {
     Provide.value<SettingModule>(context).options.seoVerificationQihu = _360Controller.text;
     saveData();
   }
+
+  @override
+  String getTitle() {
+    return "SEO设置";
+  }
 }

@@ -62,4 +62,9 @@ class GeneralSetPage extends SettingPageBase {
     Provide.value<SettingModule>(context).options.blogUrl = _blogController.text;
     saveData();
   }
+
+  @override
+  String getTitle() {
+    return "常规设置";
+  }
 }
