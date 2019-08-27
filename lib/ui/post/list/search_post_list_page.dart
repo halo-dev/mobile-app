@@ -103,8 +103,7 @@ class _SearchPostListPageView extends State<SearchPostListPage>
   ) {
     if (controller.headerStatus == RefreshStatus.refreshing ||
         controller.footerStatus == RefreshStatus.refreshing) {
-      controller.sendBack(controller.headerStatus == RefreshStatus.refreshing,
-          RefreshStatus.completed);
+      controller.refreshCompleted();
     }
     IndexedWidgetBuilder builder;
     if (mode.articleList.isEmpty) {

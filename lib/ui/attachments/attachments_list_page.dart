@@ -95,8 +95,8 @@ class AttachmentsListPage extends BaseState with PullRefreshMixIn {
               childAspectRatio: 1 //宽高比为1时，子widget
               ),
           itemBuilder: builder,
-        ), (up) {
-      refresh(up);
-    }, controller);
+        ),
+        (up) => refresh(up),
+        controller);
   }
 }
