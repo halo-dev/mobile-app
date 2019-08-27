@@ -32,7 +32,7 @@ dependencies:
   flutter_markdown: ^0.2.0
   url_launcher: ^5.0.2
   shared_preferences: ^0.5.2
-  cached_network_image: ^0.7.0
+  cached_network_image: ^1.1.1
   pull_to_refresh: ^1.2.0
   fluttertoast: ^3.0.4
   multi_image_picker: ^4.2.0

@@ -53,8 +53,8 @@ class ExtendedImage extends StatefulWidget {
             ? constraints?.tighten(width: width, height: height) ??
                 BoxConstraints.tightFor(width: width, height: height)
             : constraints,
-        gestureConfig =
-            gestureConfig ?? (mode == ExtendedImageMode.Gesture ? GestureConfig() : null),
+        gestureConfig = gestureConfig ??
+            (mode == ExtendedImageMode.Gesture ? GestureConfig() : null),
         super(key: key);
 
   /// Creates a widget that displays an [ImageStream] obtained from a [File].
@@ -114,8 +114,8 @@ class ExtendedImage extends StatefulWidget {
             ? constraints?.tighten(width: width, height: height) ??
                 BoxConstraints.tightFor(width: width, height: height)
             : constraints,
-        gestureConfig =
-            gestureConfig ?? (mode == ExtendedImageMode.Gesture ? GestureConfig() : null),
+        gestureConfig = gestureConfig ??
+            (mode == ExtendedImageMode.Gesture ? GestureConfig() : null),
         super(key: key);
 
   /// Creates a widget that displays an [ImageStream] obtained from an asset
@@ -276,7 +276,8 @@ class ExtendedImage extends StatefulWidget {
       GestureConfig gestureConfig,
       BoxConstraints constraints})
       : image = scale != null
-            ? ExactAssetImage(name, bundle: bundle, scale: scale, package: package)
+            ? ExactAssetImage(name,
+                bundle: bundle, scale: scale, package: package)
             : AssetImage(name, bundle: bundle, package: package),
         assert(alignment != null),
         assert(repeat != null),
@@ -285,8 +286,8 @@ class ExtendedImage extends StatefulWidget {
             ? constraints?.tighten(width: width, height: height) ??
                 BoxConstraints.tightFor(width: width, height: height)
             : constraints,
-        gestureConfig =
-            gestureConfig ?? (mode == ExtendedImageMode.Gesture ? GestureConfig() : null),
+        gestureConfig = gestureConfig ??
+            (mode == ExtendedImageMode.Gesture ? GestureConfig() : null),
         super(key: key);
 
   /// Creates a widget that displays an [ImageStream] obtained from a [Uint8List].
@@ -342,8 +343,8 @@ class ExtendedImage extends StatefulWidget {
             ? constraints?.tighten(width: width, height: height) ??
                 BoxConstraints.tightFor(width: width, height: height)
             : constraints,
-        gestureConfig =
-            gestureConfig ?? (mode == ExtendedImageMode.Gesture ? GestureConfig() : null),
+        gestureConfig = gestureConfig ??
+            (mode == ExtendedImageMode.Gesture ? GestureConfig() : null),
         super(key: key);
 
   ///call back of double tap  under ExtendedImageMode.Gesture
@@ -596,10 +597,11 @@ class _ExtendedImageState extends State<ExtendedImage> with ExtendedImageState {
       widget.image.evict();
     }
 
-    final ImageStream newStream = widget.image.resolve(createLocalImageConfiguration(context,
-        size: widget.width != null && widget.height != null
-            ? Size(widget.width, widget.height)
-            : null));
+    final ImageStream newStream = widget.image.resolve(
+        createLocalImageConfiguration(context,
+            size: widget.width != null && widget.height != null
+                ? Size(widget.width, widget.height)
+                : null));
     assert(newStream != null);
 
     _updateSourceStream(newStream, rebuild: rebuild);
@@ -648,7 +650,8 @@ class _ExtendedImageState extends State<ExtendedImage> with ExtendedImageState {
   void _updateSourceStream(ImageStream newStream, {bool rebuild = false}) {
     if (_imageStream?.key == newStream?.key) return;
     //print("_updateSourceStream");
-    if (_isListeningToStream) _imageStream.removeListener(_handleImageChanged);
+    if (_isListeningToStream)
+      _imageStream.removeListener(new ImageStreamListener(_handleImageChanged));
 
     if (!widget.gaplessPlayback || rebuild) {
       setState(() {
@@ -658,18 +661,20 @@ class _ExtendedImageState extends State<ExtendedImage> with ExtendedImageState {
     }
 
     _imageStream = newStream;
-    if (_isListeningToStream) _imageStream.addListener(_handleImageChanged);
+    if (_isListeningToStream)
+      _imageStream.addListener(new ImageStreamListener(_handleImageChanged));
   }
 
   void _listenToStream() {
     if (_isListeningToStream) return;
-    _imageStream.addListener(_handleImageChanged, onError: _loadFailed);
+    _imageStream.addListener(
+        new ImageStreamListener(_handleImageChanged, onError: _loadFailed));
     _isListeningToStream = true;
   }
 
   void _stopListeningToStream() {
     if (!_isListeningToStream) return;
-    _imageStream.removeListener(_handleImageChanged);
+    _imageStream.removeListener(new ImageStreamListener(_handleImageChanged));
     _isListeningToStream = false;
   }
 
@@ -727,8 +732,8 @@ class _ExtendedImageState extends State<ExtendedImage> with ExtendedImageState {
                   widget,
                   this,
                   widget.gestureConfig.inPageView
-                      ? context
-                          .ancestorStateOfType(TypeMatcher<ExtendedImageGesturePageViewState>())
+                      ? context.ancestorStateOfType(
+                          TypeMatcher<ExtendedImageGesturePageViewState>())
                       : null);
             } else {
               current = _buildExtendedRawImage();
@@ -747,12 +752,14 @@ class _ExtendedImageState extends State<ExtendedImage> with ExtendedImageState {
             break;
         }
       } else {
-        if (_loadState == LoadState.completed && widget.mode == ExtendedImageMode.Gesture) {
+        if (_loadState == LoadState.completed &&
+            widget.mode == ExtendedImageMode.Gesture) {
           current = ExtendedImageGesture(
               widget,
               this,
               widget.gestureConfig.inPageView
-                  ? context.ancestorStateOfType(TypeMatcher<ExtendedImageGesturePageViewState>())
+                  ? context.ancestorStateOfType(
+                      TypeMatcher<ExtendedImageGesturePageViewState>())
                   : null);
         } else {
           current = _buildExtendedRawImage();
@@ -782,7 +789,9 @@ class _ExtendedImageState extends State<ExtendedImage> with ExtendedImageState {
     if (widget.border != null) {
       current = CustomPaint(
         foregroundPainter: ExtendedImageBorderPainter(
-            borderRadius: widget.borderRadius, border: widget.border, shape: widget.shape),
+            borderRadius: widget.borderRadius,
+            border: widget.border,
+            shape: widget.shape),
         child: current,
         size: Size(widget.width, widget.height),
       );

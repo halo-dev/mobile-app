@@ -59,8 +59,7 @@ class TagManagerPage extends BaseState with PullRefreshMixIn {
   ) {
     if (controller.headerStatus == RefreshStatus.refreshing ||
         controller.footerStatus == RefreshStatus.refreshing) {
-      controller.sendBack(
-          controller.headerStatus == RefreshStatus.refreshing, RefreshStatus.completed);
+      controller.refreshCompleted();
     }
     IndexedWidgetBuilder builder;
     if (mode.tagList == null || mode.tagList.list.isEmpty) {
@@ -104,7 +103,11 @@ class TagManagerPage extends BaseState with PullRefreshMixIn {
     }
     content = Padding(
       padding: EdgeInsets.all(10),
-      child: Wrap(spacing: 12, runSpacing: 12, alignment: WrapAlignment.start, children: tiles),
+      child: Wrap(
+          spacing: 12,
+          runSpacing: 12,
+          alignment: WrapAlignment.start,
+          children: tiles),
     );
     return content;
   }
