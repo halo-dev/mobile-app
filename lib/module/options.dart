@@ -115,7 +115,7 @@ class Options {
     this.emailEnabled = json['email_enabled'];
     this.commentApiEnabled = json['comment_api_enabled'];
     this.commentPassNotice = json['comment_pass_notice'];
-    this.spiderDisabled = json['spider_disabled'];
+    this.spiderDisabled = json['seo_spider_disabled'];
     this.apiEnabled = json['api_enabled'];
     this.commentNewNeedCheck = json['comment_new_need_check'];
     this.isInstalled = json['is_installed'];
